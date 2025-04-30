@@ -1,0 +1,171 @@
+---
+title: Habit Tracking
+---
+
+Habit Tracking is a powerful feature of Task Genius designed to help you easily track and visualize your habit formation process using Obsidian's daily notes feature.
+
+By adding simple metadata (Frontmatter) to your daily notes, Task Genius can automatically index and display your habit completion status.
+
+<Callout title="Feature Availability" type="info">
+  Habit Tracking is available starting from Task Genius{" "}
+  <strong className="text-primary">8.5.0</strong>.
+</Callout>
+
+## Getting Started
+
+### 1. Define Your Habits
+
+First, you need to tell Task Genius which habits you want to track.
+
+1.  Open Task Genius settings.
+2.  Navigate to the "Habit" settings tab.
+3.  Click **Add new habit**.
+
+You need to configure the following basic information for each habit:
+
+- **Name:** The display name of the habit, e.g., "Meditation", "Drink Water", "Read".
+- **Icon:** Choose a [Lucide icon](https://lucide.dev/icons/) to represent your habit by entering its ID (e.g., `brain`, `glass-water`, `book-open`).
+- **ID:** A unique identifier for the habit, usually auto-generated, used for internal reference.
+
+Next, you need to select the appropriate **Type** based on how the habit is tracked and configure the corresponding **Property** and **Completion Condition**.
+
+#### Habit Types and Configuration
+
+Task Genius supports multiple habit types to accommodate different tracking needs:
+
+##### Daily Habit
+
+This is the simplest type, used to record whether a habit was completed on a given day.
+
+- **Type:** Select `daily`.
+- **Property:** Define a **Metadata Key** used to mark this habit in the daily note's Frontmatter. For example, you could use `meditation-done` or `journaling_complete`. This key name should be unique.
+- **Completion Condition:**
+  - `exists` (default): Considered complete as long as the `Property` exists in the Frontmatter (regardless of its value).
+  - `equals`: The value of the `Property` in the Frontmatter must be **strictly equal** to the specified `Value` to be considered complete (e.g., `Property` is `exercise`, `Value` is `"completed"`).
+  - _Other conditions (`greaterThan`, `lessThan`, `contains`) are less common for daily habits but can be configured if needed._
+
+**Example (Daily Habit - Meditation):**
+
+- Name: Meditation
+- Icon: `brain`
+- Type: `daily`
+- Property (Metadata Key): `meditation`
+- Completion Condition: `exists` (default)
+
+##### Count Habit
+
+Used for tracking goals that require reaching a certain quantity, such as drinking 8 glasses of water or doing 50 push-ups daily.
+
+- **Type:** Select `count`.
+- **Property:** Define a **Metadata Key** used to record the count, e.g., `water_cups` or `pushups`.
+- **Completion Condition:**
+  - Typically use `greaterThan` or `equals`.
+  - `greaterThan`: Considered complete when the value of the `Property` in the Frontmatter is **greater than** the specified `Value`.
+  - `equals`: Considered complete when the value of the `Property` in the Frontmatter is **equal to** the specified `Value`.
+- **Min / Max:** (Optional) Define the expected minimum or maximum count value.
+- **Count Unit:** (Optional) Add a unit to the count, e.g., "cups", "times", "minutes".
+- **Notice:** (Optional) A notification message triggered when a certain count value is reached.
+
+**Example (Count Habit - Drink Water):**
+
+- Name: Drink Water
+- Icon: `glass-water`
+- Type: `count`
+- Property (Metadata Key): `water_intake`
+- Completion Condition: `greaterThan`, Value: `7` (goal is 8 or more glasses)
+- Count Unit: cups
+
+##### Scheduled Habit
+
+Used for tracking habits that involve multiple sub-items or specific scheduled events, such as a multi-step morning routine.
+
+- **Type:** Select `scheduled`.
+- **Events:** Define the list of sub-events included in the habit, each with a `Name` and `Details`.
+- **Properties Map:** Define a unique **Metadata Key** for **each event** to individually mark its completion in the Frontmatter. For example, for a "Morning Routine", events might be "Wake up", "Drink water", "Stretch", with corresponding keys `morning_getup`, `morning_water`, `morning_stretch`.
+
+**Example (Scheduled Habit - Morning Routine):**
+
+- Name: Morning Routine
+- Icon: `sunrise`
+- Type: `scheduled`
+- Events:
+  - `{ name: "Wake up", details: "Wake up on time" }`
+  - `{ name: "Drink water", details: "Drink a glass of warm water" }`
+  - `{ name: "Stretch", details: "Do 5 minutes of stretching" }`
+- Properties Map:
+  - Wake up: `morning_getup`
+  - Drink water: `morning_water`
+  - Stretch: `morning_stretch`
+  - _Note: The overall "completion" status of a scheduled habit might depend on its specific implementation in the view, but tracking is based on individual event metadata keys._
+
+##### Mapping Habit
+
+Used to map a numerical value or state from your daily note to a specific habit label, such as recording mood or energy level.
+
+- **Type:** Select `mapping`.
+- **Property:** Define a **Metadata Key** used to record the original value, e.g., `mood_rating` or `energy_level`.
+- **Mapping:** Define a mapping relationship from numerical values to text labels. For example:
+  - `1`: "Very Low"
+  - `2`: "Low"
+  - `3`: "Neutral"
+  - `4`: "Energetic"
+  - `5`: "Excellent"
+- **Completion Condition:** Usually based on whether the `Property` value exists (`exists`) or meets a specific condition (e.g., `greaterThan` 3 indicates a good state).
+
+**Example (Mapping Habit - Mood Log):**
+
+- Name: Mood Log
+- Icon: `smile`
+- Type: `mapping`
+- Property (Metadata Key): `mood`
+- Mapping:
+  - `1`: "😞"
+  - `2`: "😟"
+  - `3`: "😐"
+  - `4`: "🙂"
+  - `5`: "😃"
+- Completion Condition: `exists` (Tracking is considered complete as long as it's recorded)
+
+### 2. Track Habits in Your Daily Notes
+
+Once you have defined your habits and configured their corresponding **Property (Metadata Key)**, you can start recording them in the Frontmatter of your daily notes (or other periodic notes, depending on your Obsidian setup).
+
+Task Genius will automatically scan the Frontmatter of these notes and determine the completion status of your habits based on the `Property` and `Completion Condition` you set.
+
+**Example Frontmatter:**
+
+Assume today is `2023-10-27`, and the corresponding daily note file is `2023-10-27.md`. Based on the habit examples defined above, your Frontmatter might look like this:
+
+```yaml
+---
+date: 2023-10-27
+# Daily Habit (Meditation) - Existence implies completion
+meditation: true
+# Count Habit (Drink Water) - Record the specific value
+water_intake: 9
+# Scheduled Habit (Morning Routine) - Mark completed sub-events
+morning_getup: done
+morning_water: ✅
+morning_stretch: skipped
+# Mapping Habit (Mood) - Record the rating
+mood: 4
+---
+Today's journal content...
+```
+
+**Explanation:**
+
+- `meditation: true`: Because the `meditation` key exists, the "Meditation" habit is marked as complete. The value could be `true`, `done`, `yes`, or even a number; completion is triggered by the key's presence.
+- `water_intake: 9`: Because 9 is greater than the completion condition value of 7 we set, the "Drink Water" habit is marked as complete. Task Genius will record the value 9.
+- `morning_getup: done`, `morning_water: ✅`: The keys corresponding to these sub-events of the morning routine exist, so they will be recorded. `morning_stretch: skipped` will also be recorded, but how it's displayed depends on the view.
+- `mood: 4`: The "Mood Log" habit is considered complete for tracking purposes because the `mood` key exists. Task Genius records the value 4, which might be displayed as "🙂" in the view based on the mapping.
+
+**Important Notes:**
+
+- Ensure your Frontmatter syntax is correct.
+- The `Property` (Metadata Key) used must **exactly match** the one defined in your Task Genius habit settings.
+- Task Genius relies on Obsidian's metadata cache (`metadataCache`). If you find data isn't updating, try restarting Obsidian or triggering a data rescan in the Task Genius settings.
+
+### 3. View Your Habit Progress
+
+Task Genius provides a dedicated **Habit View** to visualize your habit data. You can usually access it in [Task Genius Views](/docs/task-view).

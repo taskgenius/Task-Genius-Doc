@@ -1,0 +1,29 @@
+---
+title: Progress Bars
+---
+
+Task Genius automatically adds progress indicators to parent items (tasks, list items, or even headings) based on the completion status of their direct sub-tasks or nested sub-items.
+
+## Example
+
+```markdown
+- [ ] Parent Task [||||----] [4/8] // Example progress bar and text
+  - [x] Sub-task 1
+  - [x] Sub-task 2
+  - [/] Sub-task 3 (In Progress)
+  - [ ] Sub-task 4
+  - [-] Sub-task 5 (Abandoned - might be excluded from count based on settings)
+  - [?] Sub-task 6 (Planned - might be excluded)
+  - [x] Sub-task 7
+  - [x] Sub-task 8
+```
+
+## Customization
+
+You can heavily customize the appearance and behavior of progress bars in the plugin settings:
+
+- **Display Mode**: Choose between a graphical bar (`[||||----]`), text (`[4/8]`), both, or none.
+- **Counting**: Configure which sub-item statuses count towards completion (e.g., exclude `[-]` or `[?]`). Decide whether to count only direct children or all nested sub-items.
+- **Target Items**: Enable/disable progress bars on regular list items, headings, or only task items.
+- **Text Format**: Customize the text display using placeholders (like `{done}`, `{total}`, `{perc}`) and simple expressions.
+- **Conditional Hiding**: Hide progress bars based on specific tags, parent tags, file paths, or frontmatter metadata.

@@ -1,0 +1,44 @@
+---
+title: Workflows
+---
+
+Define structured, multi-stage workflows for your tasks and track their progression through different phases.
+
+## Defining Workflows
+
+Workflows are created and managed in the Task Genius plugin settings.
+
+1.  Go to the "Workflows" section in the Task Genius settings.
+2.  Create a new workflow and give it a name (e.g., "Development Process", "Blog Post Pipeline").
+3.  Add stages to the workflow. Each stage typically corresponds to a task status (e.g., "Todo", "Doing", "Review", "Done").
+4.  Define the type for each stage:
+    - **Cycle Stage**: Represents an active part of the workflow (e.g., Todo, Doing, Review). Tasks can cycle through these.
+    - **Terminal Stage**: Represents a final state (e.g., Done, Archived, Cancelled). Tasks reaching a terminal stage might trigger specific actions.
+
+## Associating Tasks with Workflows
+
+Link a task to a specific workflow, often by using a designated tag or metadata:
+
+```markdown
+- [ ] Implement feature #workflow/DevelopmentProcess
+- [ ] Write draft #workflow/BlogPostPipeline
+```
+
+(The exact method for association, like the tag format `#workflow/YourFlowName`, might be configurable in settings.)
+
+## Using Workflows
+
+Once a task is associated with a workflow:
+
+- **Context Menu**: Right-click on the task line and use options like `Task Genius: Move to Next Stage` to advance the task according to the defined workflow sequence.
+- **Status Cycling**: Cycling the task's status (see [[Task Status & Cycling]]) might automatically correspond to moving between workflow stages if the statuses are mapped correctly in the workflow definition.
+
+## Automation (Optional)
+
+Workflows can automate certain actions when tasks enter or leave stages:
+
+- **Timestamps**: Automatically record the date/time when a task enters a specific stage.
+- **Duration Tracking**: Calculate time spent in certain stages.
+- **Next Task Creation**: Automatically create a follow-up task when a task reaches a specific stage (e.g., create a "Publish Post" task when a "Review Draft" task is marked done).
+
+Check the workflow configuration settings for available automation options.

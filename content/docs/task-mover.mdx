@@ -1,0 +1,26 @@
+---
+title: Task Mover
+---
+
+# Task Mover
+
+Keep your active notes tidy by archiving completed or specific groups of sub-tasks to a designated location using Task Mover commands.
+
+## Usage
+
+Place your cursor on the parent task line whose sub-tasks you want to move. Then, use the Obsidian command palette (`Ctrl/Cmd + P`) to run one of the available commands:
+
+- **`Task Genius: Move all completed subtasks under cursor`**: Moves only the sub-tasks marked as complete (e.g., `[x]`) under the current parent task.
+- **`Task Genius: Move direct completed subtasks under cursor`**: Moves only the _direct_ children marked as complete, ignoring nested completed tasks.
+- **`Task Genius: Move all subtasks under cursor`**: Moves _all_ sub-tasks (regardless of status) under the current parent task.
+- **`Task Genius: Move task under cursor`**: Moves the task line the cursor is currently on (could be a parent or a sub-task).
+
+## Configuration
+
+In the Task Genius settings (often under the "Quick Capture" or a dedicated "Task Mover" section), you can configure:
+
+- **Destination File**: Specify the path to the file where tasks should be moved (e.g., `Archive/Completed Tasks.md`). This often uses the same setting as Quick Capture's target file.
+- **Formatting**: Add markers or context when moving tasks, such as:
+  - Timestamping: Automatically add the date/time of archival (e.g., using `{{DATE:YYYY-MM-DD}}`).
+  - Link Back: Optionally add a link back to the original source note.
+- **Behavior**: Choose whether to append to the destination file, prepend, or replace specific sections.

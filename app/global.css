@@ -1,3 +1,54 @@
-@import 'tailwindcss';
-@import 'fumadocs-ui/css/neutral.css';
-@import 'fumadocs-ui/css/preset.css';
+@import "tailwindcss";
+@import "fumadocs-ui/css/ocean.css";
+@import "fumadocs-ui/css/preset.css";
+
+.dark .zimbra-background {
+  --pattern-fg: color-mix(
+    in oklab,
+    var(--color-fd-border) 80%,
+    transparent
+  ) !important;
+}
+
+.zimbra-background {
+  --pattern-fg: color-mix(in oklab, var(--color-fd-border) 30%, transparent);
+  background-image: repeating-linear-gradient(
+    315deg,
+    var(--pattern-fg) 0,
+    var(--pattern-fg) 1px,
+    transparent 0,
+    transparent 50%
+  );
+  background-size: 10px 10px;
+  background-attachment: fixed;
+}
+
+.dark .grid-background {
+  --pattern-fg: color-mix(
+    in oklab,
+    var(--color-fd-border) 80%,
+    transparent
+  ) !important;
+}
+
+.grid-background {
+  --pattern-fg: color-mix(in oklab, var(--color-fd-border) 30%, transparent);
+  background-image: linear-gradient(
+      to right,
+      var(--pattern-fg) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, var(--pattern-fg) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-attachment: fixed;
+}
+
+.scroll-background {
+  background-image: repeating-linear-gradient(
+    315deg,
+    var(--pattern-fg) 0,
+    var(--pattern-fg) 1px,
+    transparent 0,
+    transparent 50%
+  );
+}
