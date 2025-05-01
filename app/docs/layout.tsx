@@ -2,6 +2,12 @@ import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import type { ReactNode } from "react";
 import { source } from "@/lib/source";
 import { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Documentation - Task Genius",
+  description: "Documentation for Task Genius, a plugin for Obsidian.",
+};
 
 const baseOptions: BaseLayoutProps = {
   nav: {
