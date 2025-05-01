@@ -1,0 +1,67 @@
+---
+title: Plan View (Gantt)
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import {
+  Filter,
+  GanttChartSquare,
+  ZoomIn,
+  ZoomOut,
+  MousePointerClick,
+  CalendarSearch,
+  Pin,
+  PinOff,
+} from "lucide-react";
+
+The Plan View provides a timeline-based Gantt chart interface for visualizing and managing your tasks and their dependencies. It allows you to view task durations, start/end dates, and navigate through the timeline.
+
+<VersionCallout version="8.0.0" />
+
+## Open the Plan View
+
+1.  Open the [Task View](/docs/task-view/index).
+2.  Select the `Plan` navigation item in the left sidebar.
+3.  You will see the tasks displayed as a Gantt chart in the right panel.
+
+## Usage
+
+The Plan View displays tasks based on a horizontal timeline:
+
+- **Timeline:** Shows dates, automatically adjusting the display granularity (Day, Week, Month, Year) based on the zoom level.
+- **Task Bars:** Represent tasks with both start and end dates.
+- **Milestones:** Represent tasks with only a due date or identical start and end dates.
+- **Filter Area:** <Filter className="inline-block w-5 h-5" /> Located at the top of the view, allowing you to filter displayed tasks based on various criteria. Read more about the filter in the [Advanced Filter](/docs/task-view/filter/advanced-filter) page.
+
+### Task Display
+
+Tasks are processed and displayed on the Gantt chart based on their date properties:
+
+- **Date Mapping:**
+  - The **start** position of a task bar is based on `Start date` or `Scheduled date`.
+  - The **end** position of a task bar is based on `Due date`.
+  - If only `Due date` is present, or if `Start date` is the same as `Due date`, the task is displayed as a **Milestone** (diamond shape).
+  - Tasks without valid date information will not be displayed on the Gantt chart.
+- **Task Sorting:** Tasks are sorted by default based on their start date (or due date).
+- **Task Labels:** <GanttChartSquare className="inline-block w-5 h-5" /> Task content (supports Markdown rendering) is displayed next to the task bar or milestone.
+
+### Interactions
+
+You can interact with the Gantt chart in several ways:
+
+- **Click Task Bar/Milestone:** <MousePointerClick className="inline-block w-5 h-5" /> Selects the corresponding task and opens its details in the sidebar.
+- **Right-click Task Bar/Milestone:** Opens a context menu with relevant actions for that task.
+- **Click Offscreen Indicator:** <Pin className="inline-block w-5 h-5" /> / <PinOff className="inline-block w-5 h-5" /> If a task is outside the currently visible area, indicators appear on the left/right edges of the view. Clicking an indicator scrolls the view to that task's position.
+- **Scroll to Date:** <CalendarSearch className="inline-block w-5 h-5" /> Use the "Scroll to Date" button in the filter area to quickly navigate to a specific date.
+
+### Navigation & Zoom
+
+- **Horizontal Scrolling:** Use the scrollbar or touchpad/mouse wheel to scroll the timeline horizontally to view tasks in different time periods.
+- **Zooming:** <ZoomIn className="inline-block w-5 h-5" /> / <ZoomOut className="inline-block w-5 h-5" /> Hold the `Ctrl` key and scroll the mouse wheel to zoom the timeline.
+  - Zooming in increases the timeline granularity (e.g., from Month view to Week or Day view).
+  - Zooming out decreases the timeline granularity (e.g., from Day view to Week, Month, or Year view).
+  - Zooming centers on the time point under the mouse cursor.
+
+## Settings
+
+You can read more about view settings on the [Basic view settings](/docs/task-view/basic-view-settings#basic-settings) page.

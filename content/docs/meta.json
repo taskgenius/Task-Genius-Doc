@@ -3,13 +3,14 @@
   "description": "Comprehensive task management plugin for Obsidian",
   "icon": "Building2",
   "root": true,
+  "expanded": true,
   "pages": [
     "---Introduction---",
     "getting-started",
-    "what-is-task-genius",
-    "comparisons",
     "---Setup---",
     "installation",
+    "---View---",
+    "task-view",
     "---Editor---",
     "progress-bars",
     "task-status",
@@ -19,10 +20,9 @@
     "---File---",
     "task-mover",
     "quick-capture",
-    "---View---",
-    "task-view",
-    "habit",
     "---Other---",
-    "reward"
+    "commands",
+    "reward",
+    "habit"
   ]
 }

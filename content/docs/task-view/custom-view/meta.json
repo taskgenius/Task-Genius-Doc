@@ -1,0 +1,6 @@
+{
+  "title": "Custom View",
+  "description": "Task Genius custom view documentation",
+  "root": false,
+  "pages": ["standard-view", "two-column-view"]
+}

@@ -1,0 +1,23 @@
+{
+  "title": "Task View",
+  "description": "Task Genius View Documentation",
+  "icon": "LayoutDashboard",
+  "root": false,
+  "pages": [
+    "index",
+    "indexer",
+    "filter",
+    "custom-view",
+    "---Available Views---",
+    "inbox-view",
+    "forecast-view",
+    "project-view",
+    "tag-view",
+    "flag-view",
+    "review-view",
+    "event-view",
+    "status-view",
+    "plan-view",
+    "habit-view"
+  ]
+}

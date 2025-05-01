@@ -23,7 +23,8 @@
   background-attachment: fixed;
 }
 
-.dark .grid-background {
+.dark .grid-background,
+.dark .grid-background-small {
   --pattern-fg: color-mix(
     in oklab,
     var(--color-fd-border) 80%,
@@ -43,12 +44,14 @@
   background-attachment: fixed;
 }
 
-.scroll-background {
-  background-image: repeating-linear-gradient(
-    315deg,
-    var(--pattern-fg) 0,
-    var(--pattern-fg) 1px,
-    transparent 0,
-    transparent 50%
-  );
+.grid-background-small {
+  --pattern-fg: color-mix(in oklab, var(--color-fd-border) 30%, transparent);
+  background-image: linear-gradient(
+      to right,
+      var(--pattern-fg) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, var(--pattern-fg) 1px, transparent 1px);
+  background-size: 16px 16px;
+  background-attachment: fixed;
 }

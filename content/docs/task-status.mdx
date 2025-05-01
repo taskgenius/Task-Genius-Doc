@@ -2,32 +2,72 @@
 title: Task Status & Cycling
 ---
 
-Go beyond the standard `- [ ]` (incomplete) and `- [x]` (complete) task markers. Task Genius allows you to define and use custom statuses to represent different stages of your workflow.
+import { VersionCallout } from "@/components/VersionCallout";
 
-## Custom Statuses
+Go beyond the standard `- [ ]` (incomplete) and `- [x]` (complete) task markers. Task Genius offers extensive customization for task statuses to fit your workflow.
 
-Define your own markers in the plugin settings. Common examples include:
+<VersionCallout version="5.0.0" />
 
-- `[/]` for "In Progress"
-- `[?]` for "Planned" or "On Hold"
-- `[-]` for "Abandoned" or "Cancelled"
+## Defining Status Markers
 
-These custom statuses can be configured to be included or excluded from progress bar calculations (see [[Progress Bars]]).
+Task Genius categorizes statuses for progress tracking and specific behaviors. You can define the marker characters for each category in the settings:
 
-## Cycling Statuses
+- **Completed:** Markers representing finished tasks (e.g., `x`, `X`). Default: `x`.
+- **Planned:** Markers for tasks planned but not started (e.g., `?`). Default: `?`.
+- **In progress:** Markers for tasks currently being worked on (e.g., `/`, `>`). Default: `/`.
+- **Abandoned:** Markers for tasks that will not be completed (e.g., `-`). Default: `-`.
+- **Not started:** The marker for tasks yet to begin (e.g., ` ` (space)). Default: ` `.
 
-Easily transition tasks between statuses:
+Separate multiple markers for a single category with a pipe character (`|`), like `x|X`.
 
-- **Clicking**: In Live Preview or Reading mode, click directly on a task marker (e.g., `[ ]`, `[x]`, `[/]`) to cycle it to the next configured status (if enabled in settings).
+### Applying Status Themes
+
+You can quickly apply predefined sets of statuses using themes (e.g., "Standard", "Things3"). Select a theme from the dropdown in the "Task Status Settings" section.
+
+**Note:** Applying a theme will override your current custom marker definitions _and_ your custom status cycle configuration (see below).
+
+### Handling Other Statuses
+
+If a task uses a marker not defined in the categories above, you can configure how Task Genius should count it using the "Count other statuses as" setting. Options include "not started", "abandoned", "planned", "completed", or "in progress".
+
+## Configuring the Status Cycle
+
+The "Task Status Switcher" section allows you to define a custom sequence for cycling through statuses when clicking on a task marker or using commands.
+
+- **Enable/Disable:** Toggle the ability to cycle statuses by clicking (`Enable task status switcher`).
+- **Define cycle & marks:**
+  - **Add status:** Add a new status entry to the cycle.
+  - **Status name:** Define the name for the status (e.g., "Todo", "In progress", "Done").
+  - **Mark:** Set the single character marker for this status (e.g., ` `, `/`, `x`).
+  - **Include in cycle:** Toggle whether this specific status should be included when clicking to cycle. Useful for intermediate or final states you don't want to cycle _through_ but want to define a mark for.
+  - **Reorder:** Use the up/down arrows to change the cycling sequence.
+  - **Remove:** Delete a status from the cycle using the trash icon.
+- **Apply themes:** You can also apply a theme's cycle definition from the dropdown here, which will override your custom cycle.
+
+### Click Behavior Customization
+
+- **Enable custom task marks:** Replace standard `- [ ]` checkboxes with styled text marks based on your cycle definition.
+- **Enable text mark in source mode:** Allow clicking the text mark in Source Mode to cycle the status.
+- **Enable cycle complete status:** Determine if clicking a marker automatically cycles through all defined states.
+
+## Parent Task Automation
+
+Configure how parent tasks behave based on their subtasks:
+
+- **Auto complete parent task:** Automatically mark a parent task as complete when all its direct subtasks are completed. Useful for [progress bars](/docs/progress-bars).
+- **Mark parent as 'in progress' when partially complete:** If the above is enabled, automatically mark a parent task with your "in progress" marker when _some_ but not all subtasks are complete.
+
+## Task Counting
+
+Control how task progress is calculated:
+
+- **Exclude specific task markers:** Enter markers (separated by `|`) that should _not_ be counted towards progress totals (e.g., `?|-`).
+- **Only count specific task markers:** Enable this toggle and specify markers (separated by `|`) that _should_ be counted. All other markers will be ignored.
+
+## Cycling Commands
+
+You can still use commands to cycle statuses:
+
 - **Commands**: Use the Obsidian command palette (`Ctrl/Cmd + P`) and search for:
   - `Task Genius: Cycle task status forward`
   - `Task Genius: Cycle task status backward`
-
-## Configuration
-
-In the Task Genius settings, you can:
-
-- Define the characters used for custom statuses (e.g., `x`, `/`, `?`, `-`).
-- Configure which statuses are counted as "done", "incomplete", or ignored for progress calculations.
-- Choose visual themes or styles for different statuses.
-- Set up specific cycling sequences (e.g., define the order statuses change when clicked or using commands).

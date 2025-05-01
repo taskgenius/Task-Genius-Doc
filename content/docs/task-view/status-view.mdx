@@ -1,0 +1,73 @@
+---
+title: Status View (Kanban)
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+
+import {
+  FolderCheckIcon,
+  FolderIcon,
+  SidebarIcon,
+  FilterIcon,
+  PlusIcon,
+  XIcon,
+} from "lucide-react";
+
+The Status View displays your tasks in a Kanban board format, organized into columns based on their status. This allows for a visual workflow management where you can easily track task progress.
+
+<VersionCallout version="8.0.0" />
+
+## Open the status view
+
+1. Open the [Task Genius View](/docs/task-view/index).
+2. Select `Status` nav item in the left sidebar.
+3. You will see the tasks grouped by status in the right panel.
+
+## Usage
+
+### Columns
+
+- Each column represents a specific task status defined in your settings (e.g., "Todo", "In Progress", "Done"). Based on the status of task itself.
+- The order of the columns follows the `taskStatusCycle` setting, typically grouping standard statuses, then custom statuses, and finally completed statuses (marked with 'x').
+- Tasks within each column are sorted primarily by priority (highest first) and secondarily by due date (earliest first).
+
+### Drag and Drop
+
+- You can move tasks between columns by clicking and dragging them.
+- Dropping a task into a new column will update the task's status to match the status of that column.
+- Visual indicators appear during dragging to show where the task will be placed.
+
+### Filtering
+
+Above the Kanban board, filter controls allow you to narrow down the displayed tasks.
+
+<VersionCallout version="8.0.0" />
+
+1. Click the <PlusIcon className="inline-block w-5 h-5" /> **Add filter** button to open a dropdown.
+2. Select a **category** to filter by (e.g., `Tag`, `Priority`, `Project`).
+3. Select the specific **value** within that category (e.g., `#urgent`, `🔺 Highest`, `MyProject`).
+4. Available filter categories and options are dynamically generated based on the tasks currently loaded.
+5. Active filters are displayed as removable "pills" above the board (via <XIcon className="inline-block w-5 h-5" />).
+6. You can add multiple filters. Tasks must match **all** active filters to be displayed.
+7. Click the **Clear all** button to remove all active filters at once.
+8. The filterable criteria include:
+
+- Status
+- Tag
+- Project
+- Context
+- Priority (often represented by icons like 🔺, ⏫, 🔼)
+- Completed (Yes/No)
+- File Path
+
+9. Applying, adding, or removing filters dynamically updates the Kanban board.
+
+## Settings
+
+You can read more about the settings in the [Basic view settings](/docs/task-view/basic-view-settings#basic-settings) page.
+
+### Specific settings
+
+<VersionCallout version="8.1.0" />
+
+`Show Checkbox`: When enabled, displays a checkbox for each task in the kanban view, allowing you to mark tasks as complete directly from the board.

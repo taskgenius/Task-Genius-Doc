@@ -1,0 +1,42 @@
+---
+title: Flag View
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import { ListIcon, GitBranchIcon } from "lucide-react";
+
+The Flag View is a built-in view that displays high-priority tasks or tasks tagged with #flagged. It provides a focused perspective on your most important tasks that require attention.
+
+<VersionCallout version="7.0.0" />
+
+## Open the flag view
+
+1. Open the [Task Genius View](/docs/task-view/index).
+2. Select `Flag` nav item in the left sidebar.
+3. You will see the tasks grouped by flag in the right panel.
+
+## Usage
+
+- **Task Display**: Shows tasks that have a priority level of 3 or higher, or tasks that include the #flagged tag.
+- **Filtering**:
+  - **Text Filter**: A search bar in the header allows for quick filtering of displayed tasks by their content (case-insensitive).
+  - **Rule-Based Filtering**: Applies predefined filter rules ([see settings](#settings)) to determine which tasks are initially loaded into the view.
+  - **Priority Filtering**: By default, only shows tasks with priority level 3+ or the #flagged tag.
+- **View Modes**:
+  - **List View** (<ListIcon className="inline-block w-5 h-5" />): Displays tasks as a flat list.
+  - **Tree View** (<GitBranchIcon className="inline-block w-5 h-5" />): Displays tasks hierarchically, showing parent-child relationships.
+- **Task Count**: The header displays the current number of flagged tasks visible after applying filters.
+- **Sorting**: Tasks are automatically sorted based on the following order:
+  1.  Completion status (incomplete tasks first).
+  2.  Priority (higher priority first).
+  3.  Due Date (earlier dates first).
+  4.  Task content (alphabetical).
+- **Interactions**:
+  - **Selection**: Click on a task to select it (used for detail views or actions).
+  - **Completion**: Mark tasks as complete directly within the view.
+  - **Context Menu**: Right-click on a task to open a context menu for more actions.
+- **Lazy Loading**: For performance with large numbers of tasks, the view loads tasks in batches as you scroll down.
+
+## Settings
+
+You can read more about the settings in the [Basic view settings](/docs/task-view/basic-view-settings#basic-settings) page.

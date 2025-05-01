@@ -1,0 +1,31 @@
+---
+title: Basic view settings
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+
+<VersionCallout version="7.0.0" />
+
+## Basic Settings
+
+View settings are available in the view configuration modal, which you can open by right-clicking the view item in the sidebar and selecting `Open settings`, or visiting `Settings` -> `View` -> `View Name`.
+
+By default, all views (except the habit view) have the following settings:
+
+- **Basic Settings**:
+  - **View Name**: The name displayed for the view (e.g., "Inbox").
+  - **Icon**: The Lucide icon used for the view in the sidebar.
+- **General Filters**:
+  - **Hide Completed and Abandoned Tasks**: Toggle to hide tasks marked as completed (`x`) or abandoned (`-`).
+  - **Filter Blanks**: Toggle to hide tasks with no content.
+- **Filter Rules**: Define specific criteria for tasks to be included in this view:
+  - **Text Contains**: Filter by specific text within the task content.
+  - **Tags Include**: Only show tasks that have _all_ specified tags (e.g., `#urgent, #work`).
+  - **Tags Exclude**: Hide tasks that have _any_ of the specified tags (e.g., `#waiting, #someday`).
+  - **Project Is**: Only show tasks belonging to a specific project path (exact match).
+  - **Priority Is**: Only show tasks with a specific priority level (e.g., `1`, `2`).
+  - **Status Include**: Only show tasks with specific status markers (e.g., `/`, `>`).
+  - **Status Exclude**: Hide tasks with specific status markers (e.g., `-`, `x`).
+  - **Due/Start/Scheduled Date Is**: Filter tasks based on their due, start, or scheduled dates. Accepts specific dates (`YYYY-MM-DD`) or relative terms (`today`, `next week`).
+  - **Path Includes**: Only show tasks whose file path contains the specified string (e.g., `Meetings/`).
+  - **Path Excludes**: Hide tasks whose file path contains the specified string (e.g., `Archive/`).

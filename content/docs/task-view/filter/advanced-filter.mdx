@@ -1,0 +1,35 @@
+---
+title: Advanced Filter
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import { PlusIcon, XIcon } from "lucide-react";
+
+The Advanced Filter is a powerful tool that allows you to filter tasks based on complex criteria.
+
+<VersionCallout version="8.0.0" />
+
+## Scope
+
+Currently, the advanced filter is only available in the [Plan(Gantt) view](/docs/task-view/plan-view) and also the [Status(Kanban) view](/docs/task-view/status-view).
+
+## Usage
+
+1. Click the <PlusIcon className="inline-block w-5 h-5" /> **Add filter** button to open a dropdown.
+2. Select a **category** to filter by (e.g., `Tag`, `Priority`, `Project`).
+3. Select the specific **value** within that category (e.g., `#urgent`, `🔺 Highest`, `MyProject`).
+4. Available filter categories and options are dynamically generated based on the tasks currently loaded.
+5. Active filters are displayed as removable "pills" above the board (via <XIcon className="inline-block w-5 h-5" />).
+6. You can add multiple filters. Tasks must match **all** active filters to be displayed.
+7. Click the **Clear all** button to remove all active filters at once.
+8. The filterable criteria include:
+
+- Status
+- Tag
+- Project
+- Context
+- Priority (often represented by icons like 🔺, ⏫, 🔼)
+- Completed (Yes/No)
+- File Path
+
+9. Applying, adding, or removing filters dynamically updates the tasks in the view.

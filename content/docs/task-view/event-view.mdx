@@ -1,0 +1,77 @@
+---
+title: Event View
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import {
+  CalendarDays,
+  GanttChartSquare,
+  Clock,
+  ListChecks,
+  CalendarCheck2,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+
+The Event View provides a calendar-based interface to visualize and interact with your tasks. It allows you to see tasks plotted on different time scales, navigate through dates, and perform actions directly from the calendar.
+
+<VersionCallout version="8.0.0" />
+
+## Open the event view
+
+1. Open the [Task Genius View](/docs/task-view/index).
+2. Select `Event` nav item in the left sidebar.
+3. You will see the tasks grouped by event in the right panel.
+
+## Usage
+
+The Event View offers several ways to look at your tasks:
+
+- **Multiple views:** Switch between different perspectives:
+  - <GanttChartSquare className="inline-block w-5 h-5" /> **Year view:** Get a high-level
+    overview of the entire year.
+  - <CalendarDays className="inline-block w-5 h-5" /> **Month view:** See tasks laid
+    out across a specific month.
+  - <CalendarDays className="inline-block w-5 h-5" /> **Week view:** Focus on the
+    current or selected week.
+  - <Clock className="inline-block w-5 h-5" /> **Day view:** Examine tasks scheduled
+    for a single day.
+  - <ListChecks className="inline-block w-5 h-5" /> **Agenda view:** View upcoming
+    tasks in a list format.
+- **Navigation:** Easily move through time:
+  - <ChevronLeft className="inline-block w-5 h-5" /> **Previous**/**Next** <ChevronRight className="inline-block w-5 h-5" />
+    : Navigate to the previous or next year, month, week, or day depending on the
+    active view.
+  - <CalendarCheck2 className="inline-block w-5 h-5" /> **Today:** Quickly jump back
+    to the current date.
+- **View switching:** Use the buttons or dropdown in the header to select your preferred view (`Year`, `Month`, `Week`, `Day`, `Agenda`). Your last used view is remembered.
+- **Date display:** The header clearly shows the currently displayed date range, adapting its format based on the active view (e.g., "MMMM YYYY" for Month view, "MMM D - D, YYYY" for Week view).
+
+## Task Display
+
+Tasks are processed and displayed on the calendar as events:
+
+- **Date mapping:** Tasks are primarily placed on the calendar based on their `Due date`. If `Due date` is not available, it will fall back to `Scheduled date` and then `Start date`. Tasks without any of these dates are currently not displayed in the calendar view.
+- **All-day events:** By default, tasks are treated as all-day events on their assigned date.
+- **Multi-day events:** If a task has both a `Start date` and a `Due date` that are different, it will be displayed spanning across those days (inclusive).
+- **Completed tasks:** Completed tasks are visually distinct (e.g., shown in grey).
+
+## Interactions
+
+You can interact with the calendar in various ways:
+
+- **Clicking an event:** Selects the corresponding task, will open the task in the detail side panel.
+- **Clicking a day (Month/Week view):**
+  - Can be configured to open the Quick Capture modal to quickly add a task for that day.
+  - Can switch the view to the Day view for the selected date (Note: This is not yet implemented).
+- **Clicking a month (Year view):** Switches the view to the Month view for the selected month.
+- **Right-clicking an event:** Opens a context menu with relevant actions for that task.
+- **Completing an event:** A mechanism (like a checkbox on the event, depending on the view) allows marking the task as complete directly from the calendar.
+
+## Settings
+
+You can read more about the settings in the [Basic view settings](/docs/task-view/basic-view-settings#basic-settings) page.
+
+Event view has a special setting:
+
+`First day of week`: This setting determines the first day of the week for the calendar. It can be set to any day of the week.

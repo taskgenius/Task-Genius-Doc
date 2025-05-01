@@ -2,43 +2,82 @@
 title: Workflows
 ---
 
-Define structured, multi-stage workflows for your tasks and track their progression through different phases.
+import { VersionCallout } from "@/components/VersionCallout";
+import { Edit3Icon, TrashIcon } from "lucide-react";
 
-## Defining Workflows
+Task Genius includes a powerful workflow system to help you manage multi-stage tasks and processes directly within Obsidian, tracking their progression through different phases.
 
-Workflows are created and managed in the Task Genius plugin settings.
+<VersionCallout version="6.0.0" />
 
-1.  Go to the "Workflows" section in the Task Genius settings.
-2.  Create a new workflow and give it a name (e.g., "Development Process", "Blog Post Pipeline").
-3.  Add stages to the workflow. Each stage typically corresponds to a task status (e.g., "Todo", "Doing", "Review", "Done").
-4.  Define the type for each stage:
-    - **Cycle Stage**: Represents an active part of the workflow (e.g., Todo, Doing, Review). Tasks can cycle through these.
-    - **Terminal Stage**: Represents a final state (e.g., Done, Archived, Cancelled). Tasks reaching a terminal stage might trigger specific actions.
+## Enabling & Configuring Workflows
 
-## Associating Tasks with Workflows
+Activate and customize workflow behavior in the plugin settings:
 
-Link a task to a specific workflow, often by using a designated tag or metadata:
+1.  Go to `Settings` -> `Task Genius` -> `Workflow`.
+2.  Toggle **Enable workflow** on.
 
-```markdown
-- [ ] Implement feature #workflow/DevelopmentProcess
-- [ ] Write draft #workflow/BlogPostPipeline
-```
+### Configuration options
 
-(The exact method for association, like the tag format `#workflow/YourFlowName`, might be configurable in settings.)
+Fine-tune how workflows operate:
+
+- **Auto-add timestamp:** Automatically append a timestamp (e.g., `🛫 2024-01-01 10:00:00`) to a task when it enters a workflow stage or is created within one.
+  - **Timestamp format:** Define the date/time format using Moment.js tokens (default: `YYYY-MM-DD HH:mm:ss`).
+  - **Remove timestamp when moving to next stage:** Delete the timestamp from the task when it transitions to the next workflow stage.
+- **Calculate spent time:** Track the time a task spends in a stage. When the task moves, append the duration (e.g., `(⏱️ 01:30:00)`).
+  - **Spent time format:** Define the format for the duration (default: `HH:mm:ss`).
+  - **Calculate full spent time:** Track the total time from the _start_ of the workflow to the _completion_ of the final stage. Adds a total duration marker (e.g., `(Total: 05:45:10)`) to the final task.
+- **Auto remove last stage marker:** When a task marked with the _final_ stage of its workflow is completed (`- [x]`), automatically remove the stage marker text (e.g., `[stage::stage_id]`).
+
+## Workflow definitions
+
+Workflows are defined as templates specifying a sequence of stages. Manage them in `Settings` -> `Task Genius` -> `Workflow`:
+
+- Click `Add New Workflow` to define a new template.
+- Click the pencil icon (<Edit3Icon className="inline-block w-5 h-5" />) to edit an existing one.
+- Click the trash icon (<TrashIcon className="inline-block w-5 h-5" />) to delete a definition.
+
+### Defining Stages
+
+When creating or editing a workflow:
+
+- **Name & Description:** Identify the workflow.
+- **Stages:** Add, remove, and reorder stages.
+  - **ID:** A unique identifier for the stage (e.g., `planning`, `dev`, `review`) used in the task line, for example `[stage::planning]`.
+  - **Name:** The display name for the stage (e.g., "Planning", "Development", "Review"). This is used as the stage display name (not in task line).
+  - **Type:**
+    - `Linear`: Moves strictly to the stage defined in its `next` property.
+    - `Cycle`: Can loop back or move to multiple stages defined in `canProceedTo`. May contain `subStages` for nested steps.
+    - `Terminal`: Represents a final state (e.g., "Completed", "Cancelled"). Tasks entering a terminal stage typically conclude their workflow path.
+  - **Next (for Linear):** The ID of the single stage that follows this one, for example `[stage::in_progress]`.
+  - **SubStages (for Cycle):** Define nested steps within a cycle stage. Each substage has its own `id`, `name`, and optional `next` (pointing to the next substage ID within the cycle), for example `[stage::in_progress.development]` and `[stage::in_progress.review]`.
+  - **CanProceedTo (for Cycle/Linear):** A list of stage IDs that a task can transition to from this stage (used in the context menu). This allows for branching or returning to earlier stages or going to next main stage (when in `Cycle` type stage).
 
 ## Using Workflows
 
-Once a task is associated with a workflow:
+1.  **Associate Task with Workflow:** Mark a root task with a workflow tag, like `#workflow/YourWorkflowID`. This task represents the start of the process.
 
-- **Context Menu**: Right-click on the task line and use options like `Task Genius: Move to Next Stage` to advance the task according to the defined workflow sequence.
-- **Status Cycling**: Cycling the task's status (see [[Task Status & Cycling]]) might automatically correspond to moving between workflow stages if the statuses are mapped correctly in the workflow definition.
+    ```markdown
+    - [ ] Start Project Alpha #workflow/project_workflow
+    ```
 
-## Automation (Optional)
+2.  **Initial Stage & Stage Markers:**
 
-Workflows can automate certain actions when tasks enter or leave stages:
+    - When you interact with the root task (e.g., via context menu), the plugin might automatically create the first stage task.
+    - Subsequent stages and substages are typically marked using `[stage::StageID]` or `[stage::ParentStageID.SubStageID]`.
 
-- **Timestamps**: Automatically record the date/time when a task enters a specific stage.
-- **Duration Tracking**: Calculate time spent in certain stages.
-- **Next Task Creation**: Automatically create a follow-up task when a task reaches a specific stage (e.g., create a "Publish Post" task when a "Review Draft" task is marked done).
+    ```markdown
+    - [x] Start Project Alpha #workflow/project_workflow 🛫 2024-03-20 10:00:00
+      - [x] Planning Phase [stage::planning] (⏱️ 02:15:30)
+      - [ ] Development [stage::in_progress] 🛫 2024-03-20 12:15:30
+        - [x] Coding [stage::in_progress.development] (⏱️ 01:30:00)
+        - [x] Code Review [stage::in_progress.review] (⏱️ 00:30:00)
+        - [ ] Testing [stage::in_progress.testing] 🛫 2024-03-20 15:15:30
+    ```
 
-Check the workflow configuration settings for available automation options.
+3.  **Transitioning Stages:**
+
+    - **Context Menu:** Right-click on a task associated with a workflow. Choose options like "Move to [Next Stage Name]", select from available stages defined in `canProceedTo` or "Complete Stage".
+    - **Task Completion:** Completing a task (`- [x]`) associated with a non-terminal stage can trigger automatic transitions.
+    - **Manual Editing:** You can manually change the `[stage::...]` marker, although using the context menu or task completion is recommended for consistency and triggering automation.
+
+4.  **Automation:** Based on your configuration (see "Configuration Options" above), actions like adding timestamps, calculating spent time, removing markers, and creating the next task will happen automatically during stage transitions or completions.

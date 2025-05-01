@@ -6,7 +6,7 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 export default function HomePage() {
   return (
     <main className="container md:mx-auto max-w-5xl md:px-4 py-12 md:py-20 ">
-      <section className="-mt-20 border border-fd-border border-b-0 grid-background p-12 px-12"></section>
+      <section className="-mt-20 border border-fd-border border-b-0 grid-background-small p-12 px-12"></section>
       <section className="text-left border border-fd-border border-b-0 p-6 bg-fd-background backdrop-blur-sm bg-opacity-50">
         <h1 className="mb-4 text-4xl font-bold tracking-tight text-fd-foreground sm:text-5xl">
           Task Genius
@@ -39,7 +39,7 @@ export default function HomePage() {
       <section className="absolute inset-0 -z-10 border border-fd-border grid-background  max-h-1/2 top-1/3 border-b md:block hidden"></section>
       <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background"></section>
       <section className="border border-fd-border border-b-0 md:border-b pt-12 pb-12 px-6 md:px-12 relative">
-        <div className="border-r border-b border-fd-border pb-2 text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-1 bg-fd-background backdrop-blur-sm">
+        <div className="border-r border-b border-fd-border text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-2 bg-fd-background backdrop-blur-sm">
           <span className="text-fd-primary font-sans font-bold">01</span>{" "}
           Features
         </div>
@@ -64,7 +64,7 @@ export default function HomePage() {
       </section>
       <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background"></section>
       <section className="border border-fd-border border-b-0 md:border-b pt-8 px-6 md:px-12 pb-6 relative">
-        <div className="border-r border-b border-fd-border pb-2 text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-1 bg-fd-background backdrop-blur-sm">
+        <div className="border-r border-b border-fd-border text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-2 bg-fd-background backdrop-blur-sm">
           <span className="text-fd-primary font-sans font-bold">02</span>{" "}
           Installation
         </div>
@@ -140,7 +140,7 @@ export default function HomePage() {
       </section>
       <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background"></section>
       <section className="border border-fd-border  pt-12 px-6 md:px-12 pb-6 relative">
-        <div className="border-r border-b border-fd-border pb-2 text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-1 bg-fd-background backdrop-blur-sm">
+        <div className="border-r border-b border-fd-border text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-2 bg-fd-background backdrop-blur-sm">
           <span className="text-fd-primary font-sans font-bold">03</span>{" "}
           Support
         </div>
@@ -153,6 +153,16 @@ export default function HomePage() {
             GitHub discussions page
           </Link>
           .
+        </div>
+      </section>
+      <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background"></section>
+      <section className="border border-fd-border -mb-20 pt-12 px-6 md:px-12 pb-6 relative text-right">
+        <div className="border-r border-b border-fd-border text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-2 bg-fd-background backdrop-blur-sm">
+          <span className="text-fd-primary font-sans font-bold">04</span>{" "}
+          Copyright
+        </div>
+        <div className="prose prose-fd max-w-none">
+          © {new Date().getFullYear()} Boninall(Quorafind)
         </div>
       </section>
     </main>

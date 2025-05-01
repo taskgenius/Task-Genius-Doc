@@ -1,0 +1,53 @@
+---
+title: Two Column View
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import { ListPlusIcon } from "lucide-react";
+
+Two column view is a view that displays tasks in two columns.
+
+<VersionCallout version="8.2.0" />
+
+## Usage
+
+When creating or editing a custom view, if you select "Two Column View" as the `View Type`, the following settings become available:
+
+- **Group by Task Property**: Select which task property (e.g., Tags, Project, Priority, Status, Due Date, File Path) to use for grouping items in the left column. The title of the left column will often default based on this selection (e.g., selecting "Tags" might default the left column title to "Tags").
+  - _Default_: `Tags`
+- **Left Column Title**: The title displayed at the top of the left column, which lists the groups (based on the selected property).
+  - _Default_: `Items` (or based on the "Group by Task Property" selection)
+- **Right Column Title**: The default title displayed at the top of the right column when a single group is selected from the left column.
+  - _Default_: `Tasks`
+- **Multi-select Text**: The text displayed in the right column's title bar when multiple groups are selected in the left column.
+  - _Default_: `selected items`
+- **Empty State Text**: The text displayed in the right column when no group is selected in the left column.
+  - _Default_: `No items selected`
+
+## Task List
+
+The task list is the list of tasks that will be displayed in the right column. The task list is influenced by the basic filter settings.
+
+## Group List
+
+The group list is the list of groups that will be displayed in the left column. The group list is influenced by the "Group by Task Property" setting.
+
+### Multi-select
+
+In the top-right corner of the group list, you can see a multi-select button <ListPlusIcon className="inline-block w-5 h-5" />. You can use it to select multiple groups.
+
+After you press the multi-select button, you can use the left mouse button to select a group and then press the `Ctrl/Cmd` key to select another group.
+
+## Settings
+
+1. Open the [Task View](/docs/task-view/basic-view-settings#basic-settings) page.
+2. Click on the button `Add Custom View`.
+3. Input the view name, and then select a icon for the view.
+4. Select the `View Type` as `Two Column View`.
+5. Configure the view settings especially the `Group by Task Property` setting.
+6. Click on the button `Save`.
+7. All done.
+
+You can read more about the settings in the [Basic view settings](/docs/task-view/basic-view-settings#basic-settings) page.
+
+After reload Obsidian, you will see the new view in the sidebar.
