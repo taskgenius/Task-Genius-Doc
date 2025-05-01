@@ -2,11 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon, CheckCircleIcon, Github } from "lucide-react";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import LatestVersion from "@/components/LatestVersion";
 
 export default function HomePage() {
   return (
     <main className="container md:mx-auto max-w-5xl md:px-4 py-12 md:py-20 ">
-      <section className="-mt-20 border border-fd-border border-b-0 grid-background-small p-12 px-12"></section>
+      <section className="-mt-20 border border-fd-border border-b-0 grid-background-small p-12 px-12 relative">
+        <div className="absolute bottom-0 right-0 p-2 py-1 hover:text-fd-primary">
+          <LatestVersion />
+        </div>
+      </section>
       <section className="text-left border border-fd-border border-b-0 p-6 bg-fd-background backdrop-blur-sm bg-opacity-50">
         <h1 className="mb-4 text-4xl font-bold tracking-tight text-fd-foreground sm:text-5xl">
           Task Genius
@@ -139,7 +144,7 @@ export default function HomePage() {
         </Tabs>
       </section>
       <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background"></section>
-      <section className="border border-fd-border  pt-12 px-6 md:px-12 pb-6 relative">
+      <section className="border border-fd-border border-b-0 md:border-b pt-12 px-6 md:px-12 pb-6 relative">
         <div className="border-r border-b border-fd-border text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-2 bg-fd-background backdrop-blur-sm">
           <span className="text-fd-primary font-sans font-bold">03</span>{" "}
           Support
