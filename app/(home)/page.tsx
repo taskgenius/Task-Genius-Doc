@@ -59,6 +59,7 @@ export default function HomePage() {
             "Customizable Workflows",
             "Dedicated Cross-Vault Task View",
             "Extensive Customization Options",
+            "Rewards for Completing Tasks",
           ].map((feature) => (
             <li key={feature} className="flex items-center text-sm md:pl-20">
               <CheckCircleIcon className="mr-2 size-5 flex-shrink-0 text-fd-primary" />
