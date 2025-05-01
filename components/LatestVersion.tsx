@@ -1,21 +1,34 @@
+"use client";
+
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 const TARGET_URL =
   "https://api.github.com/repos/Quorafind/Obsidian-Task-Genius/releases/latest";
 
-async function getLatestVersion() {
-  const response = await fetch(TARGET_URL, { cache: "no-store" });
-  const data = await response.json();
-  return data.tag_name;
-}
+export default function LatestVersion() {
+  const [version, setVersion] = useState<string | null>(null);
 
-export default async function LatestVersion() {
-  const version = await getLatestVersion();
+  useEffect(() => {
+    async function fetchLatestVersion() {
+      try {
+        const response = await fetch(TARGET_URL, { cache: "no-store" });
+        const data = await response.json();
+        setVersion(data.tag_name);
+      } catch (error) {
+        console.error("Failed to fetch latest version:", error);
+      }
+    }
+
+    fetchLatestVersion();
+  }, []);
 
   return (
     <>
       <Link
-        href={`https://github.com/Quorafind/Obsidian-Task-Genius/releases/tag/${version}`}
+        href={`https://github.com/Quorafind/Obsidian-Task-Genius/releases/tag/${
+          version || "latest"
+        }`}
         target="_blank"
         rel="noopener noreferrer"
       >
