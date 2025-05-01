@@ -1,3 +1,37 @@
 ---
 title: Indexer
 ---
+
+import { VersionCallout } from "@/components/VersionCallout";
+
+Task Genius uses an indexer to index your tasks. Basically, it's a process that runs in the background to index your tasks.
+
+<VersionCallout version="7.0.0" />
+
+## How it works
+
+When you enable the Task Genius View, the indexer will start indexing your tasks. And it uses indexedDB to store all the indexed data.
+
+If you find that the indexer is not working, you can try to force it to reindex by running the command `Task Genius: Force reindex all tasks`.
+
+Or trying to reload Obsidian.
+
+## How to disable it
+
+You can disable the indexer by disabling the Task Genius View.
+
+## Settings
+
+Currently, the indexer is not configurable except for the metadata format.
+
+### Tasks format
+
+This is from the [Tasks](https://obsidian.md/plugins/tasks) plugin. It is a plugin that provides a task management system in Obsidian.
+
+And you can select `Tasks` format to match emoji type metadata (e.g. `🛫 2025-01-01`) or `#project/hello-world` for project type metadata.
+
+### Dataview format
+
+This is from the [Dataview](https://obsidian.md/plugins/dataview) plugin. It is a plugin that provides full data indexing and viewing in Obsidian.
+
+And you can select `Dataview` format to match the format of Dataview (e.g. `[due:: 2025-01-01]` or `[project:: hello-world]`).
