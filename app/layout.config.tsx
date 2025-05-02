@@ -14,6 +14,11 @@ export const linkItems: LinkItemType[] = [
     ),
     external: true,
   },
+  {
+    url: "/changelog",
+    text: "Changelog",
+    icon: <Book />,
+  },
 ];
 
 /**

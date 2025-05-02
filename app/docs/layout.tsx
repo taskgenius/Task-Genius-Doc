@@ -1,6 +1,6 @@
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import type { ReactNode } from "react";
-import { source } from "@/lib/source";
+import { docsSource } from "@/lib/source";
 import { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 import { Metadata } from "next";
 
@@ -48,7 +48,7 @@ const baseOptions: BaseLayoutProps = {
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <DocsLayout tree={source.pageTree} {...baseOptions}>
+    <DocsLayout tree={docsSource.pageTree} {...baseOptions}>
       {children}
     </DocsLayout>
   );
