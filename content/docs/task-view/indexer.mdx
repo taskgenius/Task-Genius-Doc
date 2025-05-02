@@ -4,32 +4,73 @@ title: Indexer
 
 import { VersionCallout } from "@/components/VersionCallout";
 
-Task Genius uses an indexer to index your tasks. Basically, it's a process that runs in the background to index your tasks.
+Task Genius uses an indexer to efficiently find and manage your tasks within Obsidian. It runs in the background to parse your Markdown files and keep task information up-to-date.
 
 <VersionCallout version="7.0.0" />
 
 ## How it works
 
-When you enable the Task Genius View, the indexer will start indexing your tasks. And it uses indexedDB to store all the indexed data.
+When you enable the Task Genius View, the `TaskManager` initializes. To improve performance, especially in large vaults, it utilizes a pool of background **Web Workers** managed by the `TaskWorkerManager`.
 
-If you find that the indexer is not working, you can try to force it to reindex by running the command `Task Genius: Force reindex all tasks`. Or trying to reload Obsidian.
+Here's a simplified flow:
+
+1.  **File Monitoring:** The `TaskManager` watches your vault for changes (file creation, modification, deletion, renaming).
+2.  **Cache Check:** When a file change occurs or during initial startup, the system checks a persistent **cache** (`LocalStorageCache`) to see if up-to-date task data for that file already exists. Preloading from this cache significantly speeds up startup.
+3.  **Task Parsing:**
+    - If the cache is missing or outdated, the file needs processing.
+    - The `TaskManager` sends the file content to the `TaskWorkerManager`.
+    - The `TaskWorkerManager` assigns the parsing job to an available **Web Worker**. Tasks might be prioritized (e.g., user-initiated actions higher than background scans).
+    - The Worker parses the file content using regular expressions to identify tasks and extract metadata (like dates, tags, priority) based on your chosen format (`Tasks` or `Dataview`).
+    - If Web Workers fail or are disabled, parsing falls back to the main thread.
+4.  **Index & Cache Update:** The parsed tasks are sent back to the `TaskManager`, which updates its internal index and stores the results in the `LocalStorageCache` for future use.
+5.  **View Update:** An event (`task-genius:task-cache-updated`) is triggered, notifying the Task Genius views to refresh with the latest data.
+
+<Mermaid chart={`
+graph TB
+    subgraph Obsidian
+        A[Vault Files] -- File Events --> B(TaskManager);
+    end
+
+    subgraph TaskGenius Indexing
+        B -- Check Cache --> C{LocalStorageCache};
+        C -- Cache Hit --> E[Update Views];
+        C -- Cache Miss/Stale --> D(Process File);
+        D -- Use Workers? --> F{WorkerManager};
+        F -- Yes --> G[TaskWorker];
+        G -- Parse Tasks --> H(Parsed Tasks);
+        F -- No / Fallback --> I[TaskIndexer Main Thread];
+        I -- Parse Tasks --> H;
+        D -- No Workers --> I;
+        H -- Update Index & Cache --> C;
+        C -- Trigger Update --> E;
+    end
+
+    E -- Display Tasks --> J[Task Views / UI];
+
+`} />
+
+If you find that the indexer isn't reflecting recent changes correctly, you can force it to clear its cache and re-index everything by running the command `Task Genius: Force reindex all tasks`. Reloading Obsidian might also help in some cases.
 
 ## How to disable it
 
-You can disable the indexer by disabling the Task Genius View.
+You can disable the indexer by disabling the Task Genius View in the plugin settings. This will stop the background processing and file monitoring.
 
 ## Settings
 
-Currently, the indexer is not configurable except for the metadata format.
+The indexer's behavior can be customized through the following settings:
 
-### Tasks format
+### Metadata Format Preference (`Prefer Metadata Format`)
 
-This is from the [Tasks](https://obsidian.md/plugins/tasks) plugin. It is a plugin that provides a task management system in Obsidian.
+Choose the primary format the indexer should use when extracting metadata like dates, priority, and recurrence.
 
-And you can select `Tasks` format to match emoji type metadata (e.g. `🛫 2025-01-01`) or `#project/hello-world` for project type metadata.
+- **Tasks:** Select this to prioritize the [Tasks](https://obsidian.md/plugins/tasks) plugin's emoji-based format (e.g., `🛫 2025-01-01`, `⏫`, `🔁 every week`, `#project/my-project`). It will still attempt to parse Dataview format as a fallback if the Tasks format isn't found for a specific metadata type.
+- **Dataview:** Select this to prioritize the [Dataview](https://obsidian.md/plugins/dataview) plugin's inline field format (e.g., `[due:: 2025-01-01]`, `[priority:: high]`, `[repeat:: every week]`, `[project:: my-project]`). It will fall back to the Tasks emoji format if the Dataview format isn't found.
 
-### Dataview format
+### Daily Notes Integration
 
-This is from the [Dataview](https://obsidian.md/plugins/dataview) plugin. It is a plugin that provides full data indexing and viewing in Obsidian.
+These settings allow you to automatically assign a date to tasks found within your daily notes, based on the note's file path.
 
-And you can select `Dataview` format to match the format of Dataview (e.g. `[due:: 2025-01-01]` or `[project:: hello-world]`).
+- **Use Daily Note Path as Date (`Use Daily Note Path as Date`):** Enable this to extract a date from the file path of notes located within your configured daily note directory.
+- **Daily Note Path (`Daily Note Path`):** Specify the folder where your daily notes are stored (e.g., `dailies`, `journal/daily`). The indexer uses this to identify which files should have dates extracted from their paths.
+- **Daily Note Date Format (`Daily Note Date Format`):** Define the date format used in your daily note file names (e.g., `yyyy-MM-dd`, `yyyy/MM/dd`, `dd-MM-yyyy`). This should match the structure within the `dailyNotePath`. Uses [date-fns format tokens](https://date-fns.org/v2.30.0/docs/format).
+- **Assign Daily Note Date As (`Assign Daily Note Date As`):** Choose which date field (`due`, `start`, or `scheduled`) the extracted daily note date should be assigned to _if_ the task doesn't already have that specific date field set.
