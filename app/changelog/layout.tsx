@@ -1,6 +1,13 @@
+import { Metadata } from "next";
 import type { ReactNode } from "react";
+import { baseOptions } from "../layout.config";
+import { HomeLayout } from "fumadocs-ui/layouts/home";
+
+export const metadata: Metadata = {
+  title: "Changelog - Task Genius",
+  description: "Changelog for Task Genius.",
+};
 
 export default function ChangelogLayout({ children }: { children: ReactNode }) {
-  console.log("ChangelogLayout");
-  return <div className="container mx-auto px-4 py-8">{children}</div>;
+  return <HomeLayout {...baseOptions}>{children}</HomeLayout>;
 }

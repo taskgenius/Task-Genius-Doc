@@ -13,8 +13,6 @@ export function generateStaticParams() {
 export default function Page({ params }: { params: { slug?: string[] } }) {
   const slug = params.slug;
 
-  console.log(slug);
-
   // If slug exists, show the specific release detail
   if (slug) {
     const page = releasesSource.getPage(slug);
