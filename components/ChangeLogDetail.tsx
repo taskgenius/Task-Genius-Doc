@@ -1,7 +1,8 @@
 import { Badge } from "@/components/ui/Badge";
-import Link from "next/link";
 import type { ReleasePage } from "@/lib/source";
-import { CalendarIcon, GithubIcon } from "lucide-react";
+import { FormattedDate } from "@/components/FormattedDate";
+import Link from "next/link";
+import { GithubIcon } from "lucide-react";
 
 interface ChangeLogDetailProps {
   page: ReleasePage;
@@ -20,6 +21,14 @@ export function ChangeLogDetail({ page }: ChangeLogDetailProps) {
     date: page.data.date,
     version: page.data.version,
     platform: page.data.platform,
+    access: page.data.access,
+  };
+
+  const getLink = (version: string) => {
+    console.log(frontmatter);
+    if (!frontmatter.date || !frontmatter.platform || !frontmatter.version)
+      return `/changelog`;
+    return `/changelog/${frontmatter.date}-${frontmatter.platform}-v${frontmatter.version}`;
   };
 
   // Check if frontmatter exists before accessing properties
@@ -27,52 +36,42 @@ export function ChangeLogDetail({ page }: ChangeLogDetailProps) {
     return <div>Error: Missing frontmatter data.</div>;
   }
 
-  const date = frontmatter.date
-    ? new Date(frontmatter.date).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : "Date not specified";
-  const version = frontmatter.version ?? "Version not specified";
-  const platform = frontmatter.platform ?? "Platform not specified"; // Get platform
-  const title = frontmatter.title ?? page.data.title;
+  const version = frontmatter.version ?? "";
+  const platform = frontmatter.platform == "desktop" ? "Desktop" : "Mobile";
+  const access = frontmatter.access == "public" ? "Public" : "Private";
 
   return (
-    <article className="flex flex-col md:flex-row md:w-full gap-8">
-      <div className="md:w-1/4">
-        <div className="md:sticky md:top-[var(--header-height,64px)] md:h-[calc(100vh-var(--header-height,64px))] overflow-y-auto p-4 border-l">
-          <h1 className="font-semibold text-2xl sm:text-xl mb-2">{title}</h1>
-
-          <div className="text-sm text-muted-foreground mb-1 flex items-center gap-2">
-            <CalendarIcon className="w-4 h-4" />
-            <span>{date}</span>
+    <>
+      <div className="grow">
+        <div className="md:sticky md:top-[var(--header-height)] pb-2">
+          <div className="font-semibold text-2xl sm:text-xl">
+            <FormattedDate dateString={frontmatter.date} />
           </div>
-          <div className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
-            <span>{version}</span>
-            {frontmatter.platform && (
-              <Badge variant={"outline"}> {platform}</Badge>
-            )}
+          <div className="font-mono mt-1 text-muted">
+            <div className="flex items-center">
+              <Link href={getLink(version)}>
+                <span className="text-sm text-fd-muted-foreground px-1 hover:text-fd-primary cursor-pointer hover:underline">
+                  {version}
+                </span>
+              </Link>
+              <span className="text-sm text-fd-muted-foreground px-1">
+                {platform}
+              </span>
+            </div>
+            <div className="mb-8 mt-2 text-xs text-fd-muted-foreground font-mono flex flex-row gap-2 items-center">
+              <Badge variant={"default"}>{access}</Badge>
+              <Link
+                href={`https://github.com/Quorafind/Obsidian-Task-Genius/releases/tag/${version}`}
+              >
+                <GithubIcon className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
-
-          {version !== "Version not specified" && (
-            <Link
-              href={`https://github.com/quorafind/outliner.md/releases/tag/${version}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center text-xs"
-            >
-              <Badge variant={"secondary"} className="py-0.5 px-2">
-                <GithubIcon className="w-3 h-3 mr-1" />
-                View on Github
-              </Badge>
-            </Link>
-          )}
         </div>
       </div>
       <div className="md:basis-3/4 prose dark:prose-invert max-w-none break-words">
         <RenderContent page={page} />
       </div>
-    </article>
+    </>
   );
 }

@@ -19,8 +19,8 @@ export const releases = defineDocs({
       // date: z.string().date(), // Temporarily comment out date validation
       date: z.string(), // Use plain string for now
       version: z.string(),
-      platform: z.string().optional(), // Platform might be optional
-      access: z.enum(["public", "private"]).default("public"), // Example of adding other fields
+      platform: z.string(), // Platform might be optional
+      access: z.string().default("public"), // Example of adding other fields
     }),
   },
 });

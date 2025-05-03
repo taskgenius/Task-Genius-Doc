@@ -55,3 +55,7 @@
   background-size: 16px 16px;
   background-attachment: fixed;
 }
+
+:root {
+  --header-height: 70px;
+}
