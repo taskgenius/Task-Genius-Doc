@@ -3,9 +3,10 @@ import type { InferMetaType, InferPageType } from "fumadocs-core/source";
 import { loader } from "fumadocs-core/source";
 import { icons } from "lucide-react";
 import { createElement } from "react";
-import { docs } from "@/.source";
+import { docs, releases } from "@/.source";
 
-export const source = loader({
+// Loader for docs
+export const docsSource = loader({
   baseUrl: "/docs",
   icon(icon) {
     if (icon && icon in icons)
@@ -14,5 +15,23 @@ export const source = loader({
   source: docs.toFumadocsSource(),
 });
 
-export type Page = InferPageType<typeof source>;
-export type Meta = InferMetaType<typeof source>;
+// Loader for releases
+export const releasesSource = loader({
+  baseUrl: "/changelog",
+  source: releases.toFumadocsSource(),
+  // You might want to add processing for frontmatter fields like 'date', 'version' here
+  // Example:
+  // transform(data) {
+  //   return {
+  //     ...data,
+  //     // Potentially parse date string into Date object
+  //     date: new Date(data.frontmatter.date)
+  //   };
+  // }
+});
+
+export type DocsPage = InferPageType<typeof docsSource>;
+export type DocsMeta = InferMetaType<typeof docsSource>;
+
+export type ReleasePage = InferPageType<typeof releasesSource>;
+export type ReleaseMeta = InferMetaType<typeof releasesSource>;

@@ -1,5 +1,5 @@
 import { generateOGImage } from "fumadocs-ui/og";
-import { source } from "@/lib/source";
+import { docsSource } from "@/lib/source";
 import { notFound } from "next/navigation";
 
 export async function GET(
@@ -7,7 +7,7 @@ export async function GET(
   { params }: { params: Promise<{ slug: string[] }> }
 ) {
   const { slug } = await params;
-  const page = source.getPage(slug.slice(0, -1));
+  const page = docsSource.getPage(slug.slice(0, -1));
   if (!page) notFound();
 
   return generateOGImage({
@@ -18,7 +18,7 @@ export async function GET(
 }
 
 export function generateStaticParams() {
-  return source.generateParams().map((page) => ({
+  return docsSource.generateParams().map((page) => ({
     ...page,
     slug: [...page.slug, "banner.png"],
   }));

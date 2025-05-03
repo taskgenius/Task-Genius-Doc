@@ -9,6 +9,7 @@
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
+    "class-variance-authority": "^0.7.1",
     "fast-glob": "^3.3.3",
     "fumadocs-core": "15.2.12",
     "fumadocs-mdx": "11.6.1",
@@ -23,7 +24,8 @@
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
     "remark-mdx": "^3.1.0",
-    "remark-stringify": "^11.0.0"
+    "remark-stringify": "^11.0.0",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.4",
