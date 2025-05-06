@@ -37,7 +37,7 @@ export default async function Page({
     );
     content = <ChangeLogDetail page={page} />;
     contentClasses =
-      "flex-1 px-8 flex flex-row space-x-6 border border-t-0 border-fd-border border-b p-6 bg-fd-background backdrop-blur-sm bg-opacity-50";
+      "flex-1 px-8 flex flex-row space-x-6 border border-t-0 border-fd-border border-b p-6 bg-fd-background backdrop-blur-sm bg-opacity-50 md:pt-10";
   } else {
     const pages = releasesSource.getPages();
     const sortedPages = pages.sort((a, b) => {
