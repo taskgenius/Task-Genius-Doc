@@ -15,6 +15,7 @@ export default async function Page({
   params: Promise<{ slug?: string[] }>;
 }) {
   const slug = (await params).slug;
+  console.log(slug);
 
   let pageTitle: ReactNode;
   let content: ReactNode;
@@ -113,8 +114,25 @@ export async function generateMetadata({
   params: Promise<{ slug?: string[] }>;
 }) {
   const { slug = [] } = await params;
+
+  // For the main changelog page without a specific release
+  if (!slug || slug.length === 0) {
+    return {
+      title: "Changelog - Task Genius",
+      description: "Task Genius changelog and release notes",
+      openGraph: {
+        images: "/changelog-og/banner.png",
+      },
+      twitter: {
+        card: "summary_large_image",
+        images: "/changelog-og/banner.png",
+      },
+    } satisfies Metadata;
+  }
+
+  // For specific release page
   const page = releasesSource.getPage(slug);
-  if (!page) notFound();
+  if (!page) return notFound();
 
   const image = ["/changelog-og", ...slug, "banner.png"].join("/");
   return {
