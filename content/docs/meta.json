@@ -19,6 +19,7 @@
     "workflows",
     "---File---",
     "task-mover",
+    "task-sorter",
     "quick-capture",
     "---Other---",
     "commands",

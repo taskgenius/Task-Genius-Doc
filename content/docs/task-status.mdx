@@ -8,7 +8,9 @@ Go beyond the standard `- [ ]` (incomplete) and `- [x]` (complete) task markers.
 
 <VersionCallout version="5.0.0" />
 
-## Defining Status Markers
+## Usage
+
+### Defining Status Markers
 
 Task Genius categorizes statuses for progress tracking and specific behaviors. You can define the marker characters for each category in the settings:
 
@@ -20,17 +22,47 @@ Task Genius categorizes statuses for progress tracking and specific behaviors. Y
 
 Separate multiple markers for a single category with a pipe character (`|`), like `x|X`.
 
-### Applying Status Themes
+#### Applying Status Themes
 
 You can quickly apply predefined sets of statuses using themes (e.g., "Standard", "Things3"). Select a theme from the dropdown in the "Task Status Settings" section.
 
 **Note:** Applying a theme will override your current custom marker definitions _and_ your custom status cycle configuration (see below).
 
-### Handling Other Statuses
+#### Handling Other Statuses
 
 If a task uses a marker not defined in the categories above, you can configure how Task Genius should count it using the "Count other statuses as" setting. Options include "not started", "abandoned", "planned", "completed", or "in progress".
 
-## Configuring the Status Cycle
+#### Click Behavior Customization
+
+- **Enable custom task marks:** Replace standard `- [ ]` checkboxes with styled text marks based on your cycle definition.
+- **Enable text mark in source mode:** Allow clicking the text mark in Source Mode to cycle the status.
+- **Enable cycle complete status:** Determine if clicking a marker automatically cycles through all defined states.
+
+### Parent Task Automation
+
+Configure how parent tasks behave based on their subtasks:
+
+- **Auto complete parent task:** Automatically mark a parent task as complete when all its direct subtasks are completed. Useful for [progress bars](/docs/progress-bars).
+- **Mark parent as 'in progress' when partially complete:** If the above is enabled, automatically mark a parent task with your "in progress" marker when _some_ but not all subtasks are complete.
+
+### Task Counting
+
+Control how task progress is calculated:
+
+- **Exclude specific task markers:** Enter markers (separated by `|`) that should _not_ be counted towards progress totals (e.g., `?|-`).
+- **Only count specific task markers:** Enable this toggle and specify markers (separated by `|`) that _should_ be counted. All other markers will be ignored.
+
+Read more about task counting in the [Task Progress](/docs/progress-bars) page.
+
+### Cycling Commands
+
+You can still use commands to cycle statuses:
+
+- **Commands**: Use the Obsidian command palette (`Ctrl/Cmd + P`) and search for:
+  - `Task Genius: Cycle task status forward`
+  - `Task Genius: Cycle task status backward`
+
+## Settings
 
 The "Task Status Switcher" section allows you to define a custom sequence for cycling through statuses when clicking on a task marker or using commands.
 
@@ -43,31 +75,3 @@ The "Task Status Switcher" section allows you to define a custom sequence for cy
   - **Reorder:** Use the up/down arrows to change the cycling sequence.
   - **Remove:** Delete a status from the cycle using the trash icon.
 - **Apply themes:** You can also apply a theme's cycle definition from the dropdown here, which will override your custom cycle.
-
-### Click Behavior Customization
-
-- **Enable custom task marks:** Replace standard `- [ ]` checkboxes with styled text marks based on your cycle definition.
-- **Enable text mark in source mode:** Allow clicking the text mark in Source Mode to cycle the status.
-- **Enable cycle complete status:** Determine if clicking a marker automatically cycles through all defined states.
-
-## Parent Task Automation
-
-Configure how parent tasks behave based on their subtasks:
-
-- **Auto complete parent task:** Automatically mark a parent task as complete when all its direct subtasks are completed. Useful for [progress bars](/docs/progress-bars).
-- **Mark parent as 'in progress' when partially complete:** If the above is enabled, automatically mark a parent task with your "in progress" marker when _some_ but not all subtasks are complete.
-
-## Task Counting
-
-Control how task progress is calculated:
-
-- **Exclude specific task markers:** Enter markers (separated by `|`) that should _not_ be counted towards progress totals (e.g., `?|-`).
-- **Only count specific task markers:** Enable this toggle and specify markers (separated by `|`) that _should_ be counted. All other markers will be ignored.
-
-## Cycling Commands
-
-You can still use commands to cycle statuses:
-
-- **Commands**: Use the Obsidian command palette (`Ctrl/Cmd + P`) and search for:
-  - `Task Genius: Cycle task status forward`
-  - `Task Genius: Cycle task status backward`

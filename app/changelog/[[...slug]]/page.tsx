@@ -3,6 +3,7 @@ import { ChangeLogDetail } from "@/components/ChangeLogDetail";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ReactNode } from "react";
+import { Metadata } from "next";
 
 export function generateStaticParams() {
   return releasesSource.generateParams();
@@ -104,4 +105,27 @@ export default async function Page({
       </section>
     </main>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug?: string[] }>;
+}) {
+  const { slug = [] } = await params;
+  const page = releasesSource.getPage(slug);
+  if (!page) notFound();
+
+  const image = ["/changelog-og", ...slug, "banner.png"].join("/");
+  return {
+    title: page.data.title + " - Task Genius",
+    description: page.data.description,
+    openGraph: {
+      images: image,
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: image,
+    },
+  } satisfies Metadata;
 }

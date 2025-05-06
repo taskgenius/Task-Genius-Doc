@@ -74,3 +74,10 @@ These settings allow you to automatically assign a date to tasks found within yo
 - **Daily Note Path (`Daily Note Path`):** Specify the folder where your daily notes are stored (e.g., `dailies`, `journal/daily`). The indexer uses this to identify which files should have dates extracted from their paths.
 - **Daily Note Date Format (`Daily Note Date Format`):** Define the date format used in your daily note file names (e.g., `yyyy-MM-dd`, `yyyy/MM/dd`, `dd-MM-yyyy`). This should match the structure within the `dailyNotePath`. Uses [date-fns format tokens](https://date-fns.org/v2.30.0/docs/format).
 - **Assign Daily Note Date As (`Assign Daily Note Date As`):** Choose which date field (`due`, `start`, or `scheduled`) the extracted daily note date should be assigned to _if_ the task doesn't already have that specific date field set.
+
+### Focus Or Ignore Tasks Based On Heading
+
+You can focus on specific tasks or ignore tasks based on their headings in your notes.
+
+- **Ignore all tasks behind heading (`Ignore all tasks behind heading`):** Specify headings to ignore tasks under. Tasks that appear below these headings will be excluded from the task index. Enter headings in the format `## Project`, `## Inbox`, etc., separated by commas.
+- **Focus all tasks behind heading (`Focus all tasks behind heading`):** Specify headings to focus on tasks under. When this is set, only tasks that appear below these headings will be included in the task index. Enter headings in the format `## Project`, `## Inbox`, etc., separated by commas.
