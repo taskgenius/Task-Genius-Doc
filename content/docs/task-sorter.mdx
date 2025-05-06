@@ -1,0 +1,47 @@
+---
+title: Sort Tasks
+label: "New"
+---
+
+Automatically sort tasks within a document or specific sections based on customizable criteria. This helps maintain organization and prioritize tasks effectively.
+
+## Usage
+
+Task sorting can be applied either to the entire document or just the tasks under the heading where your cursor is located.
+
+Use the Obsidian command palette (`Ctrl/Cmd + P`) to run one of the available commands:
+
+- **`Task Genius: Sort Tasks in Section`**: Sorts all tasks found under the current heading level (and its sub-headings) based on the configured criteria. Place your cursor within the section you want to sort before running the command.
+- **`Task Genius: Sort Tasks in Entire Document`**: Sorts all tasks throughout the entire active note based on the configured criteria.
+
+**Note:** Sorting modifies the document directly. Ensure you are satisfied with the sort criteria before applying it to large documents.
+
+## Settings
+
+Enable and configure task sorting in the Task Genius settings under the "Task Sorting Settings" section:
+
+1.  **Enable Task Sorting**: You must first toggle this setting on to enable the sorting commands and access the configuration options below.
+2.  **Sort Criteria**: Define the rules for how tasks should be ordered.
+    - Click **"Add Sort Criterion"** to add a new rule.
+    - For each criterion, select:
+      - **Field**: The task attribute to sort by (Status, Priority, Due Date, Start Date, Scheduled Date, or Content/Description).
+      - **Order**: Ascending (`asc`) or Descending (`desc`). The meaning of ascending/descending depends on the field:
+        - **Priority**: `asc` (Highest to Lowest), `desc` (Lowest to Highest).
+        - **Dates**: `asc` (Earliest to Latest), `desc` (Latest to Earliest). Tasks without a date are usually placed last in ascending order.
+        - **Status**: `asc` generally follows a logical progression (e.g., Overdue -> Due -> Undated -> Done), `desc` reverses this.
+        - **Content**: `asc` (A-Z), `desc` (Z-A).
+    - **Order Matters**: Criteria are applied sequentially. Tasks are first sorted by the top criterion, then tasks with the same value for the first criterion are sorted by the second, and so on.
+    - **Manage Criteria**:
+      - Use the **up/down arrows** to reorder criteria.
+      - Click the **trash icon** to remove a criterion.
+      - Click **"Reset to Defaults"** to revert to the plugin's default sorting rules.
+
+**Default Sort Order (Example):**
+
+The default might be something like:
+
+1.  Status (Ascending: Overdue, Due Soon, ..., Done)
+2.  Priority (Ascending: Highest, High, ..., Lowest)
+3.  Due Date (Ascending: Earliest to Latest)
+
+> Please reload the plugin after changing the settings.

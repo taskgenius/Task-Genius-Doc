@@ -4,9 +4,15 @@ import {
   frontmatterSchema,
 } from "fumadocs-mdx/config";
 import { z } from "zod";
+
 // Options: https://fumadocs.vercel.app/docs/mdx/collections#define-docs
 export const docs = defineDocs({
   dir: "content/docs",
+  docs: {
+    schema: frontmatterSchema.extend({
+      label: z.string().optional(),
+    }),
+  },
 });
 
 // Define a new source for releases using the schema

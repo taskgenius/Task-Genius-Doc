@@ -59,3 +59,43 @@
 :root {
   --header-height: 70px;
 }
+
+.task-date::before {
+  display: inline-block;
+  margin-right: 0.4rem;
+  font-size: small;
+  display: inline-flex;
+  transform: translateY(-1px);
+}
+
+.task-date.task-due-date::before {
+  content: "📅";
+}
+
+.task-date.task-start-date::before {
+  content: "🛫";
+}
+
+.task-date.task-created-date::before {
+  content: "➕";
+}
+
+.task-date.task-scheduled-date::before {
+  content: "⏳";
+}
+
+.task-date.task-done-date::before {
+  content: "✅";
+}
+
+.task-date.task-cancelled-date::before {
+  content: "❌";
+}
+
+.task-date.task-recurrence::before {
+  content: "🔁";
+}
+
+.task-date.task-on-completion::before {
+  content: "🏁";
+}

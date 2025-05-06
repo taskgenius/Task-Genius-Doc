@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { docsSource } from "@/lib/source";
 import { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 import { Metadata } from "next";
+import { SidebarItem } from "@/components/ui/sidebar-item";
 
 export const metadata: Metadata = {
   title: "Documentation - Task Genius",
@@ -54,7 +55,15 @@ const baseOptions: BaseLayoutProps = {
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <DocsLayout tree={docsSource.pageTree} {...baseOptions}>
+    <DocsLayout
+      tree={docsSource.pageTree}
+      {...baseOptions}
+      sidebar={{
+        components: {
+          Item: SidebarItem,
+        },
+      }}
+    >
       {children}
     </DocsLayout>
   );
