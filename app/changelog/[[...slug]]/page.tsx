@@ -101,7 +101,12 @@ export default async function Page({
       <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background"></section>
       <section className="border border-fd-border -mb-20 pt-12 px-6 md:px-12 pb-6 relative text-right">
         <div className="prose prose-fd max-w-none">
-          © {new Date().getFullYear()} Boninall(Quorafind)
+          <Link
+            href="https://boninall.com"
+            className="text-fd-muted-foreground hover:text-fd-primary no-underline"
+          >
+            © {new Date().getFullYear()} Boninall(Quorafind)
+          </Link>{" "}
         </div>
       </section>
     </main>

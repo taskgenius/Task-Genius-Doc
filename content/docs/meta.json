@@ -14,6 +14,7 @@
     "---Editor---",
     "progress-bars",
     "task-status",
+    "task-gutter",
     "date-priority",
     "filtering",
     "workflows",

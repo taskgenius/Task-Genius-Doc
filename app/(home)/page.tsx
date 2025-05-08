@@ -168,7 +168,12 @@ export default function HomePage() {
           Copyright
         </div>
         <div className="prose prose-fd max-w-none">
-          © {new Date().getFullYear()} Boninall(Quorafind)
+          <Link
+            href="https://boninall.com"
+            className="text-fd-muted-foreground hover:text-fd-primary no-underline"
+          >
+            © {new Date().getFullYear()} Boninall(Quorafind)
+          </Link>{" "}
         </div>
       </section>
     </main>

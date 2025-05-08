@@ -1,7 +1,7 @@
 import { roadmapSource } from "@/lib/source";
 import type { RoadmapPageType } from "@/lib/source";
 import { RoadmapItemCard } from "@/components/roadmap/roadmap-item-card";
-
+import Link from "next/link";
 // Updated interface to match fumadocs structure (simplified)
 // interface RoadmapPageData {
 //   title: string;
@@ -97,7 +97,12 @@ export default function RoadmapPage() {
       <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background bg-fd-background"></section>
       <section className="border border-fd-border -mb-20 pt-12 px-6 md:px-12 pb-6 relative text-right">
         <div className="prose prose-fd max-w-none">
-          © {new Date().getFullYear()} Boninall(Quorafind)
+          <Link
+            href="https://boninall.com"
+            className="text-fd-muted-foreground hover:text-fd-primary no-underline"
+          >
+            © {new Date().getFullYear()} Boninall(Quorafind)
+          </Link>{" "}
         </div>
       </section>
     </main>
