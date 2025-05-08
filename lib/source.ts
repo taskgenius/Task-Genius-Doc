@@ -3,7 +3,7 @@ import type { InferMetaType, InferPageType } from "fumadocs-core/source";
 import { loader } from "fumadocs-core/source";
 import { icons } from "lucide-react";
 import { createElement } from "react";
-import { docs, releases } from "@/.source";
+import { docs, releases, roadmap } from "@/.source";
 
 // Loader for docs
 export const docsSource = loader({
@@ -30,8 +30,17 @@ export const releasesSource = loader({
   // }
 });
 
+// Loader for roadmap
+export const roadmapSource = loader({
+  baseUrl: "/roadmap", // Base URL for roadmap item pages
+  source: roadmap.toFumadocsSource(),
+});
+
 export type DocsPage = InferPageType<typeof docsSource>;
 export type DocsMeta = InferMetaType<typeof docsSource>;
 
 export type ReleasePage = InferPageType<typeof releasesSource>;
 export type ReleaseMeta = InferMetaType<typeof releasesSource>;
+
+export type RoadmapPageType = InferPageType<typeof roadmapSource>; // Using a more distinct name
+export type RoadmapMeta = InferMetaType<typeof roadmapSource>;

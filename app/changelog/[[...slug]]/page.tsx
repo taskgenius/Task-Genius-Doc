@@ -89,7 +89,7 @@ export default async function Page({
   }
 
   return (
-    <main className="container h-screen flex flex-col md:mx-auto max-w-5xl md:px-4 py-12 md:py-20 ">
+    <main className="container h-screen flex flex-col md:mx-auto max-w-6xl md:px-4 py-12 md:py-20 ">
       <section className="-mt-20 border border-fd-border border-b-0 grid-background-small p-12 px-12 relative"></section>
       <section className="text-left border border-fd-border md:border-b border-b-0 p-6 bg-fd-background backdrop-blur-sm bg-opacity-50">
         {pageTitle}
@@ -121,11 +121,11 @@ export async function generateMetadata({
       title: "Changelog - Task Genius",
       description: "Task Genius changelog and release notes",
       openGraph: {
-        images: "/changelog-og/banner.png",
+        images: "/banner.png",
       },
       twitter: {
         card: "summary_large_image",
-        images: "/changelog-og/banner.png",
+        images: "/banner.png",
       },
     } satisfies Metadata;
   }
@@ -134,7 +134,7 @@ export async function generateMetadata({
   const page = releasesSource.getPage(slug);
   if (!page) return notFound();
 
-  const image = ["/changelog-og", ...slug, "banner.png"].join("/");
+  const image = ["/banner.png"].join("/");
   return {
     title: page.data.title + " - Task Genius",
     description: page.data.description,

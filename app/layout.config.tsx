@@ -1,5 +1,12 @@
 import type { BaseLayoutProps, LinkItemType } from "fumadocs-ui/layouts/shared";
-import { CalendarCheck, Gift, Heart, Layout, Server } from "lucide-react";
+import {
+  CalendarCheck,
+  Gift,
+  Heart,
+  Layout,
+  Route,
+  Server,
+} from "lucide-react";
 import { Book, ComponentIcon, Pencil } from "lucide-react";
 
 export const linkItems: LinkItemType[] = [
@@ -18,6 +25,11 @@ export const linkItems: LinkItemType[] = [
     url: "/changelog",
     text: "Changelog",
     icon: <Book />,
+  },
+  {
+    url: "/roadmap",
+    text: "Roadmap",
+    icon: <Route />,
   },
 ];
 

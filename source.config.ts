@@ -31,6 +31,21 @@ export const releases = defineDocs({
   },
 });
 
+export const roadmap = defineDocs({
+  dir: "content/roadmap",
+  docs: {
+    schema: frontmatterSchema.extend({
+      title: z.string(),
+      description: z.string().optional(),
+      status: z
+        .enum(["working-on", "shipped", "backlog"])
+        .default("backlog")
+        .optional(),
+      docsUrl: z.string().optional(),
+    }),
+  },
+});
+
 export default defineConfig({
   mdxOptions: {
     // MDX options
