@@ -36,6 +36,7 @@ export const roadmap = defineDocs({
   docs: {
     schema: frontmatterSchema.extend({
       title: z.string(),
+      date: z.string().optional(),
       description: z.string().optional(),
       status: z
         .enum(["working-on", "shipped", "backlog"])

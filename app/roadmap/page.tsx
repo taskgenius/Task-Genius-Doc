@@ -21,9 +21,14 @@ export default function RoadmapPage() {
   const workingOnItems = allItems.filter(
     (item) => item.data.status === "working-on"
   );
-  const shippedItems = allItems.filter(
-    (item) => item.data.status === "shipped"
-  );
+  const shippedItems = allItems
+    .filter((item) => item.data.status === "shipped")
+    .sort((a, b) => {
+      if (!a.data.date || !b.data.date) {
+        return 0;
+      }
+      return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+    });
   const backlogItems = allItems.filter(
     (item) => item.data.status === "backlog"
   );
