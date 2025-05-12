@@ -46,7 +46,10 @@ export default function RoadmapPage() {
         </p>
       </section>
       <section className="border border-fd-border border-t-0 p-0 md:p-6 px-12 zimbra-background"></section>
-      <section className="relative flex flex-col md:flex-row md:space-x-6 md:justify-end space-y-2 w-full md:space-y-0 flex-1 [&:not(:last-child)]:border-b border-fd-border bg-fd-background border-x px-4 md:px-8 py-6 pt-12 md:pt-4 md:pl-24">
+      <section
+        id="working-on"
+        className="relative flex flex-col md:flex-row md:space-x-6 md:justify-end space-y-2 w-full md:space-y-0 flex-1 [&:not(:last-child)]:border-b border-fd-border bg-fd-background border-x px-4 md:px-8 py-6 pt-12 md:pt-4 md:pl-24"
+      >
         <div className="border-r border-b border-fd-border text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-2 bg-fd-background backdrop-blur-sm">
           <span className="text-fd-primary font-sans font-bold">01</span>{" "}
           Working On
@@ -64,7 +67,10 @@ export default function RoadmapPage() {
         )}
       </section>
       <section className="border border-fd-border border-t-0 border-b-0 md:border-b p-0 md:p-6 px-12 zimbra-background bg-fd-background"></section>
-      <section className="relative flex flex-col md:flex-row md:space-x-6 md:justify-end space-y-2 w-full md:space-y-0 flex-1 [&:not(:last-child)]:border-b border-fd-border  bg-fd-background border-x px-4 md:px-8 py-6 pt-12 md:pt-4 md:pl-24">
+      <section
+        id="backlog"
+        className="relative flex flex-col md:flex-row md:space-x-6 md:justify-end space-y-2 w-full md:space-y-0 flex-1 [&:not(:last-child)]:border-b border-fd-border  bg-fd-background border-x px-4 md:px-8 py-6 pt-12 md:pt-4 md:pl-24"
+      >
         <div className="border-r border-b border-fd-border text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-2 bg-fd-background backdrop-blur-sm">
           <span className="text-fd-primary font-sans font-bold">02</span>{" "}
           Backlog
@@ -80,7 +86,10 @@ export default function RoadmapPage() {
         )}
       </section>
       <section className="border border-fd-border border-t-0 border-b-0 md:border-b p-0 md:p-6 px-12 zimbra-background bg-fd-background"></section>
-      <section className="relative flex flex-col md:flex-row md:space-x-6 md:justify-end space-y-2 w-full md:space-y-0 flex-1 md:[&:not(:last-child)]:border-b border-fd-border  bg-fd-background border-x px-4 md:px-8 py-6 pt-12 md:pt-4 md:pl-24">
+      <section
+        id="shipped"
+        className="relative flex flex-col md:flex-row md:space-x-6 md:justify-end space-y-2 w-full md:space-y-0 flex-1 md:[&:not(:last-child)]:border-b border-fd-border  bg-fd-background border-x px-4 md:px-8 py-6 pt-12 md:pt-4 md:pl-24"
+      >
         <div className="border-r border-b border-fd-border text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-2 bg-fd-background backdrop-blur-sm">
           <span className="text-fd-primary font-sans font-bold">03</span>{" "}
           Shipped
