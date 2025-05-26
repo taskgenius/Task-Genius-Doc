@@ -1,0 +1,55 @@
+---
+title: "Desktop v8.7.0"
+date: "2025-05-26"
+version: "8.7.0"
+platform: "desktop"
+access: "public"
+---
+
+## Shinny New Things
+
+### Popover Filter System
+
+Introducing the new **Popover Filter** - an advanced filtering system that provides a comprehensive interface for creating complex filter conditions with multiple groups and logical operators.
+
+- **Multiple Filter Groups**: Create sophisticated filter configurations with different logical operators (AND, OR, NOT)
+- **Individual Filters**: Add various conditions within each group
+- **Drag & Drop**: Reorder filter groups with intuitive drag-and-drop interface
+- **Real-time Updates**: Filter changes are applied with debounced updates for optimal performance
+- **Save & Load**: Save filter configurations and load them later
+- **Comprehensive Properties**: Filter by content, status, priority, dates, tags, file path, and completion status
+- **Flexible Conditions**: Support for various condition types including contains, is, starts with, date comparisons, and more
+
+## Features
+
+### Enhanced Kanban View
+
+- **Clickable Tags & Projects**: Click on tags, projects, or priority in cards to directly apply filters
+- **Auto-collapse Empty Columns**: Empty columns automatically collapse for better space utilization
+- **Column Sorting**: Sort columns by priority, schedule, or due date
+- **Custom Columns**: Add new columns based on due date and tags
+- **Colored Tags Support**: Visual enhancement with colored tags plugin compatibility
+- **Parent Tags Filtering**: Support for nested tags filtering with includes field
+
+### Event View Improvements
+
+- **Today Highlighting**: Current day is now highlighted in the Event view for better navigation
+
+## Fixes
+
+- **Project Tags**: Fixed duplicate project tag issues
+- **Task Gutter**: Fixed task duplication and date changing issues when using task gutter feature [#207](https://github.com/Quorafind/Obsidian-Task-Genius/issues/207)
+- **Custom Status Menu**: Resolved duplicate entries in custom status context menu [#205](https://github.com/Quorafind/Obsidian-Task-Genius/issues/205)
+- **Custom View**: Fixed dual-column view options becoming ineffective when creating custom views [#210](https://github.com/Quorafind/Obsidian-Task-Genius/issues/210)
+- **Filter Rules**: Fixed "has recurrence" filter rule configuration issue [#202](https://github.com/Quorafind/Obsidian-Task-Genius/issues/202)
+- **Tree View**: Fixed "hide completed and abandoned tasks" not working in tree view [#201](https://github.com/Quorafind/Obsidian-Task-Genius/issues/201)
+- **Multiple Priority Filter**: Added support for multiple priority filtering in views [#192](https://github.com/Quorafind/Obsidian-Task-Genius/issues/192)
+- **Workspace Switching**: Fixed task index rebuilding requirement when switching workspaces [#185](https://github.com/Quorafind/Obsidian-Task-Genius/issues/185)
+- **Mobile Scrolling**: Fixed scrolling issues in Kanban view on mobile devices [#120](https://github.com/Quorafind/Obsidian-Task-Genius/issues/120)
+- **Alphabetical Sorting**: Implemented default alphabetical sorting [#141](https://github.com/Quorafind/Obsidian-Task-Genius/issues/141)
+
+## Improvements
+
+- **Search Filters**: Enhanced search filtering capabilities in Task Genius view [#110](https://github.com/Quorafind/Obsidian-Task-Genius/issues/110)
+- **Performance**: Optimized task indexing and filtering performance
+- **User Experience**: Improved overall interface responsiveness and usability

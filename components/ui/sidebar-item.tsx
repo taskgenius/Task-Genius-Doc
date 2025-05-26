@@ -6,6 +6,8 @@ import { SidebarItem as InternalSidebarItem } from "fumadocs-ui/components/layou
 const Tags: Record<string, string> = {
   "/docs/task-gutter": "New",
   "/docs/task-view/filter/popover-filter": "New",
+  "/docs/task-view/status-view": "Updated",
+  "/docs/task-mover": "Updated",
 };
 
 export const SidebarItem = ({ item }: { item: PageTree.Item }) => {
