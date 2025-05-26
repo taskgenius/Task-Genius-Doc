@@ -1,0 +1,126 @@
+---
+title: Popover Filter
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import {
+  Edit3Icon,
+  PlusIcon,
+  CopyIcon,
+  Trash2Icon,
+  GripVerticalIcon,
+} from "lucide-react";
+
+The Popover Filter is an advanced filtering system that provides a comprehensive interface for creating complex filter conditions with multiple groups and logical operators.
+
+<VersionCallout version="8.7.0" />
+
+## Overview
+
+The Popover Filter allows you to create sophisticated filter configurations using:
+
+- Multiple filter groups with different logical operators (AND, OR, NOT)
+- Individual filters within each group with various conditions
+- Drag-and-drop reordering of filter groups
+- Real-time filter application with debounced updates
+
+## Features
+
+### Filter Groups
+
+- **Root Condition**: Choose how filter groups are combined (Any, All, None)
+- **Group Condition**: Set how filters within each group are combined (All, Any, None)
+- **Drag & Drop**: Reorder filter groups using the <GripVerticalIcon className="inline-block w-5 h-5" /> handle
+- **Duplicate Groups**: Copy entire filter groups with the <CopyIcon className="inline-block w-5 h-5" /> button
+- **Remove Groups**: Delete filter groups with the <Trash2Icon className="inline-block w-5 h-5" /> button
+
+### Filter Properties
+
+The system supports filtering by various task properties:
+
+- **Content**: Filter by task text content
+- **Status**: Filter by task status
+- **Priority**: Filter by task priority level
+- **Due Date**: Filter by task due dates
+- **Start Date**: Filter by task start dates
+- **Scheduled Date**: Filter by scheduled dates
+- **Tags**: Filter by task tags
+- **File Path**: Filter by the file containing the task
+- **Completed**: Filter by completion status
+
+### Filter Conditions
+
+Different properties support different condition types:
+
+#### Text Properties (Content, File Path, Status)
+
+- Contains / Does not contain
+- Is / Is not
+- Starts with / Ends with
+- Is empty / Is not empty
+
+#### Date Properties (Due Date, Start Date, Scheduled Date)
+
+- Is / Is not
+- Greater than (&gt;) / Less than (&lt;)
+- Greater than or equal (&gt;=) / Less than or equal (&lt;=)
+- Is empty / Is not empty
+
+#### Priority Property
+
+- Is / Is not
+- Is empty / Is not empty
+
+#### Tags Property
+
+- Contains / Does not contain
+- Is empty / Is not empty
+
+#### Completed Property
+
+- Is true / Is false
+
+## Usage
+
+### Creating Filter Groups
+
+1. Click the <PlusIcon className="inline-block w-5 h-5" /> **Add filter group** button to create a new filter group
+2. Choose the group condition (All, Any, None) to determine how filters within the group are combined
+3. Add individual filters to the group using the <PlusIcon className="inline-block w-5 h-5" /> **Add filter** button
+
+### Configuring Individual Filters
+
+1. **Select Property**: Choose what aspect of the task to filter by
+2. **Select Condition**: Choose the comparison operator
+3. **Enter Value**: Provide the value to compare against (if required)
+4. **Remove Filter**: Use the <Trash2Icon className="inline-block w-5 h-5" /> button to delete unwanted filters
+
+### Managing Filter Groups
+
+- **Reorder**: Drag filter groups using the <GripVerticalIcon className="inline-block w-5 h-5" /> handle
+- **Duplicate**: Click the <CopyIcon className="inline-block w-5 h-5" /> button to copy a filter group
+- **Remove**: Click the <Trash2Icon className="inline-block w-5 h-5" /> button to delete a filter group
+
+### Root Condition Settings
+
+At the top level, choose how multiple filter groups are combined:
+
+- **Any**: Tasks matching any filter group will be shown
+- **All**: Tasks must match all filter groups to be shown
+- **None**: Tasks matching any filter group will be hidden
+
+## Real-time Updates
+
+The Popover Filter system provides real-time filtering with:
+
+- **Automatic Saving**: Filter configurations are automatically saved to local storage
+- **Debounced Updates**: Filter changes are applied with a slight delay to prevent excessive updates
+- **Event Broadcasting**: Filter changes trigger events that other components can listen to
+
+## Data Persistence
+
+Filter configurations are automatically saved and restored:
+
+- Settings persist across application sessions
+- Invalid configurations are automatically reset to defaults
+- Filter state can be programmatically loaded and retrieved

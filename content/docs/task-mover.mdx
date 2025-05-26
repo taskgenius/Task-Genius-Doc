@@ -12,6 +12,8 @@ Place your cursor on the parent task line whose sub-tasks you want to move. Then
 - **`Task Genius: Move direct completed subtasks to other file`**: Moves only the _direct_ children marked as complete, ignoring nested completed tasks.
 - **`Task Genius: Move all subtasks to other file`**: Moves _all_ sub-tasks (regardless of status) under the current parent task.
 - **`Task Genius: Move task to other file`**: Moves the task line the cursor is currently on (could be a parent or a sub-task).
+- **`Task Genius: Move direct incomplete subtasks to other file`**: Moves only the _direct_ children marked as incomplete, ignoring nested incomplete tasks.
+- **`Task Genius: Move all incomplete subtasks to other file`**: Moves _all_ sub-tasks (regardless of status) under the current parent task.
 
 ## Settings
 
@@ -22,3 +24,5 @@ In the Task Genius settings (in the "Task Mover" section), you can configure:
   - Timestamping: Automatically add the date/time of archival (e.g., using `{{DATE:YYYY-MM-DD}}`).
   - Link Back: Optionally add a link back to the original source note.
 - **Behavior**: Choose whether to append to the destination file, prepend, or replace specific sections.
+
+- **Enable incomplete subtask mover**: If enabled, the "Move all incomplete subtasks to other file" command will be available.

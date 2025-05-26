@@ -4,9 +4,8 @@ import type { PageTree } from "fumadocs-core/server";
 import { SidebarItem as InternalSidebarItem } from "fumadocs-ui/components/layout/sidebar";
 
 const Tags: Record<string, string> = {
-  "/docs/progress-bars": "Updated",
-  "/docs/commands": "Updated",
   "/docs/task-gutter": "New",
+  "/docs/task-view/filter/popover-filter": "New",
 };
 
 export const SidebarItem = ({ item }: { item: PageTree.Item }) => {
