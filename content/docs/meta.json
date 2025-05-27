@@ -21,6 +21,7 @@
     "date-priority",
     "filtering",
     "workflows",
+    "append-date",
     "---File---",
     "task-mover",
     "task-sorter",
