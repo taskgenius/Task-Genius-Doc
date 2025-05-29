@@ -1,0 +1,121 @@
+---
+title: Table View
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+
+The Table View provides a comprehensive tabular interface for viewing, editing, and managing your tasks in Task Genius. It offers powerful features like sorting, filtering, inline editing, and both flat and hierarchical tree views.
+
+<VersionCallout version="8.9.0" />
+
+## Open the Table View
+
+1. Open the [Task Genius View](/docs/task-view).
+2. Select the `Table` nav item in the left sidebar.
+3. The Table View will load, displaying your tasks in a structured table format.
+
+## Usage
+
+The Table View presents your tasks in a spreadsheet-like interface with powerful data management capabilities.
+
+The view consists of:
+
+1. **Table Header Bar:** Contains controls for view mode toggle (flat/tree), and column visibility settings.
+2. **Table Headers:** Column headers that support sorting (click to sort) and resizing (drag column borders).
+3. **Table Body:** The main area displaying task data in rows and columns.
+4. **Selection Controls:** Support for single and multi-row selection using click and Ctrl/Cmd+click.
+
+### Available Columns
+
+The table supports various column types that can be shown or hidden:
+
+- **Status:** Task completion status with visual indicators
+- **Content:** Task description and details
+- **Priority:** Task priority level (High, Medium, Low)
+- **Due Date:** When the task is due
+- **Start Date:** When the task should start
+- **Scheduled Date:** When the task is scheduled
+- **Created Date:** When the task was created
+- **Completed Date:** When the task was completed
+- **Tags:** Associated task tags
+- **Project:** Project assignment
+- **Context:** Task context
+- **Recurrence:** Recurring task settings
+- **Estimated Time:** Time estimated to complete
+- **Actual Time:** Time actually spent
+- **File:** Source file location
+
+### View Modes
+
+#### Flat View
+
+Displays all tasks in a simple list format with each task on its own row.
+
+#### Tree View
+
+Organizes tasks hierarchically, showing parent-child relationships and allowing you to expand/collapse task groups.
+
+### Sorting and Filtering
+
+- **Click column headers** to sort by that column
+- **Click again** to reverse sort order
+- **Visual sort indicators** show current sort field and direction
+- Tasks are automatically filtered and sorted based on your current criteria
+
+### Inline Editing
+
+When inline editing is enabled:
+
+- **Double-click any cell** to start editing
+- **Press Enter** to save changes
+- **Press Escape** to cancel editing
+- **Date fields** show date pickers for easy selection
+- **Status fields** provide dropdown selection
+- **Tag fields** support comma-separated values
+
+### Row Selection
+
+- **Single-click** to select a row
+- **Ctrl/Cmd+click** for multi-selection
+- **Right-click** for context menu options
+- Selected tasks can be bulk-operated upon
+
+### Virtual Scrolling
+
+For large task lists, the table uses virtual scrolling to maintain performance by only rendering visible rows.
+
+### Column Management
+
+Use the column visibility controls in the header bar to:
+
+- **Show/hide columns** based on your needs
+- **Resize columns** by dragging column borders
+- **Reorder columns** (if supported)
+- Settings are automatically saved
+
+### Keyboard Shortcuts
+
+- **Escape:** Cancel current cell editing
+- **Arrow keys:** Navigate between cells (when editing)
+- **Enter:** Confirm cell editing
+
+### Export Data
+
+The table view supports exporting your current view data for use in external applications.
+
+## Configuration
+
+To configure the Table View behavior and appearance:
+
+1. Open Task Genius settings
+2. Navigate to the **View Configuration** section
+3. Find the **Table View** settings
+4. Configure options such as:
+   - Default visible columns
+   - Column widths
+   - Sorting preferences
+   - Enable/disable features like inline editing, tree view, row selection
+   - Virtual scrolling settings
+   - Row numbering
+
+The Table View will automatically save your column visibility preferences and restore them when you return to the view.
