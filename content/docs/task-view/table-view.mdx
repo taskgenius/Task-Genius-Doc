@@ -3,6 +3,7 @@ title: Table View
 ---
 
 import { VersionCallout } from "@/components/VersionCallout";
+import { ListIcon, GitBranchIcon, ArrowUpDownIcon } from "lucide-react";
 
 The Table View provides a comprehensive tabular interface for viewing, editing, and managing your tasks in Task Genius. It offers powerful features like sorting, filtering, inline editing, and both flat and hierarchical tree views.
 
@@ -49,17 +50,16 @@ The table supports various column types that can be shown or hidden:
 
 #### Flat View
 
-Displays all tasks in a simple list format with each task on its own row.
+Displays all tasks in a simple list format with each task on its own row. You can click on <ListIcon className="inline-block w-5 h-5" /> button to toggle the view mode.
 
 #### Tree View
 
-Organizes tasks hierarchically, showing parent-child relationships and allowing you to expand/collapse task groups.
+Organizes tasks hierarchically, showing parent-child relationships and allowing you to expand/collapse task groups. You can click on <GitBranchIcon className="inline-block w-5 h-5" /> button to toggle the view mode.
 
 ### Sorting and Filtering
 
-- **Click column headers** to sort by that column
-- **Click again** to reverse sort order
-- **Visual sort indicators** show current sort field and direction
+- **Click column headers** or <ArrowUpDownIcon className="inline-block w-5 h-5" /> button to sort by that column. You can click again to reverse sort order.
+- **Visual sort indicators** show current sort field and direction.
 - Tasks are automatically filtered and sorted based on your current criteria
 
 ### Inline Editing
@@ -70,6 +70,7 @@ When inline editing is enabled:
 - **Press Enter** to save changes
 - **Press Escape** to cancel editing
 - **Date fields** show date pickers for easy selection
+- **Priority fields** provide dropdown selection
 - **Status fields** provide dropdown selection
 - **Tag fields** support comma-separated values
 
@@ -78,7 +79,6 @@ When inline editing is enabled:
 - **Single-click** to select a row
 - **Ctrl/Cmd+click** for multi-selection
 - **Right-click** for context menu options
-- Selected tasks can be bulk-operated upon
 
 ### Virtual Scrolling
 
@@ -90,32 +90,16 @@ Use the column visibility controls in the header bar to:
 
 - **Show/hide columns** based on your needs
 - **Resize columns** by dragging column borders
-- **Reorder columns** (if supported)
 - Settings are automatically saved
 
 ### Keyboard Shortcuts
 
 - **Escape:** Cancel current cell editing
+- **Tab:** Move to next cell
+- **Shift+Tab:** Move to previous cell
 - **Arrow keys:** Navigate between cells (when editing)
 - **Enter:** Confirm cell editing
 
-### Export Data
+## Settings
 
-The table view supports exporting your current view data for use in external applications.
-
-## Configuration
-
-To configure the Table View behavior and appearance:
-
-1. Open Task Genius settings
-2. Navigate to the **View Configuration** section
-3. Find the **Table View** settings
-4. Configure options such as:
-   - Default visible columns
-   - Column widths
-   - Sorting preferences
-   - Enable/disable features like inline editing, tree view, row selection
-   - Virtual scrolling settings
-   - Row numbering
-
-The Table View will automatically save your column visibility preferences and restore them when you return to the view.
+You can read more about the settings in the [Basic view settings](/docs/task-view/basic-view-settings#basic-settings) page.
