@@ -42,7 +42,7 @@ export function ChangeLogDetail({ page }: ChangeLogDetailProps) {
 
   return (
     <>
-      <div className="grow">
+      <div className="md:grow">
         <div className="md:sticky md:top-[var(--header-height)] pb-2">
           <div className="font-semibold text-2xl sm:text-xl">
             <FormattedDate dateString={frontmatter.date} />
