@@ -1,0 +1,66 @@
+---
+title: "Inline Editor"
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+
+The Inline Editor is a powerful component that enables direct editing of task content and metadata within the task view. It provides seamless in-place editing capabilities without requiring separate sidebar or dialogs.
+
+<VersionCallout version="8.9.0" />
+
+## Overview
+
+The Inline Editor component allows users to edit task properties directly within the task list view. It supports both content editing and metadata field editing with intelligent auto-completion.
+
+## Features
+
+### Content Editing
+
+The editor supports two modes for editing task content (Currently, Task Genius is not support Textarea editor mode):
+
+- **Embedded Markdown Editor**: Full-featured markdown editor with syntax highlighting and live preview.
+- ~~**Textarea Editor**: Lightweight text input with auto-resize functionality~~
+
+### Metadata Editing
+
+Supports editing of all task metadata fields:
+
+- **Project**: Project assignment with autocomplete
+- **Tags**: Tag management with comma-separated input and autocomplete
+- **Context**: Context assignment with autocomplete
+- **Dates**: Due date, start date, and scheduled date with date picker
+- **Priority**: Priority levels (1-5) with dropdown selection
+- **Recurrence**: Recurrence rules with text input
+
+Using `Enter` to save and exit the editor.
+
+## Keyboard Shortcuts
+
+| Shortcut | Action                                                                             |
+| -------- | ---------------------------------------------------------------------------------- |
+| `Enter`  | Save and exit (content: embedded editor handles this, metadata: saves immediately) |
+| `Escape` | Cancel editing and revert changes                                                  |
+
+## Event Handling
+
+### Content Events
+
+- **Blur**: Automatically saves and exits content editing
+- **Keydown**: Handles Enter/Escape key combinations
+
+### Metadata Events
+
+- **Blur**: Saves and exits metadata editing
+- **Change**: Immediate save for select elements (priority)
+
+## Auto-completion
+
+The editor provides intelligent auto-completion for:
+
+- **Projects**: Suggests existing project names from the vault
+- **Tags**: Suggests existing tags with # prefix support
+- **Contexts**: Suggests existing context values
+
+## Settings
+
+You can configure the inline editor in the Task Genius settings.
