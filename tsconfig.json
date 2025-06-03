@@ -31,6 +31,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "content/docs/task-sorter.mdx"
-  ],
+, "content/roadmap/inline-editor.mdx"  ],
   "exclude": ["node_modules"]
 }
