@@ -1,8 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRightIcon, CheckCircleIcon, Github } from "lucide-react";
+import {
+  ArrowRightIcon,
+  CheckCircleIcon,
+  Github,
+  Mail,
+  MessageCircle,
+} from "lucide-react";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import LatestVersion from "@/components/LatestVersion";
+import AnimatedFeatureList from "@/components/AnimatedFeatureList";
 
 export default function HomePage() {
   return (
@@ -48,8 +55,8 @@ export default function HomePage() {
           <span className="text-fd-primary font-sans font-bold">01</span>{" "}
           Features
         </div>
-        <ul className="grid grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2">
-          {[
+        <AnimatedFeatureList
+          features={[
             "Visual Task Progress Bars",
             "Advanced Task Statuses & Cycling",
             "Date & Priority Management",
@@ -60,13 +67,8 @@ export default function HomePage() {
             "Dedicated Cross-Vault Task View",
             "Extensive Customization Options",
             "Rewards for Completing Tasks",
-          ].map((feature) => (
-            <li key={feature} className="flex items-center text-sm md:pl-20">
-              <CheckCircleIcon className="mr-2 size-5 flex-shrink-0 text-fd-primary" />
-              <span className="text-fd-foreground">{feature}</span>
-            </li>
-          ))}
-        </ul>
+          ]}
+        />
       </section>
       <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background"></section>
       <section className="border border-fd-border border-b-0 md:border-b pt-8 px-6 md:px-12 pb-6 relative">
@@ -153,18 +155,52 @@ export default function HomePage() {
         <div className="prose prose-fd max-w-none">
           If you like the plugin, please consider leaving a review on the{" "}
           <Link
-            href="https://github.com/Quorafind/Obsidian-Task-Genius/discussions"
+            href="https://github.com/Quorafind/Obsidian-Task-Genius/issues"
             className="text-fd-primary hover:underline"
           >
-            GitHub discussions page
+            GitHub issues
           </Link>
           .
         </div>
       </section>
       <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background"></section>
-      <section className="border border-fd-border -mb-20 pt-12 px-6 md:px-12 pb-6 relative text-right">
+      <section className="border border-fd-border border-b-0 md:border-b pt-12 px-6 md:px-12 pb-6 relative">
         <div className="border-r border-b border-fd-border text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-2 bg-fd-background backdrop-blur-sm">
           <span className="text-fd-primary font-sans font-bold">04</span>{" "}
+          Community
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:max-w-xl mx-auto">
+          <Link
+            href="https://discord.gg/fWrbxUbD"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center p-4 border border-fd-border hover:bg-fd-muted/50 transition-colors group"
+          >
+            <MessageCircle className="mr-3 size-5 text-fd-primary group-hover:scale-110 transition-transform" />
+            <div className="text-left">
+              <div className="font-medium text-fd-foreground">Discord</div>
+            </div>
+          </Link>
+
+          <Link
+            href="https://github.com/Quorafind/Obsidian-Task-Genius/discussions"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center p-4 border border-fd-border hover:bg-fd-muted/50 transition-colors group"
+          >
+            <Github className="mr-3 size-5 text-fd-primary group-hover:scale-110 transition-transform" />
+            <div className="text-left">
+              <div className="font-medium text-fd-foreground">
+                GitHub Discussions
+              </div>
+            </div>
+          </Link>
+        </div>
+      </section>
+      <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background"></section>
+      <section className="border border-fd-border -mb-20 pt-12 px-6 md:px-12 pb-6 relative text-right">
+        <div className="border-r border-b border-fd-border text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-2 bg-fd-background backdrop-blur-sm">
+          <span className="text-fd-primary font-sans font-bold">05</span>{" "}
           Copyright
         </div>
         <div className="prose prose-fd max-w-none">
