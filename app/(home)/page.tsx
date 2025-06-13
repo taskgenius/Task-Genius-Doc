@@ -48,15 +48,15 @@ export default function HomePage() {
         />
       </section>
 
-      <section className="absolute inset-0 -z-10 border border-fd-border grid-background  max-h-1/2 top-1/3 border-b md:block hidden"></section>
+      <section className="absolute inset-0 -z-10 border-t border-b border-fd-border grid-background  max-h-1/2 top-1/3 border-b md:block hidden"></section>
       <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background"></section>
       <section className="border border-fd-border border-b-0 md:border-b pt-12 pb-12 px-6 md:px-12 relative">
         <div className="border-r border-b border-fd-border text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-2 bg-fd-background backdrop-blur-sm">
           <span className="text-fd-primary font-sans font-bold">01</span>{" "}
           Features
         </div>
-        <AnimatedFeatureList
-          features={[
+        <ul className="grid grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2">
+          {[
             "Visual Task Progress Bars",
             "Advanced Task Statuses & Cycling",
             "Date & Priority Management",
@@ -67,8 +67,13 @@ export default function HomePage() {
             "Dedicated Cross-Vault Task View",
             "Extensive Customization Options",
             "Rewards for Completing Tasks",
-          ]}
-        />
+          ].map((feature) => (
+            <li key={feature} className="flex items-center text-sm md:pl-20">
+              <CheckCircleIcon className="mr-2 size-5 flex-shrink-0 text-fd-primary" />
+              <span className="text-fd-foreground">{feature}</span>
+            </li>
+          ))}
+        </ul>
       </section>
       <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background"></section>
       <section className="border border-fd-border border-b-0 md:border-b pt-8 px-6 md:px-12 pb-6 relative">
