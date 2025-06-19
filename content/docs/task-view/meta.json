@@ -18,6 +18,9 @@
     "event-view",
     "status-view",
     "plan-view",
-    "habit-view"
+    "habit-view",
+    "matrix-view",
+    "table-view",
+    "timeline-sidebar-view"
   ]
 }

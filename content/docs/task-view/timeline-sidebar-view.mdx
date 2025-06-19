@@ -1,0 +1,178 @@
+---
+title: Timeline Sidebar View
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import {
+  Calendar,
+  CalendarClock,
+  RefreshCw,
+  Focus,
+  ExternalLink,
+  Clock,
+  CheckSquare,
+  Plus,
+  MoreHorizontal,
+} from "lucide-react";
+
+The Timeline Sidebar View provides a chronological timeline interface for viewing and managing your tasks based on their dates. It displays tasks in a time-ordered format, making it easy to see what's happening when and track your schedule at a glance.
+
+<VersionCallout version="9.0.0" />
+
+## Open the Timeline Sidebar View
+
+The Timeline Sidebar View can be opened as a dedicated sidebar panel:
+
+1. Use the command palette (`Ctrl/Cmd + P`) and search for "Timeline"
+2. Or use the ribbon icon <CalendarClock className="inline-block w-5 h-5" /> if available
+3. The timeline will appear as a sidebar panel showing your tasks chronologically
+
+## Usage
+
+The Timeline Sidebar View presents your tasks in a chronological timeline format with the following components:
+
+### Timeline Display
+
+- **Date Groups:** Tasks are grouped by date (Today, Yesterday, Tomorrow, or specific dates)
+- **Chronological Order:** Events are sorted by time, with the most recent events first
+- **Time Stamps:** Each event shows the specific time when it's scheduled or due
+- **Visual Indicators:** Today's events are highlighted with special styling
+
+### Event Types
+
+The timeline displays various task-related events:
+
+- **Due Date Events:** <Clock className="inline-block w-5 h-5" /> Tasks with due dates
+- **Scheduled Events:** Tasks with scheduled dates
+- **Start Date Events:** Tasks with start dates  
+- **Completion Events:** Tasks with completion dates (if enabled in settings)
+
+### Header Controls
+
+The timeline header provides several navigation and control options:
+
+#### Navigation Controls
+- **Today Button:** <Calendar className="inline-block w-5 h-5" /> Quickly scroll to today's events
+- **Refresh Button:** <RefreshCw className="inline-block w-5 h-5" /> Manually refresh the timeline data
+- **Focus Mode:** <Focus className="inline-block w-5 h-5" /> Toggle focus mode to show only today's events
+
+### Task Interactions
+
+#### Task Management
+- **Task Checkboxes:** <CheckSquare className="inline-block w-5 h-5" /> Click to mark tasks as complete/incomplete
+- **Task Navigation:** Click on any task to navigate to its location in your vault
+- **Go to Task:** <ExternalLink className="inline-block w-5 h-5" /> Use the action button to jump to the task's file
+
+#### Visual States
+- **Completed Tasks:** Visually distinguished with different styling
+- **Today's Events:** Highlighted with special "is-today" styling
+- **Task Status:** Shows current task status and allows status changes
+
+### Quick Capture
+
+The timeline includes a built-in quick capture feature at the bottom:
+
+#### Quick Input Area
+- **Markdown Editor:** Built-in editor with markdown support
+- **Placeholder Text:** "What do you want to do today?"
+- **Target Information:** Shows where captured tasks will be saved
+
+#### Capture Actions
+- **Quick Capture:** <Plus className="inline-block w-5 h-5" /> Save the task using current quick capture settings
+- **More Options:** <MoreHorizontal className="inline-block w-5 h-5" /> Open the full Quick Capture modal with advanced options
+
+#### Keyboard Shortcuts
+- **Ctrl/Cmd + Enter:** Submit the quick capture
+- **Escape:** Clear the input field
+- **Auto-focus:** Input field automatically receives focus after capture
+
+### Date Grouping
+
+Tasks are intelligently grouped by date with relative time indicators:
+
+- **Today:** Current day's events with "Today" label
+- **Yesterday/Tomorrow:** Recent days with relative labels  
+- **Specific Dates:** Other dates shown in "MMM DD, YYYY" format
+- **Relative Time:** Shows "X days ago" or "in X days" for context
+
+## Features
+
+### Smart Filtering
+
+The timeline automatically filters content based on settings:
+
+- **Completed Tasks:** Option to show/hide completed tasks
+- **Date-based Display:** Only shows tasks with relevant date information
+
+### Auto-scrolling
+
+- **Today Focus:** Automatically scrolls to today's events when opened
+- **Smooth Scrolling:** Animated scrolling for better user experience
+- **Scroll Memory:** Maintains scroll position during updates
+
+## Configuration
+
+### Timeline Settings
+
+The timeline behavior can be configured through plugin settings:
+
+- **Show Completed Tasks:** Choose whether to display completed tasks in the timeline
+- **Date Range:** Configure how far back/forward to show events
+- **Auto-scroll:** Enable/disable automatic scrolling to today
+
+### Quick Capture Settings
+
+The integrated quick capture uses the global quick capture settings:
+
+- **Target Type:** Daily notes or specific file
+- **Target File:** Specific file for capturing tasks
+- **Target Heading:** Specific heading within the target file
+- **Daily Note Settings:** Format and folder for daily notes
+
+### Display Options
+
+- **Time Format:** 24-hour or 12-hour time display
+- **Date Format:** Customize date display format
+- **Relative Time:** Show relative time indicators
+- **Visual Themes:** Timeline appearance customization
+
+## Best Practices
+
+1. **Regular Review:** Use the timeline for daily and weekly planning reviews
+2. **Quick Capture:** Leverage the integrated quick capture for rapid task entry
+3. **Date Management:** Set appropriate due dates and scheduled dates for better timeline visibility
+4. **Today Focus:** Use the "Today" button to quickly focus on current priorities
+5. **Status Updates:** Update task status directly from the timeline for efficiency
+
+## Keyboard Shortcuts
+
+- **Ctrl/Cmd + Enter:** Submit quick capture input
+- **Escape:** Clear quick capture input
+- **Click:** Navigate to task location
+- **Checkbox Click:** Toggle task completion status
+
+## Integration
+
+### File Types Supported
+
+- **Markdown Files:** Full support with proper line navigation
+- **Canvas Files:** Direct opening of canvas files
+- **Mixed Content:** Handles both markdown and canvas task sources
+
+### External Integrations
+
+- **ICS Calendar:** Filters ICS badge events appropriately
+- **Daily Notes:** Seamless integration with daily note workflows
+- **Task Manager:** Real-time synchronization with the task management system
+
+## Settings
+
+You can read more about view settings on the [Basic view settings](/docs/task-view/basic-view-settings#basic-settings) page.
+
+### Specific Settings
+
+- **Enable Timeline Sidebar:** Control whether the timeline sidebar feature is enabled
+- **Auto Open on Startup:** Automatically open the timeline sidebar when the plugin starts
+- **Show Completed Tasks:** Control visibility of completed tasks in the timeline
+- **Focus Mode by Default:** Start the timeline in focus mode (showing only today's events)
+- **Max Events to Show:** Limit the maximum number of events displayed in the timeline
