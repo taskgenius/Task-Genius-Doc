@@ -176,7 +176,7 @@ export default function HomePage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:max-w-xl mx-auto">
           <Link
-            href="https://discord.gg/fWrbxUbD"
+            href="https://discord.gg/ARR2rHHX6b"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center p-4 border border-fd-border hover:bg-fd-muted/50 transition-colors group"
