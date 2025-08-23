@@ -1,0 +1,22 @@
+---
+title: "Compatibility"
+---
+
+## Tasks Plugin
+
+When using Task Genius alongside the popular Tasks plugin, be aware of potential conflicts, particularly with the **status cycle** feature.
+
+Task Genius offers highly customizable task status markers and cycling behaviors (as detailed in [Task Status & Cycling](/docs/task-status)). The Tasks plugin also has its own system for managing and cycling through task statuses.
+
+If both plugins attempt to manage or cycle task statuses, you may experience:
+- Unpredictable status changes when clicking on a task.
+- Conflicts in how different status markers are interpreted or displayed.
+- Issues with commands related to task status cycling from either plugin.
+
+**Recommendation:**
+
+To avoid conflicts, it is generally recommended to **choose one plugin** to handle task status cycling and configure the other plugin to not interfere.
+- If you prefer Task Genius's status cycling, ensure that similar cycling features in the Tasks plugin are disabled or configured not to overlap with Task Genius's markers.
+- If you prefer the Tasks plugin's cycling, you might need to simplify or disable custom cycling in Task Genius to prevent clashes, potentially by not using the "Enable task status switcher" setting or by ensuring the defined cycles(You can disable all cycles in Task Genius) do not conflict with Tasks plugin's expected markers.
+
+Carefully review the settings for both Task Genius's "Task Status Switcher" and the Tasks plugin's status configuration to ensure they work harmoniously if you intend to use features from both.

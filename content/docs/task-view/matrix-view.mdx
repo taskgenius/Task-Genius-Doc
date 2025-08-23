@@ -1,0 +1,153 @@
+---
+title: Matrix View (Eisenhower Matrix)
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import {
+  Filter,
+  Grid3X3,
+  MousePointerClick,
+  ArrowUpDown,
+  Eye,
+  EyeOff,
+  PlusIcon,
+  XIcon,
+} from "lucide-react";
+
+The Matrix View provides an Eisenhower Matrix (Four Quadrants) interface for organizing and managing your tasks based on urgency and importance. This view helps you prioritize tasks effectively by categorizing them into four distinct quadrants.
+
+<VersionCallout version="9.0.0" />
+
+## Open the Matrix View
+
+1. Open the [Task Genius View](/docs/task-view).
+2. Select the `Matrix` navigation item in the left sidebar.
+3. You will see your tasks organized into four quadrants in the right panel.
+
+## Usage
+
+The Matrix View displays tasks in a 2x2 grid based on the Eisenhower Matrix methodology:
+
+### The Four Quadrants
+
+- **🔺 Urgent & Important (Do First):** Crisis & emergencies that require immediate attention
+- **⏫ Not Urgent & Important (Schedule):** Planning & development activities that are important but not time-sensitive
+- **🔼 Urgent & Not Important (Delegate):** Interruptions & distractions that are urgent but not crucial
+- **🔽 Not Urgent & Not Important (Eliminate):** Time wasters that should be minimized or eliminated
+
+### Task Categorization
+
+Tasks are automatically categorized into quadrants based on:
+
+#### Tag-Based Classification (Default)
+- **Urgency:** Determined by `#urgent` tag, high priority emojis (🔺⏫), or due dates within the configured threshold
+- **Importance:** Determined by `#important` tag, priority emojis (🔺⏫🔼), or important keywords (goal, project, milestone, strategic)
+
+#### Priority-Based Classification (Optional)
+- **Urgency:** Tasks with priority level ≥ 4 (configurable threshold)
+- **Importance:** Tasks with priority level ≥ 3 (configurable threshold)
+
+### Interactions
+
+#### Drag and Drop
+
+- **Move tasks between quadrants** by clicking and dragging them
+- Dropping a task into a new quadrant automatically updates the task's tags and priority
+- Visual feedback shows successful task updates
+
+#### Task Actions
+
+- **Click task:** <MousePointerClick className="inline-block w-5 h-5" /> Selects the task and opens its details in the sidebar
+- **Right-click task:** Opens a context menu with relevant actions
+- **Status updates:** Tasks can be marked as complete directly from the matrix
+
+#### Sorting
+- **Sort dropdown:** <ArrowUpDown className="inline-block w-5 h-5" /> Located in the header, allows sorting tasks within each quadrant
+- Available sort options:
+  - Priority (High to Low / Low to High)
+  - Due Date (Earliest First / Latest First)
+  - Created Date (Newest First / Oldest First)
+
+### Filtering
+
+The Matrix View includes advanced filtering capabilities:
+
+<VersionCallout version="8.0.0" />
+
+1. Click the <PlusIcon className="inline-block w-5 h-5" /> **Add filter** button to open the filter dropdown
+2. Select a **category** to filter by (e.g., `Tag`, `Priority`, `Project`, `Context`)
+3. Choose the specific **value** within that category
+4. Active filters are displayed as removable "pills" above the matrix (remove via <XIcon className="inline-block w-5 h-5" />)
+5. Multiple filters can be applied - tasks must match **all** active filters to be displayed
+6. Click **Clear all** to remove all active filters at once
+
+Available filter categories include:
+- Status
+- Tag
+- Project
+- Context
+- Priority
+- Completed (Yes/No)
+- File Path
+
+### Column Management
+
+- **Hide empty columns:** <EyeOff className="inline-block w-5 h-5" /> / <Eye className="inline-block w-5 h-5" /> Option to hide quadrants that contain no tasks
+- **Dynamic updates:** Quadrants automatically update when tasks are added, removed, or modified
+
+### Task Updates
+
+When moving tasks between quadrants:
+
+1. **Automatic tag updates:** Relevant `#urgent` and `#important` tags are added or removed
+2. **Priority adjustment:** Task priority is updated based on the target quadrant:
+   - Urgent & Important: Priority 5 (Highest)
+   - Not Urgent & Important: Priority 4 (High)
+   - Urgent & Not Important: Priority 3 (Medium)
+   - Not Urgent & Not Important: Priority 2 (Low)
+3. **Metadata tracking:** Quadrant information is stored in task metadata for consistency
+4. **Visual feedback:** Success or error messages appear after task updates
+
+### Performance Optimizations
+
+- **Selective refresh:** Only updates quadrants with changed tasks
+- **Mobile optimization:** Enhanced touch interactions with appropriate delays and thresholds
+- **Efficient rendering:** Virtual scrolling and optimized DOM updates for large task lists
+
+## Configuration
+
+### Quadrant Settings
+
+The Matrix View can be configured through view-specific settings:
+
+- **Urgent Tag:** Custom tag for identifying urgent tasks (default: `#urgent`)
+- **Important Tag:** Custom tag for identifying important tasks (default: `#important`)
+- **Urgent Threshold Days:** Number of days before due date to consider a task urgent (default: 3)
+- **Classification Mode:** Choose between tag-based or priority-based classification
+- **Priority Thresholds:** Configure priority levels for urgent/important classification
+
+### Advanced Options
+
+- **Use Priority for Classification:** Switch from tag-based to priority-based categorization
+- **Urgent Priority Threshold:** Priority level threshold for urgent tasks (default: 4)
+- **Important Priority Threshold:** Priority level threshold for important tasks (default: 3)
+- **Hide Empty Columns:** Automatically hide quadrants without tasks
+
+## Best Practices
+
+1. **Focus on incomplete tasks:** Filter out completed tasks to simplify the view
+2. **Consistent Tagging:** Use `#urgent` and `#important` tags consistently across your tasks
+3. **Regular Review:** Regularly review and move tasks between quadrants as priorities change
+4. **Focus on Quadrant 2:** Spend more time on "Not Urgent & Important" tasks for long-term success
+5. **Minimize Quadrant 4:** Eliminate or reduce "Not Urgent & Not Important" tasks
+6. **Due Date Management:** Set appropriate due dates to help with automatic urgency classification
+
+## Settings
+
+You can read more about view settings on the [Basic view settings](/docs/task-view/basic-view-settings#basic-settings) page.
+
+### Specific Settings
+
+- **Hide Empty Columns:** Automatically hide quadrants that contain no tasks
+- **Sort Option:** Default sorting method for tasks within each quadrant
+- **Classification Mode:** Choose between tag-based or priority-based task categorization

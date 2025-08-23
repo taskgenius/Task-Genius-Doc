@@ -1,0 +1,22 @@
+{
+  "title": "MCP Integration",
+  "description": "Model Context Protocol integration for AI-powered task management",
+  "icon": "Bot",
+  "root": false,
+  "defaultOpen": true,
+  "pages": [
+    "index",
+    "---Quick Start---",
+    "clients/cursor",
+    "clients/claude-desktop",
+    "clients/claude-code",
+    "clients/vscode",
+    "---Documentation---",
+    "api-reference",
+    "use-cases",
+    "troubleshooting",
+    "---Advanced---",
+    "security",
+    "development"
+  ]
+}

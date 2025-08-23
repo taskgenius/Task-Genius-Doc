@@ -1,0 +1,83 @@
+---
+title: Auto Date Management
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+
+Automatically manage dates based on task status changes. Task Genius can add or remove dates when you change task statuses, supporting both Tasks plugin emoji format and Dataview format.
+
+<VersionCallout version="8.8.0" />
+
+## Usage
+
+Auto Date Management automatically adds appropriate dates to your tasks when their status changes, and removes them when the status changes to something else. This helps maintain accurate task metadata without manual intervention.
+
+### Supported Date Types
+
+- **Completion dates**: Added when tasks are marked as completed
+- **Start dates**: Added when tasks are marked as in progress
+- **Cancelled dates**: Added when tasks are marked as abandoned
+
+### Metadata Format Compatibility
+
+The feature works with both popular task metadata formats:
+
+- **Tasks plugin emoji format**: Uses emojis like ✅ for completion dates
+- **Dataview format**: Uses field notation like `[completion:: 2025-01-15]`
+
+## Configuration
+
+In the Task Genius settings under "Auto Date Manager":
+
+### Enable Auto Date Manager
+
+Toggle this setting to enable automatic date management when task status changes. When enabled, dates will be added or removed based on your preferred metadata format.
+
+### Manage Completion Dates
+
+When enabled, completion dates are automatically:
+
+- **Added** when tasks are marked as completed
+- **Removed** when tasks are changed to other statuses
+
+### Manage Start Dates
+
+When enabled, start dates are automatically:
+
+- **Added** when tasks are marked as in progress
+- **Removed** when tasks are changed to other statuses
+
+### Manage Cancelled Dates
+
+When enabled, cancelled dates are automatically:
+
+- **Added** when tasks are marked as abandoned
+- **Removed** when tasks are changed to other statuses
+
+## Examples
+
+When you change a task status, the appropriate date metadata is automatically managed:
+
+```markdown
+- [ ] Task 1 => - [x] Task 1 [completion:: 2025-01-15]
+```
+
+```markdown
+- [x] Task 1 [completion:: 2025-01-15] => - [ ] Task 1
+```
+
+```markdown
+- [ ] Task 1 => - [>] Task 1 [start:: 2025-01-15]
+```
+
+```markdown
+- [>] Task 1 [start:: 2025-01-15] => - [-] Task 1 [start:: 2025-01-15] [cancelled:: 2025-01-15]
+```
+
+## Settings
+
+You can configure the auto date manager in the Task Genius settings under "Auto Date Manager":
+
+### Enable Auto Date Manager
+
+Toggle this setting to enable automatic date management when task status changes. When enabled, dates will be added or removed based on your preferred metadata format.

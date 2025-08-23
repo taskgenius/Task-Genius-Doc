@@ -1,0 +1,217 @@
+---
+title: Claude Desktop Configuration
+description: Setup guide for Claude Desktop with Task Genius MCP
+---
+
+This guide shows you how to configure Claude Desktop to work with your Task Genius tasks.
+
+## Prerequisites
+
+- Claude Desktop installed
+- Task Genius MCP server enabled in Obsidian
+- Your authentication credentials from Task Genius settings
+
+## Configuration Steps
+
+### Step 1: Locate Configuration File
+
+Find your Claude Desktop configuration file:
+
+**macOS:**
+```bash
+~/Library/Application Support/Claude/claude_desktop_config.json
+```
+
+**Windows:**
+```bash
+%APPDATA%\Claude\claude_desktop_config.json
+```
+
+**Linux:**
+```bash
+~/.config/Claude/claude_desktop_config.json
+```
+
+### Step 2: Create or Edit Configuration
+
+If the file doesn't exist, create it with this structure:
+
+```json
+{
+  "mcpServers": {
+    "obsidian-tasks": {
+      "command": "curl",
+      "args": [
+        "-X", "POST",
+        "-H", "Authorization: Bearer YOUR_TOKEN+YOUR_APP_ID",
+        "-H", "Content-Type: application/json",
+        "--data-raw", "@-",
+        "http://127.0.0.1:7777/mcp"
+      ]
+    }
+  }
+}
+```
+
+### Step 3: Get Your Credentials
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=mcp-integration">
+  Open MCP Settings
+</DeepLinkButton>
+
+Copy:
+1. Authentication Token
+2. App ID
+3. Server URL (if using custom port)
+
+### Step 4: Update Configuration
+
+Replace placeholders with your actual values:
+- `YOUR_TOKEN` → Your authentication token
+- `YOUR_APP_ID` → Your vault's App ID
+
+### Step 5: Restart Claude Desktop
+
+1. Completely quit Claude Desktop (not just close window)
+2. Restart the application
+3. The MCP server should connect automatically
+
+## Advanced Configuration
+
+### Multiple Vaults
+
+Connect to multiple Obsidian vaults:
+
+```json
+{
+  "mcpServers": {
+    "personal-tasks": {
+      "command": "curl",
+      "args": [
+        "-X", "POST",
+        "-H", "Authorization: Bearer TOKEN1+APPID1",
+        "-H", "Content-Type: application/json",
+        "--data-raw", "@-",
+        "http://127.0.0.1:7777/mcp"
+      ]
+    },
+    "work-tasks": {
+      "command": "curl",
+      "args": [
+        "-X", "POST",
+        "-H", "Authorization: Bearer TOKEN2+APPID2",
+        "-H", "Content-Type: application/json",
+        "--data-raw", "@-",
+        "http://127.0.0.1:7778/mcp"
+      ]
+    }
+  }
+}
+```
+
+### Remote Vault Access
+
+For accessing a vault on another machine:
+
+```json
+{
+  "mcpServers": {
+    "remote-vault": {
+      "command": "curl",
+      "args": [
+        "-X", "POST",
+        "-H", "Authorization: Bearer YOUR_TOKEN+YOUR_APP_ID",
+        "-H", "Content-Type: application/json",
+        "--data-raw", "@-",
+        "http://192.168.1.100:7777/mcp"
+      ]
+    }
+  }
+}
+```
+
+
+## Using Task Genius in Claude Desktop
+
+Once configured, interact naturally with your tasks:
+
+### Common Operations
+
+```text
+"Show today's high-priority tasks"
+"Create task: Review quarterly report, priority 4, due tomorrow"
+"Mark 'Review quarterly report' as complete"
+"What tasks are overdue?"
+"Show all tasks for project ClientPresentation"
+"List tasks in @office context"
+"Add task to today's daily note"
+```
+
+### Daily Workflows
+
+```text
+"Help me plan my day based on my tasks"
+"What should I focus on this morning?"
+"Show me overdue tasks that need attention"
+"What did I complete yesterday?"
+"Create a summary of this week's progress"
+```
+
+## Key Features
+
+- **Context Awareness**: Claude remembers what you're discussing
+- **Batch Operations**: Update multiple tasks at once
+- **Smart Suggestions**: Get recommendations based on your task patterns
+- **Natural Language**: No need to learn specific commands
+
+## Troubleshooting
+
+### Connection Issues
+
+1. **Verify Task Genius MCP is running:**
+   - Open Obsidian → Task Genius Settings → MCP Integration
+   - Check server status is green
+
+2. **Test connection:**
+   ```bash
+   curl -X POST http://127.0.0.1:7777/health
+   ```
+
+3. **Check configuration file:**
+   - Ensure JSON syntax is valid
+   - Verify token format: `Bearer YOUR_TOKEN+YOUR_APP_ID`
+   - No extra spaces or quotes
+
+### Authentication Errors
+
+- **"Unauthorized"**: Invalid token or App ID
+- **"Connection refused"**: MCP server not running
+- **Solution**: Get fresh credentials from <a href="obsidian://task-genius/settings?tab=mcp-integration">MCP Settings</a>
+
+### Windows-Specific
+
+If curl isn't found, use full path:
+```json
+{
+  "command": "C:\\Windows\\System32\\curl.exe"
+}
+```
+
+## Best Practices
+
+1. **Security**: Never share or commit your configuration file
+2. **Naming**: Use descriptive names like `personal-tasks` or `work-projects`
+3. **Conversations**: Start new chats for different task contexts
+4. **Performance**: Be specific in queries for faster responses
+
+
+## Next Steps
+
+- Explore [Task Genius use cases](/docs/mcp-integration/use-cases) for workflow ideas
+- Configure [other clients](/docs/mcp-integration/clients) like Claude Code or Cursor
+- Check the [API reference](/docs/mcp-integration/api-reference) for all available operations
+- See [troubleshooting guide](/docs/mcp-integration/troubleshooting) if you encounter issues
+
+<Callout type="success">
+  **Quick Tip**: Start with simple requests like "show today's tasks" to get familiar with Task Genius in Claude Desktop.
+</Callout>

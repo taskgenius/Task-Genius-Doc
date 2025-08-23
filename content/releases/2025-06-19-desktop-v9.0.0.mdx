@@ -1,0 +1,56 @@
+---
+title: "Desktop v9.0.0"
+date: "2025-06-19"
+version: "9.0.0"
+platform: "desktop"
+access: "public"
+---
+
+## Shiny new things
+
+### All-new Project and Workflow Management
+
+We've rebuilt the underlying logic for tasks, projects, and contexts to introduce powerful workflow management features. You can now:
+- **Folder as Project**: Directly manage folders as projects.
+- **Project Configuration**: Configure all project-related settings in one place within the project settings.
+- **Workflows**: Define clear workflow stages for your projects and easily move tasks between them.
+
+### Timeline Sidebar View
+
+Introducing a brand new **Timeline view** in the sidebar, allowing you to visualize and plan your schedule more intuitively.
+
+### File and Canvas Task Indexing
+
+You can now track an entire note file or Canvas as a single task, greatly expanding the boundaries of task management. Relevant metadata is automatically indexed from the file.
+
+### Matrix View (Eisenhower Matrix)
+
+Introducing the new **Matrix view** based on the Eisenhower Matrix methodology, where you can organize and prioritize your tasks across four quadrants: Urgent & Important, Not Urgent & Important, Urgent & Not Important, and Not Urgent & Not Important. Tasks can be dragged and dropped between quadrants for intuitive priority management.
+
+---
+
+## Features
+
+- **ICS Calendar Subscription**: Support for subscribing to external calendars via the `ics` format.
+- **Quick Capture to Daily Note**: Support for quickly capturing ideas to your daily note, with the ability to preview the target file.
+- **Hide Weekends in Calendar View**: You can now choose to hide weekends in the calendar or forecast view for a more focused perspective.
+
+---
+
+## Improvements
+
+- **Performance Optimization**: Significantly improved performance when handling a large number of calendar events.
+- **Settings UI**: A complete refresh and optimization of the style and user experience of the settings page.
+- **Icon Update**: Updated with all-new icons designed by @jsmorabito. Thanks to our community for the contribution!
+- **Internationalization**: Updated and completed relevant translations.
+
+---
+
+## Fixes
+
+- **Workflow**: Fixed an issue where tasks could not be moved to the next stage and a sub-stage could not be completed.
+- **Task Inheritance**: Fixed a bug where tasks did not correctly inherit metadata from their project.
+- **Dataview Parsing**: Fixed an issue where `dataview` keys were not parsed correctly.
+- **Inline Editor**: Fixed a bug where updating task metadata was not possible using the inline editor in the forecast view.
+- **View Filtering**: Fixed an issue where completed tasks were not correctly hidden in the Task Genius sidebar view.
+- **Daily Habits**: Fixed incorrect handling of the creation day for daily habits.

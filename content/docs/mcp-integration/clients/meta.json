@@ -1,0 +1,14 @@
+{
+  "title": "Client Configuration",
+  "description": "Setup guides for different AI clients",
+  "icon": "Monitor",
+  "pages": [
+    "cursor",
+    "claude-desktop",
+    "claude-code",
+    "vscode",
+    "windsurf",
+    "zed",
+    "custom"
+  ]
+}

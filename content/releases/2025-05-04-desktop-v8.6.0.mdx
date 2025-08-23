@@ -1,0 +1,42 @@
+---
+title: "Desktop v8.6.0"
+date: "2025-05-04"
+version: "8.6.0"
+platform: "desktop"
+access: "public"
+---
+
+## Features
+
+- feat: support sort command. [docs](/docs/task-sorter)
+  - feat: support sort criteria settings
+- feat: support relative time display for list item in task genius view. [docs](/docs/task-view/list-item)
+- feat: support show-on heading filter for progressbar. [docs](/docs/progress-bars#show-on-heading)
+- feat: support only show task with date (eg., has due date, start date, or is recurring)
+  - Support `hasDate`, `noDate` or `any`
+- feat: support first day of week for forecast view. [docs](/docs/task-view/forecast-view#first-day-of-week)
+- feat: ignore tasks based on heading or focus tasks based on heading. [docs](/docs/task-view/indexer#focus-or-ignore-tasks-based-on-heading)
+- feat: support sort tasks for view. [docs](/docs/task-view/basic-view-settings#sort-settings)
+
+## Improvements
+
+- improve: add more test cases for sort command
+- improve: support better confirm modal
+- style: update project badge style
+- improve: show all tasks when switch to tree view of tasks
+- improve: support `every month on the 5th` for recurrence task
+
+## Fixes
+
+- fix: task sorter is not working
+- fix: conflict with dataview plugin when renderring progressbar in read mode
+- fix: duplicate tag issue when complete recurrence task
+- fix: cannot show setting for event view correctly
+- fix: tree item not showing correctly in some views
+- fix: should use scheduled date to calculate next date if there is no due date
+
+## Chore
+
+- chore: update test cases for sort command
+- chore: update the docs
+- chore: update description for tags in detail edit component

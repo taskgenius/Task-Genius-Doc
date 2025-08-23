@@ -1,0 +1,47 @@
+---
+title: Habit View
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+
+The Habit View provides a visual interface to track your progress on the habits you've defined in Task Genius. It leverages the data you record in your daily notes' Frontmatter.
+
+<VersionCallout version="8.5.0" />
+
+## Open the Habit View
+
+1.  Open the [Task Genius View](/docs/task-view).
+2.  Select the `Habit` nav item in the left sidebar.
+3.  The Habit View will load, displaying your tracked habit data.
+
+## Usage
+
+The Habit View typically presents your habit data in a calendar-like format, often referred to as a heatmap or streaks view. This allows you to quickly see your consistency over time.
+
+The view generally consists of:
+
+1.  **Habit Grid/Calendar:** The main area showing days and whether each habit was completed according to its definition. Colors, icons, or other visual cues are used to represent the status (e.g., completed, missed, partially completed, value recorded).
+2.  **Summary/Statistics (If applicable):** May include information like current streaks, completion rates, or other relevant statistics.
+
+You can press checkbox or icon button to toggle the habit status.
+
+### Tooltip
+
+You can hover over the habit heatmap to see the tooltip with the habit status and the value recorded.
+
+### Configuring Habits
+
+The Habit View is for _visualizing_ your progress based on the habits you have already set up.
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=habit">
+  Open Habit Settings
+</DeepLinkButton>
+<DeepLinkFallback />
+
+To **define**, **add**, or **modify** habits (e.g., change their name, icon, type, properties, or completion conditions), you must use the Task Genius settings:
+
+1.  Open Task Genius settings.
+2.  Navigate to the **Habit** settings tab.
+3.  Configure your habits there.
+
+For comprehensive instructions on how to define and manage your habits, please refer to the main **[Habit Tracking Setup](/docs/habit)** documentation.

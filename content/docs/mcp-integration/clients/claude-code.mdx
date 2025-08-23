@@ -1,0 +1,248 @@
+---
+title: Claude Code Configuration
+description: Setup guide for Claude Code CLI with Task Genius MCP
+---
+
+This guide shows you how to configure Claude Code to work with your Task Genius tasks directly from the command line.
+
+## Prerequisites
+
+- Claude Code installed ([installation guide](https://claude.ai/code))
+- Task Genius MCP server enabled in Obsidian
+- Your authentication credentials from Task Genius settings
+
+## Quick Setup
+
+Add Task Genius to Claude Code with one command:
+
+```bash
+claude mcp add --transport http obsidian-tasks http://127.0.0.1:7777/mcp \
+  --header "Authorization: Bearer YOUR_TOKEN+YOUR_APP_ID"
+```
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=mcp-integration">
+  Get Your Credentials from Task Genius Settings
+</DeepLinkButton>
+
+That's it! You can now manage your Obsidian tasks from Claude Code.
+
+## Verify Your Setup
+
+After adding Task Genius, test the connection:
+
+```bash
+claude mcp test obsidian-tasks
+```
+
+You should see:
+```
+✅ Connection successful
+✅ Authentication valid
+✅ 25+ tools available
+```
+
+## Basic Commands
+
+```bash
+# View your Task Genius configuration
+claude mcp show obsidian-tasks
+
+# Update credentials if needed
+claude mcp update obsidian-tasks \
+  --header "Authorization: Bearer NEW_TOKEN+NEW_APP_ID"
+
+# Remove and re-add if having issues
+claude mcp remove obsidian-tasks
+```
+
+## Multiple Vaults
+
+If you have multiple Obsidian vaults with Task Genius:
+
+```bash
+# Add personal vault
+claude mcp add --transport http personal-vault \
+  http://127.0.0.1:7777/mcp \
+  --header "Authorization: Bearer TOKEN1+APPID1"
+
+# Add work vault (different port)
+claude mcp add --transport http work-vault \
+  http://127.0.0.1:7778/mcp \
+  --header "Authorization: Bearer TOKEN2+APPID2"
+```
+
+## Using Task Genius with Claude Code
+
+### Interactive Session
+
+Start Claude Code connected to your tasks:
+
+```bash
+claude --use obsidian-tasks
+```
+
+### Common Task Operations
+
+```bash
+# Today's tasks
+claude --use obsidian-tasks "What tasks do I have today?"
+
+# Create a new task
+claude --use obsidian-tasks "Create task: Review quarterly report, priority 4, due tomorrow"
+
+# Mark tasks complete
+claude --use obsidian-tasks "Mark task 'Review quarterly report' as complete"
+
+# Query by project
+claude --use obsidian-tasks "Show all tasks for project ClientPresentation"
+
+# Update priorities
+claude --use obsidian-tasks "Set all overdue tasks to priority 5"
+
+# Quick capture
+claude --use obsidian-tasks "Add to inbox: Call John about proposal"
+```
+
+### Task Genius Specific Features
+
+```bash
+# Work with Task Genius projects
+claude --use obsidian-tasks "List all my active projects with task counts"
+
+# Use Task Genius contexts
+claude --use obsidian-tasks "Show tasks in @office context"
+
+# Batch operations
+claude --use obsidian-tasks "Postpone all tasks tagged #waiting to next week"
+
+# Daily note integration
+claude --use obsidian-tasks "Add task to today's daily note: Team standup at 10am"
+```
+
+## Productivity Tips
+
+### Shell Aliases
+
+Add these to your `~/.bashrc` or `~/.zshrc` for quick access:
+
+```bash
+# Quick task operations
+alias task="claude --use obsidian-tasks"
+alias today="claude --use obsidian-tasks 'Show today\'s tasks'"
+alias inbox="claude --use obsidian-tasks 'Show inbox tasks'"
+
+# Task creation function
+new_task() {
+  claude --use obsidian-tasks "Create task: $*"
+}
+
+# Daily review
+alias review="claude --use obsidian-tasks 'Show overdue tasks and today\'s priorities'"
+```
+
+Usage:
+```bash
+task "What's due this week?"
+new_task Call client about proposal
+today
+review
+```
+
+### Environment Variables
+
+Store credentials securely:
+
+```bash
+# Add to ~/.bashrc or ~/.zshrc
+export OBSIDIAN_TOKEN="your_token"
+export OBSIDIAN_APP_ID="your_app_id"
+
+# Use in configuration
+claude mcp add --transport http obsidian-tasks \
+  http://127.0.0.1:7777/mcp \
+  --header "Authorization: Bearer ${OBSIDIAN_TOKEN}+${OBSIDIAN_APP_ID}"
+```
+
+
+## Troubleshooting
+
+### Connection Failed
+
+1. **Check Task Genius MCP is enabled:**
+   - Open Obsidian → Task Genius Settings → MCP Integration
+   - Ensure server is running (green status)
+
+2. **Verify port availability:**
+   ```bash
+   curl http://127.0.0.1:7777/health
+   ```
+
+3. **Test connection:**
+   ```bash
+   claude mcp test obsidian-tasks --verbose
+   ```
+
+### Authentication Issues
+
+1. **Get fresh credentials:**
+   <DeepLinkButton href="obsidian://task-genius/settings?tab=mcp-integration">Open MCP Settings</DeepLinkButton>
+
+2. **Update configuration:**
+   ```bash
+   claude mcp update obsidian-tasks \
+     --header "Authorization: Bearer NEW_TOKEN+NEW_APP_ID"
+   ```
+
+### Common Issues
+
+- **"Connection refused"**: Task Genius MCP server not running
+- **"401 Unauthorized"**: Invalid token or App ID
+- **"No tools available"**: Server running but not properly configured
+- **Timeout errors**: Large vault - increase timeout with `--timeout 60000`
+
+## Quick Reference
+
+### Essential Commands
+
+```bash
+# Setup
+claude mcp add --transport http obsidian-tasks [URL] --header [AUTH]
+
+# Management
+claude mcp list                    # List all servers
+claude mcp show obsidian-tasks     # View configuration
+claude mcp test obsidian-tasks     # Test connection
+claude mcp remove obsidian-tasks   # Remove server
+
+# Usage
+claude --use obsidian-tasks        # Interactive mode
+claude --use obsidian-tasks "..."  # Single command
+```
+
+### Task Genius MCP Tools
+
+Available operations through Claude Code:
+- Query tasks (by date, project, context, priority)
+- Create tasks (with due dates, priorities, tags)
+- Update task status (complete, postpone, delete)
+- Batch operations (update multiple tasks)
+- Daily note integration
+- Project and context management
+
+## Best Practices
+
+1. **Use aliases** for frequent operations (see Productivity Tips)
+2. **Store credentials** in environment variables, not in commands
+3. **Be specific** in queries to get better results
+4. **Use projects and contexts** to organize tasks effectively
+5. **Batch similar operations** for better performance
+
+## Next Steps
+
+- Explore [Task Genius use cases](/docs/mcp-integration/use-cases) for workflow ideas
+- Check the [API reference](/docs/mcp-integration/api-reference) for all available operations
+- See [troubleshooting guide](/docs/mcp-integration/troubleshooting) if you encounter issues
+
+<Callout type="success">
+  **Pro Tip**: Start with simple queries like "Show today's tasks" to get familiar with Task Genius through Claude Code.
+</Callout>

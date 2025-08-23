@@ -1,0 +1,133 @@
+---
+title: Indexer
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+
+Task Genius uses the modern **Dataflow Architecture** to efficiently index and manage tasks from multiple sources. This event-driven system provides real-time updates, smart caching, and exceptional performance.
+
+<VersionCallout version="9.0.0" />
+
+## Quick Configuration
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=index">
+  Open Index Settings
+</DeepLinkButton>
+<DeepLinkFallback />
+
+## How it Works
+
+The Dataflow architecture orchestrates multiple components for optimal performance:
+
+### Core Components
+
+1. **Orchestrator**: Central coordinator managing all data sources and events
+2. **Data Sources**: 
+   - **ObsidianSource**: Monitors file changes in your vault
+   - **IcsSource**: Integrates external calendar events
+   - **FileSource**: Recognizes entire files as tasks
+3. **Repository**: Maintains the task index and handles queries
+4. **Storage**: Multi-tier caching system for instant startup
+5. **Workers**: Background processing for large operations
+
+### Processing Flow
+
+1. **File Monitoring**: ObsidianSource watches for changes (create, modify, delete)
+2. **Smart Caching**: Repository checks cache validity using content hashing
+3. **Parallel Processing**: 
+   - WorkerOrchestrator distributes parsing to Web Workers
+   - Multiple files processed simultaneously
+   - Automatic fallback to main thread if needed
+4. **Event Broadcasting**: Changes trigger `task-genius:task-cache-updated` events
+5. **View Synchronization**: All views update automatically via event subscription
+
+### Performance Features
+
+- **Snapshot Loading**: ~100ms startup for 1000+ tasks
+- **Incremental Updates**: Only changed files reprocessed
+- **Content Hashing**: Detect actual changes vs. metadata updates
+- **Loop Prevention**: Sequence-based event tracking prevents infinite updates
+
+<Mermaid chart={`
+graph TB
+    subgraph "Data Sources"
+        A[Vault Files] -- Monitor --> B[ObsidianSource]
+        K[Calendar] -- Sync --> L[IcsSource]
+        M[File Tasks] -- Recognize --> N[FileSource]
+    end
+
+    subgraph "Dataflow Core"
+        B -- FILE_UPDATED --> O[Orchestrator]
+        L -- ICS_EVENTS_UPDATED --> O
+        N -- FILE_TASK_UPDATED --> O
+        O -- Process --> P[Repository]
+        P -- Query --> Q[Storage Cache]
+        Q -- Hit/Miss --> R{Cache Status}
+        R -- Miss --> S[WorkerOrchestrator]
+        S -- Parse --> T[Web Workers]
+        T -- Results --> P
+        R -- Hit --> U[Cached Data]
+        U --> P
+    end
+
+    subgraph "Views"
+        P -- TASK_CACHE_UPDATED --> V[All Views]
+        V --> W[UI Updates]
+    end
+`} />
+
+### Data Sources
+
+The system integrates multiple data sources seamlessly:
+
+- **File Tasks**: Regular tasks from Markdown and Canvas files
+- **ICS Events**: External calendar events displayed as tasks
+- **File-level Tasks**: Entire files treated as tasks based on metadata
+
+### Troubleshooting
+
+If the index seems outdated:
+- Run `Task Genius: Force reindex all tasks` to rebuild completely
+- Use `Task Genius: Refresh task index` for a quick refresh
+- Check console for any error messages
+
+## Managing the Indexer
+
+### Disabling
+Disable indexing in Settings → Task Genius → Index → "Enable Indexing"
+
+### Performance Tuning
+- **Worker Count**: Adjust based on vault size (Settings → Index)
+- **Cache Duration**: Configure persistence time
+- **Batch Size**: Control processing chunks
+
+## Configuration
+
+Customize indexing behavior to match your workflow:
+
+### Metadata Format
+
+Choose how to parse task metadata:
+
+- **Tasks**: Emoji format (`🛫 2025-01-01`, `⏫`, `🔁 every week`)
+- **Dataview**: Inline fields (`[due:: 2025-01-01]`, `[priority:: high]`)
+
+The system automatically falls back to the other format when needed.
+
+### Daily Notes Integration
+
+Automatically assign dates to tasks in daily notes:
+
+- **Enable**: Extract dates from daily note file paths
+- **Path**: Daily notes folder (e.g., `dailies`, `journal/daily`)
+- **Format**: Date pattern in filenames (`yyyy-MM-dd`, `dd-MM-yyyy`)
+- **Assign As**: Target field for extracted date (`due`, `start`, `scheduled`)
+
+### Heading Filters
+
+Control which tasks are indexed based on their headings:
+
+- **Ignore Under**: Exclude tasks under specific headings (`## Archive`, `## Done`)
+- **Focus On**: Only index tasks under specified headings (`## Project`, `## Inbox`)
+
+Enter headings separated by commas. Focus takes priority over ignore.

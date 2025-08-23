@@ -1,0 +1,338 @@
+---
+title: Cursor Configuration
+description: Setup guide for Cursor with Task Genius MCP
+---
+
+This guide shows you how to configure Cursor to work with your Task Genius tasks.
+
+## Prerequisites
+
+- Cursor installed
+- Task Genius MCP server enabled in Obsidian
+- Your authentication credentials from Task Genius settings
+
+## One-Click Installation (Recommended)
+
+The easiest way to configure Cursor is using the automatic deeplink installation:
+
+<div className="steps">
+
+### Step 1: Open MCP Settings
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=mcp-integration">
+  Open MCP Settings in Obsidian
+</DeepLinkButton>
+
+### Step 2: Find Cursor Section
+
+Navigate to the "Client Configuration" section and locate Cursor.
+
+### Step 3: Click Install
+
+Click the "Add to Cursor" button. This will:
+1. Open Cursor automatically
+2. Add the Task Genius MCP server
+3. Configure authentication
+4. Verify the connection
+
+</div>
+
+## Manual Configuration
+
+Cursor supports multiple configuration methods for MCP servers.
+
+### Method 1: Using mcp.json (Recommended)
+
+#### Project-specific Configuration
+
+Create `.cursor/mcp.json` in your project root:
+
+```json
+{
+  "mcpServers": {
+    "task-genius": {
+      "transport": "http",
+      "url": "http://127.0.0.1:7777/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_TOKEN+YOUR_APP_ID"
+      }
+    }
+  }
+}
+```
+
+#### Global Configuration
+
+For system-wide access, create `~/.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "obsidian-tasks": {
+      "transport": "http",
+      "url": "http://127.0.0.1:7777/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_TOKEN+YOUR_APP_ID"
+      }
+    }
+  }
+}
+```
+
+### Method 2: Environment Variables
+
+Store credentials securely using environment variables:
+
+```json
+{
+  "mcpServers": {
+    "task-genius": {
+      "transport": "http",
+      "url": "http://127.0.0.1:7777/mcp",
+      "env": {
+        "TASK_GENIUS_TOKEN": "YOUR_TOKEN",
+        "TASK_GENIUS_APP_ID": "YOUR_APP_ID"
+      },
+      "headers": {
+        "Authorization": "Bearer ${TASK_GENIUS_TOKEN}+${TASK_GENIUS_APP_ID}"
+      }
+    }
+  }
+}
+```
+
+### Step 2: Get Your Credentials
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=mcp-integration">
+  Get Credentials from Task Genius
+</DeepLinkButton>
+
+Copy:
+- Authentication Token
+- App ID
+
+### Step 3: Apply Configuration
+
+1. Replace `YOUR_TOKEN` and `YOUR_APP_ID` with actual values
+2. Save the mcp.json file
+3. Restart Cursor or reload the window
+
+## Transport Methods
+
+Task Genius MCP server uses HTTP transport, which Cursor fully supports:
+
+- **HTTP**: Best for Task Genius integration
+- **SSE**: Alternative for real-time updates (if configured)
+- **stdio**: Not applicable for Task Genius
+
+### Extension API (Advanced)
+
+For programmatic registration, Cursor provides an extension API:
+
+```javascript
+// Register Task Genius MCP server programmatically
+vscode.cursor.mcp.registerServer('task-genius', {
+  transport: 'http',
+  url: 'http://127.0.0.1:7777/mcp',
+  headers: {
+    'Authorization': 'Bearer YOUR_TOKEN+YOUR_APP_ID'
+  }
+});
+```
+
+This is useful for:
+- Enterprise deployments
+- Automated setup workflows
+- Dynamic configuration
+
+## Advanced Configuration
+
+### Multiple Vaults
+
+Configure multiple Obsidian vaults with different ports:
+
+```json
+{
+  "mcpServers": {
+    "personal-tasks": {
+      "transport": "http",
+      "url": "http://127.0.0.1:7777/mcp",
+      "headers": {
+        "Authorization": "Bearer TOKEN1+APPID1"
+      }
+    },
+    "work-tasks": {
+      "transport": "http",
+      "url": "http://127.0.0.1:7778/mcp",
+      "headers": {
+        "Authorization": "Bearer TOKEN2+APPID2"
+      }
+    }
+  }
+}
+```
+
+### Remote Access
+
+For accessing Task Genius from another machine:
+
+```json
+{
+  "mcpServers": {
+    "remote-vault": {
+      "transport": "http",
+      "url": "http://192.168.1.100:7777/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_TOKEN+YOUR_APP_ID"
+      }
+    }
+  }
+}
+```
+
+## Using Task Genius in Cursor
+
+### Composer Agent Integration
+
+The Composer Agent automatically uses Task Genius tools when relevant. Simply describe what you need:
+
+```
+"Show today's high-priority tasks"
+"Create task: Review quarterly report, priority 4, due tomorrow"
+"Mark 'Review quarterly report' as complete"
+"What tasks are overdue?"
+"Show all tasks for project ClientPresentation"
+```
+
+### Tool Management
+
+#### Toggling Tools
+
+Enable or disable Task Genius tools directly in chat:
+- Click tool names in the Available Tools list
+- Disabled tools won't be loaded into context
+
+#### Tool Approval
+
+By default, Cursor asks for approval before using MCP tools:
+- Click the arrow next to tool name to see arguments
+- Approve individual operations
+- Enable auto-run for trusted operations
+
+#### Auto-run Mode
+
+For faster workflow, enable auto-run:
+- Tools execute without asking for permission
+- Similar to terminal command auto-execution
+- Configure in Cursor settings
+
+## Troubleshooting
+
+### Connection Failed
+
+If Cursor can't connect to Task Genius:
+
+1. **Verify server is running**:
+   ```bash
+   curl http://127.0.0.1:7777/health
+   ```
+
+2. **Check authentication**:
+   - Ensure token is correct
+   - Verify App ID is included
+   - Try regenerating token
+
+3. **Test with curl**:
+   ```bash
+   curl -X POST http://127.0.0.1:7777/mcp \
+     -H "Authorization: Bearer YOUR_TOKEN+YOUR_APP_ID" \
+     -H "Content-Type: application/json" \
+     -d '{"jsonrpc":"2.0","id":1,"method":"initialize"}'
+   ```
+
+### Tools Not Available
+
+If MCP tools don't appear in Cursor:
+
+1. **Restart Cursor** after configuration changes
+2. **Check logs** in Cursor's developer console
+3. **Verify configuration** syntax is correct
+4. **Ensure MCP server** is enabled in Obsidian
+
+### Authentication Errors
+
+Common authentication issues:
+
+| Error | Solution |
+|-------|----------|
+| "Invalid token" | Regenerate token in Obsidian settings |
+| "Missing app ID" | Ensure format is `Bearer TOKEN+APPID` |
+| "Unauthorized" | Check token hasn't expired or changed |
+
+### Performance Issues
+
+For better performance:
+
+1. **Use specific queries** instead of broad requests
+2. **Limit results** for large vaults
+3. **Enable caching** if available in your Cursor version
+
+## Security Considerations
+
+When using Task Genius with Cursor:
+
+1. **Verify the source**: Task Genius is an official Obsidian plugin
+2. **Review permissions**: MCP only accesses your task data
+3. **Limit API access**: Use local-only mode when possible
+4. **Secure credentials**: Never share or commit tokens
+
+## Best Practices
+
+1. **Configuration Location**:
+   - Use project-specific `.cursor/mcp.json` for vault-specific tasks
+   - Use global `~/.cursor/mcp.json` for personal task management
+
+2. **Authentication**:
+   - Store tokens in environment variables when possible
+   - Regenerate tokens periodically
+   - Use separate tokens for different vaults
+
+3. **Usage**:
+   - Be specific in queries for better results
+   - Use tool toggling to control which operations are available
+   - Enable auto-run only for trusted operations
+
+
+## Example Workflows
+
+### Daily Review
+```
+"Show today's tasks by priority"
+"What tasks did I complete yesterday?"
+"List overdue high-priority tasks"
+```
+
+### Project Management
+```
+"Show all tasks for project Q1Planning"
+"Find incomplete tasks tagged #milestone"
+"Create task in project: Design review meeting"
+```
+
+### Quick Capture
+```
+"Add to inbox: Call client about proposal"
+"Create task in daily note: Team standup at 10am"
+"Quick task: Review pull request #123"
+```
+
+## Next Steps
+
+- Explore [Task Genius use cases](/docs/mcp-integration/use-cases) for workflow ideas
+- Check the [API reference](/docs/mcp-integration/api-reference) for all available operations
+- Configure [other clients](/docs/mcp-integration/clients) like Claude Code
+- See [troubleshooting guide](/docs/mcp-integration/troubleshooting) if you encounter issues
+
+<Callout type="success">
+  **Quick Tip**: Start with simple queries like "show today's tasks" to get familiar with Task Genius in Cursor.
+</Callout>

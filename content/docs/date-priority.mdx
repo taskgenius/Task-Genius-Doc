@@ -1,0 +1,47 @@
+---
+title: Date & Priority management
+---
+
+Task Genius provides intuitive ways to add and manage due dates and priorities for your tasks directly within Obsidian notes.
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=date-priority">
+  Open Date & Priority Settings
+</DeepLinkButton>
+<DeepLinkFallback />
+
+## Dates picker
+
+Assign due dates using the calendar emoji (`📅`) followed by a date in `YYYY-MM-DD` format.
+
+```markdown
+- [ ] Submit report 📅 2023-12-25
+```
+
+- **Calendar Picker**: Click the calendar icon and also the date text (`📅 2023-12-25`) in Live Preview mode to open a date picker menu and easily select or modify the due date.
+  - **Configurable**: You can customize what kind of the emoji is used as the calendar icon (support start date emoji, scheduled date emoji, due date emoji, etc.) in the settings.
+
+## Priority
+
+Assign priorities using specific emoji or the `priority` dataview-style inline field (`priority::`).
+
+Common emoji used (configurable in settings):
+
+- 🔺 Highest
+- ⏫ High
+- 🔼 Medium
+- 🔽 Low
+- ⏬ Lowest
+
+Alternatively, use bracketed priorities like `[#A]`, `[#B]`, `[#C]`.
+
+```markdown
+- [ ] Urgent Task 🔺
+- [ ] High priority task ⏫
+- [ ] Normal task
+- [ ] Low priority task [priority:: low]
+- [ ] Another way [#B]
+```
+
+- **Priority Selector**: In Live Preview mode, click the priority icon (if present) to open a dropdown menu for quick selection.
+- **Context Menu**: Right-click on a task line and use the `Task Genius: Set priority` submenu.
+- **Commands**: Use commands like `Task Genius: Set priority A`, `Task Genius: Set priority B`, `Task Genius: Remove priority` via the command palette.

@@ -1,0 +1,129 @@
+---
+title: Progress Bar
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+
+Task Genius automatically adds progress indicators to parent items (tasks, list items, or even headings) based on the completion status of their direct sub-tasks or nested sub-items.
+
+## Example
+
+```markdown
+- [ ] Parent Task [||||----] [✓:4 ⟳:1 ?:1 / 8] // Example with graphical bar and custom text format
+  - [x] Sub-task 1
+  - [x] Sub-task 2
+  - [/] Sub-task 3 [-] [✓:0 ⟳:0 ?:0 / 8]
+    - [ ] Sub-task 4
+  - [-] Sub-task 5 (Abandoned - might be excluded from count based on settings)
+  - [?] Sub-task 6 (Planned)
+  - [x] Sub-task 7
+  - [x] Sub-task 8
+```
+
+## Customization
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=progress-bar">
+  Open Progress Bar Settings
+</DeepLinkButton>
+<DeepLinkFallback />
+
+You can heavily customize the appearance and behavior of progress bars in the plugin settings:
+
+### Display mode
+
+<VersionCallout version="7.0.0" />
+
+Choose whether to show a graphical bar (`[||||----]`), a text indicator, both, or none at all (`progressBarDisplayMode` setting).
+
+### Text format
+
+<VersionCallout version="7.0.0" />
+
+When text indicators are enabled, you can precisely control their content and appearance using the `progressBarFormat` settings:
+
+#### Display mode
+
+- **Display Mode**: Select the basic text format:
+  - `percentage`: Shows completed percentage (e.g., `75%`).
+  - `fraction`: Shows completed vs. total (e.g., `[6/8]`).
+  - `range-based`: Displays text defined for specific percentage ranges (see below).
+  - `custom`: Allows complete control using a custom template string.
+
+#### Range-based text
+
+<VersionCallout version="5.0.0" />
+
+If `Display Mode` is `range-based`, you can define specific text templates for different percentage completion ranges (e.g., 0-20%, 20-50%, 50-100%). Use the `{{PROGRESS}}` placeholder for the current percentage within these templates.
+
+#### Custom format template
+
+<VersionCallout version="7.0.0" />
+
+If `Display Mode` is set to `custom`, you define the output using a template string.
+
+- **Placeholders**: Use placeholders like `{{COMPLETED}}`, `{{TOTAL}}`, `{{PERCENT}}`, `{{IN_PROGRESS}}`, `{{ABANDONED}}`, `{{PLANNED}}`, `{{NOT_STARTED}}`.
+- **Status Symbols**: Use `{{COMPLETED_SYMBOL}}`, `{{IN_PROGRESS_SYMBOL}}`, `{{ABANDONED_SYMBOL}}`, `{{PLANNED_SYMBOL}}`, `{{NOT_STARTED_SYMBOL}}` to insert the configured symbols for each status.
+- **Expressions**: Embed JavaScript expressions within `${=...}` for dynamic text. Example: `${="=".repeat(Math.floor(data.percentages.completed/10))}` creates a simple text bar. You have access to the `data` object (containing counts and percentages) and `displaySymbols` within expressions.
+
+**Examples**:
+
+```ts
+// Example 1
+[{{COMPLETED}}/{{TOTAL}}] -> [6/8]
+
+// Example 2
+{{PERCENT}}% Done -> 75% Done
+
+// Example 3
+[{{COMPLETED_SYMBOL}}:{{COMPLETED}} {{IN_PROGRESS_SYMBOL}}:{{IN_PROGRESS}} / {{TOTAL}}] -> [✓:6 ⟳:1 / 8]
+
+// Example 4
+Progress: ${="🟩".repeat(Math.floor(data.percentages.completed/10))}${"⬜".repeat(10-Math.floor(data.percentages.completed/10))} -> Progress: 🟩🟩🟩🟩🟩🟩🟩⬜⬜⬜
+```
+
+### Status display symbols
+
+Customize the symbols used for each task status in the text format (defaults are derived from your task status settings, e.g., `✓`, `⟳`, `✗`, `?`, ` `).
+
+### Counting
+
+Configure which sub-item statuses count towards completion (e.g., exclude `[-]` or `[?]`). Decide whether to count only direct children or all nested sub-items (`countSubLevel`).
+
+### Target items
+
+Enable/disable progress bars on regular list items (`Add ProgressBar To Non-Task Bullet`), headings (`Add ProgressBar To Heading`), or only task items.
+
+### Conditional hiding
+
+Hide progress bars based on specific tags (`Hide ProgressBar Tags`), parent tags, file paths (`Hide ProgressBar Folders`), or frontmatter metadata (`Hide ProgressBar Metadata`).
+
+#### Show on heading
+
+<VersionCallout version="8.6.0" />
+
+Show progress bars on headings only (`Show ProgressBar On Heading`). Support using comma to separate multiple heading names (eg., "# Heading 1, # Heading 2").
+
+### Other
+
+<Callout
+  type="note"
+>
+  Available since <strong className="text-primary">4.0.0</strong>
+
+Enable/disable in Reading Mode (`Enable progressbar in reading mode`).
+
+</Callout>
+
+<Callout type="note">
+  Available since <strong className="text-primary">6.0.0</strong>
+
+Show detailed progress on hover (`Support hover to show progress info`).
+
+</Callout>
+
+<Callout type="note">
+  Available since <strong className="text-primary">8.0.0</strong>
+
+Use custom goals via `g::number` inline fields (`Allow custom progress goal`).
+
+</Callout>

@@ -1,0 +1,37 @@
+---
+title: "List Item"
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import { ListItem } from "@/components/ListItem";
+
+List item is the basic unit of the task view. It is a single task that is displayed in the list view.
+
+<VersionCallout version="7.0.0" />
+
+## Task List Item
+
+This component is responsible for rendering a single task item within the task list view. It displays task details like content, dates, priority, tags, and handles user interactions.
+
+<ListItem />
+
+Contains the following information:
+
+- Task checkbox
+- Task content
+- Task dates
+- Task priority
+- Task tags
+- Task project
+
+### Rendering Principles
+
+- **Task Checkbox**: Displays the task's completion status (`Status`). Clicking it triggers the completion logic. The entire item gets a `task-completed` class if the task is marked as done.
+- **Task Content**: Renders the `Original Markdown` using Task Genius's Markdown renderer that extends Obsidian's Markdown renderer, preserving formatting and links.
+- **Task Dates**:
+  - **Incomplete Tasks**: Shows Due, Scheduled, and Start dates if available. Due dates are styled differently if they are overdue, due today, or due tomorrow. Recurrence rules are also shown if present.
+  - **Completed Tasks**: Shows Completion and Created dates if available.
+  - **Relative Time**: Dates can be displayed using relative time (e.g., "in 2 days", "yesterday") based on the `Use Relative Time` setting. (Available in Task Genius [8.6.0+](/changelog/2025-05-04-desktop-v8.6.0))
+- **Task Priority**: If `Priority` is set (1, 2, or 3), an indicator (eg, `!`, `!!`, `!!!`) is displayed, styled with a corresponding CSS class (`priority-1`, `priority-2`, `priority-3`).
+- **Task Tags**: If `Tags` exist, each tag is displayed, prefixed with `#`.
+- **Task Project**: If `Project` exists and the current view is not the project view (`viewMode !== 'projects'`), the project name (typically the last part of the path) is displayed.

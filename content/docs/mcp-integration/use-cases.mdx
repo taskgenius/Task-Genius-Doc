@@ -1,0 +1,520 @@
+---
+title: MCP Use Cases & Examples
+description: Practical examples and workflows for Task Genius MCP integration
+---
+
+This guide demonstrates real-world applications of Task Genius MCP integration, from simple daily workflows to complex automation scenarios.
+
+## Daily Task Management
+
+### Morning Planning Routine
+
+Start your day by asking AI to organize your tasks:
+
+```text
+"Show me all tasks due today, sorted by priority. 
+Include any overdue tasks from yesterday."
+```
+
+The AI will:
+1. Query incomplete tasks due today
+2. Find overdue tasks from previous days
+3. Sort by priority (5 = highest)
+4. Present a organized daily plan
+
+**Behind the scenes:**
+```json
+{
+  "method": "tools/call",
+  "params": {
+    "name": "query_tasks",
+    "arguments": {
+      "filter": {
+        "completed": false,
+        "dateRange": {
+          "from": "2024-01-01",
+          "to": "2024-01-15"
+        }
+      },
+      "sort": {
+        "field": "priority",
+        "order": "desc"
+      }
+    }
+  }
+}
+```
+
+### End-of-Day Review
+
+Review what you accomplished:
+
+```text
+"What tasks did I complete today? 
+Generate a summary for my daily log."
+```
+
+**Result:**
+```markdown
+## Daily Accomplishments - January 15, 2024
+
+### Completed Tasks (7)
+- ✅ [High] Review Q1 budget proposal
+- ✅ [High] Client meeting preparation
+- ✅ [Medium] Update project documentation
+- ✅ [Medium] Code review for feature branch
+- ✅ [Low] Respond to team emails
+- ✅ [Low] Update calendar for next week
+- ✅ [Low] File expense reports
+
+### Progress Summary
+- Completion rate: 70% (7/10 tasks)
+- High-priority completion: 100% (2/2)
+- Projects touched: Budget Planning, Client Relations, Development
+```
+
+### Weekly Planning
+
+Prepare for the upcoming week:
+
+```text
+"Create a weekly overview: 
+1. Tasks due this week by day
+2. Project milestones
+3. Recurring tasks to schedule"
+```
+
+## Project Management
+
+### Sprint Planning
+
+Set up a new sprint with AI assistance:
+
+```text
+"Create sprint tasks for Project Alpha:
+- Setup development environment (Priority 5, Due: Monday)
+- Design database schema (Priority 4, Due: Tuesday)
+- Implement user authentication (Priority 5, Due: Thursday)
+- Write unit tests (Priority 4, Due: Friday)
+- Code review and merge (Priority 3, Due: Friday)
+Tag all with #sprint-01 and +ProjectAlpha"
+```
+
+**MCP executes:**
+```json
+{
+  "name": "batch_create_tasks",
+  "arguments": {
+    "defaultFilePath": "Projects/Sprint-01.md",
+    "tasks": [
+      {
+        "content": "Setup development environment",
+        "priority": 5,
+        "dueDate": "2024-01-15",
+        "project": "ProjectAlpha",
+        "tags": ["sprint-01"]
+      },
+      // ... more tasks
+    ]
+  }
+}
+```
+
+### Project Status Report
+
+Generate project insights:
+
+```text
+"Analyze Project Alpha:
+- How many tasks are complete vs incomplete?
+- What high-priority items are overdue?
+- What's the completion trend this month?"
+```
+
+**AI Response:**
+```markdown
+## Project Alpha Status Report
+
+### Overview
+- Total Tasks: 47
+- Completed: 31 (66%)
+- In Progress: 12 (26%)
+- Not Started: 4 (8%)
+
+### Critical Items (Overdue + High Priority)
+1. API Integration - 3 days overdue
+2. Security Audit - 1 day overdue
+
+### This Month's Progress
+- Week 1: 5 tasks completed
+- Week 2: 8 tasks completed
+- Week 3: 12 tasks completed (current)
+- Trend: Accelerating ↗️
+
+### Recommendations
+- Focus on overdue high-priority items
+- API Integration blocks 3 other tasks
+- Consider redistributing Week 4 workload
+```
+
+### Milestone Tracking
+
+Track project milestones:
+
+```text
+"Show all milestones for Q1 projects. 
+Highlight any at risk of missing deadline."
+```
+
+## Meeting Management
+
+### Pre-Meeting Preparation
+
+Before a meeting:
+
+```text
+"Prepare for tomorrow's client meeting:
+1. Find all tasks related to ClientX
+2. Identify discussion points
+3. Create action items template"
+```
+
+**AI generates:**
+```markdown
+## ClientX Meeting Prep - January 16, 2024
+
+### Open Items (5)
+- Contract renewal discussion (Due: Jan 20)
+- Feature request: Dashboard customization
+- Bug report: Login timeout issue
+- Q1 roadmap review
+- Budget allocation for add-ons
+
+### Completed Since Last Meeting (3)
+- ✅ Fixed data export issue
+- ✅ Deployed performance improvements
+- ✅ Updated documentation
+
+### Suggested Agenda
+1. Review completed items (5 min)
+2. Address bug report (10 min)
+3. Discuss feature request (15 min)
+4. Q1 roadmap alignment (20 min)
+5. Contract and budget (10 min)
+
+### Action Items Template
+- [ ] [Owner] Action description (Due: Date)
+- [ ] [Owner] Action description (Due: Date)
+```
+
+### Post-Meeting Actions
+
+After the meeting:
+
+```text
+"Create tasks from these meeting notes:
+- John: Send proposal by Friday (high priority)
+- Sarah: Review legal docs by next Tuesday
+- Me: Update dashboard mockups by Monday
+- Team: Schedule follow-up for next month
+All tasks should be tagged #ClientX"
+```
+
+## Automation Workflows
+
+### Recurring Task Generation
+
+Set up recurring tasks:
+
+```text
+"Create weekly recurring tasks:
+- Monday: Team standup prep
+- Wednesday: Progress report
+- Friday: Week review and planning
+All should be medium priority, tagged #recurring"
+```
+
+### Task Migration
+
+Move tasks between projects:
+
+```text
+"Find all tasks tagged #prototype in the Research project 
+and move them to the Development project. 
+Update their priority to 4."
+```
+
+**MCP operations:**
+1. Query tasks with specific criteria
+2. Batch update project assignment
+3. Update priority levels
+4. Confirm changes
+
+### Bulk Status Updates
+
+End-of-sprint cleanup:
+
+```text
+"Mark all tasks in Sprint-01 as complete 
+except those tagged #carry-over. 
+Move carry-over tasks to Sprint-02."
+```
+
+## Time Management
+
+### Time Blocking
+
+Create time-blocked tasks:
+
+```text
+"Create time blocks for tomorrow:
+- 9:00-10:00: Deep work on API design
+- 10:00-10:30: Email and messages
+- 10:30-12:00: Development sprint
+- 13:00-14:00: Code review
+- 14:00-15:00: Team meeting
+- 15:00-17:00: Feature implementation"
+```
+
+### Focus Sessions
+
+Set up focused work sessions:
+
+```text
+"Create a 2-hour focus block:
+1. Set main task: Complete user authentication
+2. Add subtasks:
+   - Review requirements (15 min)
+   - Write implementation (60 min)
+   - Write tests (30 min)
+   - Document changes (15 min)"
+```
+
+## Data Analysis
+
+### Productivity Metrics
+
+Analyze your productivity:
+
+```text
+"Analyze my task completion for the past month:
+- Average daily completion rate
+- Most productive day of week
+- Which projects take most time
+- Priority distribution"
+```
+
+**AI Analysis:**
+```markdown
+## Productivity Analysis - Last 30 Days
+
+### Completion Metrics
+- Total tasks completed: 127
+- Average per day: 4.2 tasks
+- Completion rate: 78%
+
+### Best Performance
+- Most productive: Tuesdays (6.1 tasks avg)
+- Peak hours: 9 AM - 12 PM
+- Best week: Week 2 (34 tasks)
+
+### Project Distribution
+1. Client Work: 45% of tasks
+2. Internal Development: 30%
+3. Administration: 15%
+4. Learning: 10%
+
+### Priority Insights
+- High priority completion: 92%
+- Medium priority completion: 78%
+- Low priority completion: 65%
+- Recommendation: Delegate more low-priority tasks
+```
+
+### Workload Balancing
+
+Balance your workload:
+
+```text
+"Analyze my workload for next week:
+- Which days are overloaded?
+- What can be postponed?
+- Suggest a balanced schedule"
+```
+
+## Advanced Integrations
+
+### Cross-Tool Workflows
+
+Integrate with other tools:
+
+```text
+"When I mention a task in my code comments like:
+// TODO: Implement caching mechanism
+Create a corresponding task in Obsidian with:
+- Context from the file path
+- Priority based on TODO/FIXME/HACK
+- Tag with #code-todo"
+```
+
+### Email to Task
+
+Convert emails to tasks:
+
+```text
+"Create tasks from this email thread:
+Subject: Project Requirements Update
+- Review new requirements doc (High, Due: Friday)
+- Update implementation plan (Medium, Due: Monday)
+- Schedule stakeholder meeting (Low, Due: Next week)"
+```
+
+### Calendar Integration
+
+Sync with calendar events:
+
+```text
+"For each meeting in my calendar tomorrow:
+- Create a prep task 30 minutes before
+- Create a follow-up task for the day after
+- Tag with #meeting and the attendee names"
+```
+
+## Team Collaboration
+
+### Task Delegation
+
+Delegate tasks to team members:
+
+```text
+"From my current tasks, identify which ones could be delegated:
+- Technical tasks → Dev team
+- Documentation → Technical writer
+- Testing → QA team
+Create delegation templates for each."
+```
+
+### Team Status Dashboard
+
+Create team overview:
+
+```text
+"Generate team status dashboard:
+- Tasks by team member
+- Overdue items per person
+- This week's priorities
+- Blockers and dependencies"
+```
+
+**Generated Dashboard:**
+```markdown
+## Team Status - Week 3
+
+### Task Distribution
+- Alice: 12 tasks (3 high priority)
+- Bob: 8 tasks (2 high priority)
+- Carol: 10 tasks (4 high priority)
+- David: 7 tasks (1 high priority)
+
+### ⚠️ Overdue Items
+- Alice: API documentation (2 days)
+- Carol: Test suite update (1 day)
+
+### This Week's Priorities
+1. Complete Sprint-01 deliverables
+2. Client presentation preparation
+3. Security audit response
+4. Q2 planning kickoff
+
+### Blockers
+- Waiting on design approval (affects 3 tasks)
+- Database migration pending (affects 5 tasks)
+```
+
+## Custom Workflows
+
+### Personal Routines
+
+Create personalized workflows:
+
+```text
+"My morning routine:
+1. Check overdue tasks
+2. Review today's calendar
+3. Set 3 main priorities
+4. Time block the morning
+5. Create focus session for deep work"
+```
+
+### Context Switching
+
+Manage context switches:
+
+```text
+"I'm switching from Project A to Project B:
+1. Save current state of Project A tasks
+2. Mark in-progress items
+3. Load Project B context
+4. Show Project B priorities
+5. Suggest starting point"
+```
+
+### Review Cycles
+
+Set up review processes:
+
+```text
+"Weekly review process:
+1. List completed tasks
+2. Identify incomplete high-priority items
+3. Analyze why tasks weren't completed
+4. Adjust next week's priorities
+5. Archive completed project tasks"
+```
+
+## Tips for Effective Use
+
+### 1. Start Simple
+Begin with basic queries before complex automation:
+- ❌ "Reorganize my entire task system"
+- ✅ "Show today's high-priority tasks"
+
+### 2. Be Specific
+Provide clear criteria for better results:
+- ❌ "Find important stuff"
+- ✅ "Find tasks with priority 4-5 due this week"
+
+### 3. Use Natural Language
+The AI understands context:
+- "What should I work on now?" 
+- "Help me plan tomorrow"
+- "I'm overwhelmed, prioritize my tasks"
+
+### 4. Iterate and Refine
+Adjust queries based on results:
+1. Start broad: "Show project tasks"
+2. Refine: "Show incomplete project tasks"
+3. Focus: "Show incomplete high-priority project tasks due this week"
+
+### 5. Create Templates
+Save successful workflows:
+```javascript
+const dailyReview = `
+  Show me:
+  1. What I completed today
+  2. What's still pending
+  3. Tomorrow's priorities
+  4. Any new urgent items
+`;
+```
+
+## Next Steps
+
+- Review [API Reference](/docs/mcp-integration/api-reference) for detailed parameters
+- Explore [Client Configurations](/docs/mcp-integration/clients) for your tools
+- Check [Troubleshooting](/docs/mcp-integration/troubleshooting) if you encounter issues
+- Share your workflows with the community
+
+<Callout type="success">
+  **Pro Tip**: Save your most effective AI prompts as templates. This creates consistent, reliable workflows you can reuse daily.
+</Callout>

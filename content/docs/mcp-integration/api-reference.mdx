@@ -1,0 +1,766 @@
+---
+title: MCP API Reference
+description: Complete API documentation for Task Genius MCP tools
+---
+
+This document provides comprehensive documentation for all MCP tools available in Task Genius. Each tool includes parameters, return values, and practical examples.
+
+## Authentication
+
+All API calls require authentication using one of two methods:
+
+### Method A: Separate Headers
+```http
+Authorization: Bearer YOUR_TOKEN
+mcp-app-id: YOUR_APP_ID
+```
+
+### Method B: Combined Bearer (Recommended)
+```http
+Authorization: Bearer YOUR_TOKEN+YOUR_APP_ID
+```
+
+## Protocol Flow
+
+### 1. Initialize Session
+
+```json
+// Request
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "initialize",
+  "params": {
+    "protocolVersion": "2025-06-18",
+    "capabilities": {
+      "tools": {}
+    }
+  }
+}
+
+// Response
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "protocolVersion": "2025-06-18",
+    "capabilities": {
+      "tools": {}
+    },
+    "sessionId": "session_123"
+  }
+}
+```
+
+### 2. Use Tools
+
+Include the session ID in subsequent requests:
+
+```http
+mcp-session-id: session_123
+```
+
+## Query Tools
+
+### query_tasks
+
+Query tasks with advanced filtering and sorting options.
+
+**Parameters:**
+```typescript
+{
+  filter?: {
+    completed?: boolean;
+    priority?: 1 | 2 | 3 | 4 | 5;
+    project?: string;
+    context?: string;
+    tags?: string[];
+    hasDate?: boolean;
+    dateType?: "due" | "start" | "scheduled" | "completed";
+    dateRange?: {
+      from: string;  // YYYY-MM-DD
+      to: string;    // YYYY-MM-DD
+    };
+  };
+  sort?: {
+    field: "priority" | "dueDate" | "startDate" | "created" | "modified";
+    order: "asc" | "desc";
+  };
+  limit?: number;   // Default: 100, Max: 1000
+  offset?: number;  // For pagination
+}
+```
+
+**Example:**
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "tools/call",
+  "params": {
+    "name": "query_tasks",
+    "arguments": {
+      "filter": {
+        "completed": false,
+        "priority": 5,
+        "tags": ["urgent", "review"]
+      },
+      "sort": {
+        "field": "dueDate",
+        "order": "asc"
+      },
+      "limit": 50
+    }
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Found 3 tasks matching criteria"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "task_abc123",
+        "content": "Review quarterly report",
+        "completed": false,
+        "priority": 5,
+        "dueDate": "2024-01-15",
+        "tags": ["urgent", "review"],
+        "project": "Q1-Planning",
+        "filePath": "Daily/2024-01-10.md",
+        "line": 15
+      }
+    ]
+  }
+}
+```
+
+### query_project_tasks
+
+Get all tasks for a specific project.
+
+**Parameters:**
+```typescript
+{
+  project: string;  // Required: project name
+  includeCompleted?: boolean;  // Default: true
+  limit?: number;
+}
+```
+
+**Example:**
+```json
+{
+  "name": "query_project_tasks",
+  "arguments": {
+    "project": "Website Redesign",
+    "includeCompleted": false
+  }
+}
+```
+
+### query_context_tasks
+
+Get all tasks for a specific context.
+
+**Parameters:**
+```typescript
+{
+  context: string;  // Required: context name (e.g., "@home", "@office")
+  includeCompleted?: boolean;
+  limit?: number;
+}
+```
+
+### query_by_priority
+
+Filter tasks by priority level.
+
+**Parameters:**
+```typescript
+{
+  priority: 1 | 2 | 3 | 4 | 5;  // Required
+  completed?: boolean;
+  limit?: number;
+}
+```
+
+### query_by_due_date
+
+Find tasks within a date range.
+
+**Parameters:**
+```typescript
+{
+  from?: string;  // YYYY-MM-DD (defaults to today)
+  to?: string;    // YYYY-MM-DD (defaults to 7 days from now)
+  includeOverdue?: boolean;
+  limit?: number;
+}
+```
+
+### search_tasks
+
+Full-text search across task content.
+
+**Parameters:**
+```typescript
+{
+  query: string;  // Required: search text
+  searchIn?: ("content" | "tags" | "project" | "context")[];
+  caseSensitive?: boolean;  // Default: false
+  limit?: number;
+}
+```
+
+**Example:**
+```json
+{
+  "name": "search_tasks",
+  "arguments": {
+    "query": "meeting notes",
+    "searchIn": ["content", "tags"],
+    "limit": 20
+  }
+}
+```
+
+## Create Tools
+
+### create_task
+
+Create a single task with full metadata support.
+
+**Parameters:**
+```typescript
+{
+  content: string;          // Required: task description
+  filePath?: string;        // Target file (defaults to daily note)
+  priority?: 1-5;           // Task priority
+  dueDate?: string;         // YYYY-MM-DD
+  startDate?: string;       // YYYY-MM-DD
+  scheduledDate?: string;   // YYYY-MM-DD
+  project?: string;         // Project name
+  context?: string;         // Context (@location)
+  tags?: string[];          // Tags without #
+  parent?: string;          // Parent task ID for subtasks
+  completed?: boolean;      // For recording completed tasks
+  completedDate?: string;   // YYYY-MM-DD (when completed=true)
+}
+```
+
+**Example:**
+```json
+{
+  "name": "create_task",
+  "arguments": {
+    "content": "Prepare presentation for client meeting",
+    "priority": 4,
+    "dueDate": "2024-01-20",
+    "project": "ClientX",
+    "tags": ["presentation", "important"],
+    "context": "@office"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Task created successfully"
+      }
+    ],
+    "task": {
+      "id": "task_xyz789",
+      "content": "Prepare presentation for client meeting",
+      "filePath": "Daily/2024-01-15.md",
+      "line": 23
+    }
+  }
+}
+```
+
+### create_task_in_daily_note
+
+Create a task specifically in today's daily note.
+
+**Parameters:**
+```typescript
+{
+  content: string;        // Required
+  heading?: string;       // Place under specific heading
+  priority?: 1-5;
+  dueDate?: string;
+  startDate?: string;
+  project?: string;
+  context?: string;
+  tags?: string[];
+  parent?: string;        // Parent task ID
+  completed?: boolean;    // For recording
+  completedDate?: string;
+}
+```
+
+### add_project_quick_capture
+
+Quick capture with automatic project tagging.
+
+**Parameters:**
+```typescript
+{
+  content: string;    // Required
+  project: string;    // Required: auto-adds as +project
+  heading?: string;   // Section heading
+  priority?: 1-5;
+  dueDate?: string;
+  context?: string;
+  tags?: string[];
+}
+```
+
+### batch_create_tasks
+
+Create multiple tasks efficiently in one operation.
+
+**Parameters:**
+```typescript
+{
+  defaultFilePath?: string;  // Default file for all tasks
+  tasks: Array<{
+    content: string;         // Required for each task
+    filePath?: string;       // Override default
+    priority?: 1-5;
+    dueDate?: string;
+    startDate?: string;
+    project?: string;
+    context?: string;
+    tags?: string[];
+    parent?: string;
+    completed?: boolean;
+    completedDate?: string;
+  }>;
+}
+```
+
+**Example:**
+```json
+{
+  "name": "batch_create_tasks",
+  "arguments": {
+    "defaultFilePath": "Projects/Sprint-01.md",
+    "tasks": [
+      {
+        "content": "Setup development environment",
+        "priority": 5,
+        "tags": ["setup"]
+      },
+      {
+        "content": "Review API documentation",
+        "priority": 3,
+        "tags": ["documentation"]
+      },
+      {
+        "content": "Create initial tests",
+        "priority": 4,
+        "dueDate": "2024-01-18",
+        "tags": ["testing"]
+      }
+    ]
+  }
+}
+```
+
+### batch_create_subtasks
+
+Add multiple subtasks to an existing parent task.
+
+**Parameters:**
+```typescript
+{
+  parentTaskId: string;  // Required: parent task ID
+  subtasks: Array<{
+    content: string;     // Required for each
+    priority?: 1-5;
+    dueDate?: string;
+  }>;
+}
+```
+
+## Update Tools
+
+### update_task
+
+Update any properties of an existing task.
+
+**Parameters:**
+```typescript
+{
+  taskId: string;     // Required
+  updates: {
+    content?: string;
+    priority?: 1-5;
+    dueDate?: string;
+    startDate?: string;
+    project?: string;
+    context?: string;
+    tags?: string[];
+    completed?: boolean;
+    completedDate?: string;
+  };
+}
+```
+
+### update_task_status
+
+Change task completion status.
+
+**Parameters:**
+```typescript
+{
+  taskId: string;           // Required
+  completed?: boolean;      // Set completion
+  status?: string;         // Custom status marker
+}
+```
+
+### batch_update_task_status
+
+Update multiple task statuses at once.
+
+**Parameters:**
+```typescript
+{
+  taskIds: string[];        // Required: array of task IDs
+  completed?: boolean;
+  status?: string;
+}
+```
+
+**Example:**
+```json
+{
+  "name": "batch_update_task_status",
+  "arguments": {
+    "taskIds": ["task_1", "task_2", "task_3"],
+    "completed": true
+  }
+}
+```
+
+### batch_update_text
+
+Find and replace text across multiple tasks.
+
+**Parameters:**
+```typescript
+{
+  taskIds: string[];    // Required
+  findText: string;     // Required: text to find
+  replaceText: string;  // Required: replacement text
+}
+```
+
+### postpone_tasks
+
+Reschedule tasks to a new date.
+
+**Parameters:**
+```typescript
+{
+  taskIds: string[];    // Required
+  newDate: string;      // Required: YYYY-MM-DD
+  updateType?: "due" | "start" | "both";  // Default: "due"
+}
+```
+
+## List Tools
+
+### list_all_metadata
+
+Get all unique tags, projects, and contexts in your vault.
+
+**Parameters:** None
+
+**Response:**
+```json
+{
+  "result": {
+    "tags": ["urgent", "review", "documentation"],
+    "projects": ["Website", "Mobile App", "API"],
+    "contexts": ["@home", "@office", "@phone"]
+  }
+}
+```
+
+### list_tasks_for_period
+
+List tasks for a specific time period.
+
+**Parameters:**
+```typescript
+{
+  period: "day" | "month" | "year";  // Required
+  date: string;                       // Required: base date YYYY-MM-DD
+  dateType?: "due" | "start" | "scheduled" | "completed";
+  limit?: number;
+}
+```
+
+**Example:**
+```json
+{
+  "name": "list_tasks_for_period",
+  "arguments": {
+    "period": "month",
+    "date": "2024-01-15",
+    "dateType": "due"
+  }
+}
+```
+
+### list_tasks_in_range
+
+Get tasks between two dates.
+
+**Parameters:**
+```typescript
+{
+  from: string;     // Required: YYYY-MM-DD
+  to: string;       // Required: YYYY-MM-DD
+  dateType?: "due" | "start" | "scheduled" | "completed";
+  limit?: number;
+}
+```
+
+## Delete Tools
+
+### delete_task
+
+Remove a task by ID.
+
+**Parameters:**
+```typescript
+{
+  taskId: string;  // Required
+}
+```
+
+**Response:**
+```json
+{
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Task deleted successfully"
+      }
+    ],
+    "deleted": true,
+    "taskId": "task_abc123"
+  }
+}
+```
+
+## Error Handling
+
+All tools return errors in standard JSON-RPC format:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "error": {
+    "code": -32602,
+    "message": "Invalid params",
+    "data": {
+      "field": "priority",
+      "reason": "Must be between 1 and 5"
+    }
+  }
+}
+```
+
+### Common Error Codes
+
+| Code | Meaning | Solution |
+|------|---------|----------|
+| -32700 | Parse error | Check JSON syntax |
+| -32600 | Invalid request | Verify request structure |
+| -32601 | Method not found | Check tool name spelling |
+| -32602 | Invalid params | Review parameter requirements |
+| -32603 | Internal error | Check server logs |
+| -32000 | Server error | Retry or check server status |
+
+## Rate Limiting
+
+To ensure optimal performance:
+
+- **Batch operations** when possible (use batch_* tools)
+- **Limit query results** to necessary data
+- **Use pagination** for large result sets
+- **Cache responses** when appropriate
+
+## Best Practices
+
+### 1. Use Specific Filters
+
+```javascript
+// Good: Specific and efficient
+{
+  "filter": {
+    "completed": false,
+    "priority": 5,
+    "project": "CurrentSprint"
+  }
+}
+
+// Bad: Too broad
+{
+  "filter": {}  // Returns all tasks
+}
+```
+
+### 2. Handle Pagination
+
+```javascript
+// First page
+const page1 = await queryTasks({
+  limit: 100,
+  offset: 0
+});
+
+// Next page
+const page2 = await queryTasks({
+  limit: 100,
+  offset: 100
+});
+```
+
+### 3. Error Recovery
+
+```javascript
+try {
+  const result = await createTask({
+    content: "New task"
+  });
+} catch (error) {
+  if (error.code === -32602) {
+    // Invalid parameters - check and retry
+  } else if (error.code === -32603) {
+    // Server error - log and notify user
+  }
+}
+```
+
+### 4. Optimize Batch Operations
+
+```javascript
+// Good: Single batch operation
+await batchCreateTasks({
+  tasks: taskList
+});
+
+// Bad: Multiple individual calls
+for (const task of taskList) {
+  await createTask(task);  // Inefficient
+}
+```
+
+## WebSocket Support (Future)
+
+The MCP server currently uses HTTP. WebSocket support for real-time updates is planned:
+
+```javascript
+// Future implementation
+const ws = new WebSocket('ws://127.0.0.1:7777/mcp/stream');
+
+ws.on('message', (data) => {
+  const event = JSON.parse(data);
+  if (event.type === 'task.created') {
+    // Handle new task
+  }
+});
+```
+
+## SDK Examples
+
+### JavaScript/TypeScript
+
+```typescript
+class TaskGeniusMCP {
+  private sessionId: string;
+  
+  async initialize(): Promise<void> {
+    const response = await fetch(this.url, {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'initialize'
+      })
+    });
+    
+    const result = await response.json();
+    this.sessionId = response.headers.get('mcp-session-id');
+  }
+  
+  async queryTasks(filter: TaskFilter): Promise<Task[]> {
+    return this.callTool('query_tasks', { filter });
+  }
+}
+```
+
+### Python
+
+```python
+import requests
+import json
+
+class TaskGeniusMCP:
+    def __init__(self, url, token, app_id):
+        self.url = url
+        self.headers = {
+            'Authorization': f'Bearer {token}+{app_id}',
+            'Content-Type': 'application/json'
+        }
+        self.session_id = None
+    
+    def initialize(self):
+        response = requests.post(
+            self.url,
+            headers=self.headers,
+            json={
+                'jsonrpc': '2.0',
+                'id': 1,
+                'method': 'initialize'
+            }
+        )
+        self.session_id = response.headers.get('mcp-session-id')
+    
+    def query_tasks(self, **filter):
+        return self.call_tool('query_tasks', {'filter': filter})
+```
+
+## Next Steps
+
+- Explore [Use Cases](/docs/mcp-integration/use-cases) for practical examples
+- Review [Client Configuration](/docs/mcp-integration/clients) for your tools
+- Check [Troubleshooting](/docs/mcp-integration/troubleshooting) for common issues
+
+<Callout type="info">
+  **API Tip**: Always include a `limit` parameter in queries to prevent overwhelming responses. Start with small limits during development.
+</Callout>

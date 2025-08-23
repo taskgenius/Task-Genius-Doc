@@ -1,0 +1,35 @@
+---
+title: Task Gutter
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import { CalendarCheckIcon } from "lucide-react";
+
+Has popover menu to edit task status, priority, due date, start date, scheduled date, and tags. Or a modal when using mobile.
+
+<VersionCallout version="8.6.3" />
+
+## Usage
+
+You need to enable this feature in the settings.
+
+1. Go to the Task Genius settings.
+2. Visit the `Task Handler` section.
+3. Enable the `Enable Task Gutter` setting.
+4. Save the settings.
+
+Then you can use the task gutter when using live-preview mode in the editor.
+
+<Callout type="warn">
+  This feature is not available in the read mode.
+  <span />
+  You need to create at least one task in the document to use this feature.
+</Callout>
+
+The gutter menu will appear on the right side of the editor with a <CalendarCheckIcon className="w-4 h-4 inline-block" /> icon.
+
+## Settings
+
+You can configure the gutter menu in the `Task Handler` section.
+
+- `Enable Task Gutter`: Enable the task gutter feature.

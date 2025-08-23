@@ -1,0 +1,134 @@
+---
+title: View
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+
+The Task Genius View provides a powerful, centralized dashboard to manage all your tasks across your entire Obsidian vault.
+
+<VersionCallout version="7.0.0" />
+
+## Quick Access
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=view-settings">
+  Open View Settings
+</DeepLinkButton>
+<DeepLinkFallback />
+
+## Architecture
+
+Task Genius uses the modern **Dataflow Architecture** for optimal performance and flexibility:
+
+- **Event-driven System**: Real-time updates across all views
+- **Multi-source Support**: Seamlessly integrates file tasks, ICS calendar events, and file-level tasks
+- **Smart Caching**: Fast startup with persisted state and incremental updates
+- **Worker Processing**: Parallel processing for large vaults
+
+The system automatically indexes your tasks and keeps them synchronized across all views.
+
+## Opening the View
+
+Access the view using one of these methods:
+
+- Click the dedicated **Ribbon Icon** (if enabled in settings).
+- Run the command `Task Genius: Open Task Genius view` from the Obsidian command palette (`Ctrl/Cmd + P`).
+
+## Interface Overview
+
+The view typically consists of:
+
+- **Left Panel/Sidebar**: Navigation controls to switch between different views.
+- **Main Panel**: Displays the [list of tasks](/docs/task-view/list-item) based on the current mode and filters. (You can filter by tags, projects, status, etc.)
+- **Right Panel (Details Panel)**: Shows detailed information and allows editing of the currently selected task.
+
+## Views
+
+The Task Genius View offers several views to organize and visualize your tasks:
+
+<Cards>
+  <Card
+    title="Inbox"
+    href="/docs/task-view/inbox-view"
+    description="Shows tasks recently captured or those that haven't been processed or assigned specific metadata (like projects or dates)."
+  />
+  <Card
+    title="Forecast"
+    href="/docs/task-view/forecast-view"
+    description="Displays tasks with upcoming due dates, often grouped by day or week."
+  />
+  <Card
+    title="Tags"
+    href="/docs/task-view/tag-view"
+    description="Groups tasks based on the tags associated with them."
+  />
+  <Card
+    title="Projects"
+    href="/docs/task-view/project-view"
+    description="Groups tasks based on #project tags or project metadata."
+  />
+  <Card
+    title="Review"
+    href="/docs/task-view/review-view"
+    description="Helps you review incomplete tasks or tasks needing attention."
+  />
+  <Card
+    title="Flag"
+    href="/docs/task-view/flag-view"
+    description="Groups tasks based on their priority."
+  />
+  <Card
+    title="Event"
+    href="/docs/task-view/event-view"
+    description="Use calendar (eg. month/week/day) view to see your tasks in a calendar format."
+  />
+  <Card
+    title="Status"
+    href="/docs/task-view/status-view"
+    description="Groups tasks based on their status (e.g., '- [x]', '- [ ]', '- [!]')."
+  />
+  <Card
+    title="Habit"
+    href="/docs/task-view/habit-view"
+    description="Fetch metadata from your daily notes and display them in a list."
+  />
+  <Card
+    title="Plan"
+    href="/docs/task-view/plan-view"
+    description="View tasks in a Gantt chart view."
+  />
+  <Card
+    title="Custom"
+    href="/docs/task-view/custom-view"
+    description="Create a custom view to display tasks in a specific way."
+  />
+</Cards>
+
+## Interacting with Tasks
+
+Within the view, you can:
+
+- **View/Edit Details**: Click on a task in the main panel to see its full description, due date, priority, notes, source file link, etc., in the right details panel. You can often edit these details directly.
+- **Change Status**: Click the task marker (e.g., `[ ]`) directly in the task list to cycle its status or mark it complete.
+- **Sort & Filter**: Use controls within the view to sort tasks (by priority, due date, etc.) and apply filters (by tag, status, date range, etc.).
+- **Context Menu**: Right-click on a task in the list to access relevant actions (e.g., set priority, set due date, move task, go to source note).
+
+## Task Indexing
+
+The Dataflow architecture maintains a high-performance index of all tasks:
+
+### Automatic Updates
+- **Real-time Monitoring**: File changes trigger instant updates
+- **Event-driven Sync**: All views stay synchronized automatically
+- **Background Processing**: Workers handle large operations without blocking
+
+### Data Sources
+- **File Tasks**: Regular tasks from Markdown and Canvas files
+- **ICS Events**: External calendar events displayed as tasks
+- **File-level Tasks**: Entire files recognized as tasks based on metadata
+
+### Manual Controls
+If needed, you can manually refresh the index:
+- `Task Genius: Refresh task index` - Quick refresh
+- `Task Genius: Force reindex all tasks` - Complete rebuild
+
+Learn more in the [Task Indexing](/docs/task-view/indexer) documentation.

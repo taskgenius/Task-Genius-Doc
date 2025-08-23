@@ -1,0 +1,105 @@
+---
+title: "Desktop v9.1.0"
+date: "2025-07-18"
+version: "9.1.0"
+platform: "desktop"
+access: "public"
+---
+
+## Shiny new things
+
+- **Minimal Quick Capture Mode**
+  - Added lightweight task capture without opening full editor
+
+- **Natural Language Date Parsing**
+  - Integrated chrono-node for intelligent date recognition
+  - Support for expressions like "tomorrow", "next Monday", "in 3 days"
+  - Seamless integration with quick capture
+
+- **Webcal/ICS Calendar Subscription**
+  - Added support for `webcal://` protocol
+
+- **Frontmatter Metadata Inheritance**
+  - Tasks inherit tags and metadata from file frontmatter
+  - Configurable inheritance rules
+  - Support for project and tag inheritance from parent files
+
+- **Task Completion Actions**
+  - Configure automatic actions when tasks are completed
+  - Support for archiving, moving, deleting, and copying, etc.
+
+- **Task Genius Icons For Checkbox** designed by @jsmorabito.
+
+
+## Improvements
+
+- **Kanban Column Reordering**
+  - Drag and drop columns to reorder in kanban view
+
+- **Better Timeline Sidebar**
+  - Timeline input box now supports collapse/expand
+  - Better space utilization in timeline view
+
+- **Task Indexing Optimization**
+  - Implemented mtime-based caching mechanism
+  - Reduced unnecessary re-indexing operations
+  - Significant performance boost for large vaults
+
+- **Project Configuration Caching**
+  - Optimized ProjectConfigManager cache system
+  - Improved task parsing service efficiency
+  - Reduced memory footprint
+
+## Fixes
+
+- **CSS Issues with Task Creation**
+  - Resolved styling conflicts in minimal task creation dialog
+
+- **Forecast View Display Issues**
+  - Corrected task grouping in forecast view
+  - Fixed duplicate task display in timeline
+
+- **Checkbox State Cycling**
+  - Fixed click handler for proper status rotation
+  - Resolved edge cases in checkbox state transitions
+
+- **Canvas Task Operations**
+  - Fixed archive, delete, move, and copy operations in canvas
+  - Improved canvas task matching and updating logic
+  - Resolved canvas task duplication issues
+
+- **Project View Hierarchy**
+  - Fixed duplicate display of subtasks in tree structure
+  - Corrected parent-child relationship rendering
+
+- **Metadata Inheritance**
+  - Fixed frontmatter tag parsing
+  - Corrected metadata inheritance settings propagation
+  - Resolved date marker insertion position
+
+- **Quick Capture Path Issues**
+  - Fixed file path resolution in quick capture
+  - Improved error handling for invalid paths
+
+## Chore
+
+- **Comprehensive Test Coverage**
+  - Added unit tests for new features
+  - Created performance test suite
+  - Enhanced mock implementations for Obsidian API
+
+- **Improved Architecture**
+  - Refactored task operation executor
+  - Enhanced worker thread management
+  - Optimized caching mechanisms
+
+- Updated localization files
+- Enhanced task filtering with full file filtering support
+- Added support for more Dataview and Tasks plugin fields
+- Improved build system and CSS processing
+
+## Notice
+
+1. After upgrading, consider re-indexing tasks for optimal performance
+2. Calendar subscription requires active internet connection
+3. Some features may need manual enabling in settings

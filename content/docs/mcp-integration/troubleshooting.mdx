@@ -1,0 +1,606 @@
+---
+title: MCP Troubleshooting & FAQ
+description: Solutions to common issues and frequently asked questions
+---
+
+This guide helps you resolve common issues with Task Genius MCP integration and answers frequently asked questions.
+
+## Quick Diagnostics
+
+Before troubleshooting, run these checks:
+
+<div className="steps">
+
+### Step 1: Verify Server Status
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=mcp-integration">
+  Check MCP Status
+</DeepLinkButton>
+
+Look for:
+- [MCP Test] Server running (green indicator)
+- [MCP Test] Port number displayed
+- [MCP Test] No error messages
+
+### Step 2: Test Connection
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=mcp-integration&action=test" variant="secondary">
+  Run Connection Test
+</DeepLinkButton>
+
+Expected result:
+```text
+[MCP Test] Health check passed
+[MCP Test] Initialize successful
+[MCP Test] Tools list retrieved
+```
+
+### Step 3: Check Logs
+
+Open Obsidian Developer Console:
+- Windows/Linux: `Ctrl + Shift + I`
+- macOS: `Cmd + Option + I`
+
+Look for entries starting with `[MCP Test]`
+
+</div>
+
+## Common Issues
+
+### Server Won't Start
+
+#### Symptoms
+- Red "Stopped" indicator in settings
+- "Failed to start server" error
+- No response from health endpoint
+
+#### Solutions
+
+**1. Port Already in Use**
+
+Check if port 7777 is occupied:
+
+```bash
+# Windows
+netstat -ano | findstr :7777
+
+# macOS/Linux
+lsof -i :7777
+```
+
+Fix:
+- Kill the process using the port, OR
+- Change to a different port in settings, OR
+- Use "Next Available Port" button
+
+**2. Permission Issues**
+
+On macOS/Linux:
+```bash
+# Check permissions
+ls -la ~/.obsidian/plugins/Obsidian-Task-Genius/
+
+# Fix permissions if needed
+chmod -R 755 ~/.obsidian/plugins/Obsidian-Task-Genius/
+```
+
+**3. Firewall Blocking**
+
+- Add Obsidian to firewall exceptions
+- Allow localhost connections (127.0.0.1)
+- For network access, allow port 7777
+
+**4. Plugin Not Fully Loaded**
+
+1. Disable Task Genius plugin
+2. Restart Obsidian
+3. Enable Task Genius plugin
+4. Wait 5 seconds before enabling MCP
+
+### Authentication Failures
+
+#### Symptoms
+- "Unauthorized" errors
+- "Invalid token" messages
+- Session not established
+
+#### Solutions
+
+**1. Token Format Issues**
+
+Check your token format:
+
+❌ Wrong:
+```json
+"Authorization": "YOUR_TOKEN+YOUR_APP_ID"
+```
+
+✅ Correct:
+```json
+"Authorization": "Bearer YOUR_TOKEN+YOUR_APP_ID"
+```
+
+**2. Token Expired or Changed**
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=mcp-integration&action=regenerate-token" variant="warning">
+  Regenerate Token
+</DeepLinkButton>
+
+Then update all client configurations.
+
+**3. Missing App ID**
+
+Ensure your App ID is included:
+```bash
+# Find your App ID in settings or console
+console.log(app.appId)  // Shows something like "obsdmd1234567"
+```
+
+**4. Header Configuration**
+
+Verify headers in your client:
+
+Method A (Separate):
+```json
+{
+  "Authorization": "Bearer YOUR_TOKEN",
+  "mcp-app-id": "YOUR_APP_ID"
+}
+```
+
+Method B (Combined):
+```json
+{
+  "Authorization": "Bearer YOUR_TOKEN+YOUR_APP_ID"
+}
+```
+
+### Connection Issues
+
+#### Symptoms
+- "Connection refused" errors
+- Timeouts
+- "Cannot reach server"
+
+#### Solutions
+
+**1. Server Not Running**
+
+Check and restart:
+1. Open MCP settings
+2. Toggle server OFF
+3. Wait 2 seconds
+4. Toggle server ON
+5. Check status indicator
+
+**2. Network Configuration**
+
+For local access:
+```json
+{
+  "host": "127.0.0.1",  // Local only
+  "port": 7777
+}
+```
+
+For network access:
+```json
+{
+  "host": "0.0.0.0",   // All interfaces
+  "port": 7777
+}
+```
+
+**3. Client URL Issues**
+
+Common mistakes:
+
+❌ Wrong:
+- `http://localhost:7777/mcp/` (trailing slash)
+- `https://127.0.0.1:7777/mcp` (HTTPS not supported)
+- `http://127.0.0.1:7777` (missing /mcp)
+
+✅ Correct:
+- `http://127.0.0.1:7777/mcp`
+- `http://192.168.1.100:7777/mcp` (for network)
+
+**4. Proxy/VPN Interference**
+
+- Disable VPN temporarily
+- Check proxy settings
+- Use direct connection
+
+### Tool Execution Errors
+
+#### Symptoms
+- "Tool not found" errors
+- "Invalid parameters"
+- Unexpected results
+
+#### Solutions
+
+**1. Session Not Initialized**
+
+Always initialize first:
+```bash
+curl -X POST http://127.0.0.1:7777/mcp \
+  -H "Authorization: Bearer TOKEN+APPID" \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"initialize"}'
+```
+
+**2. Missing Session ID**
+
+Include session ID in subsequent requests:
+```bash
+-H "mcp-session-id: session_abc123"
+```
+
+**3. Parameter Validation**
+
+Check parameter types:
+
+❌ Wrong:
+```json
+{
+  "priority": "high",     // Should be number
+  "dueDate": "tomorrow",  // Should be YYYY-MM-DD
+  "completed": "yes"      // Should be boolean
+}
+```
+
+✅ Correct:
+```json
+{
+  "priority": 5,
+  "dueDate": "2024-01-20",
+  "completed": true
+}
+```
+
+**4. Tool Name Typos**
+
+Use exact tool names:
+- ✅ `query_tasks` (correct)
+- ❌ `queryTasks` (wrong)
+- ❌ `query-tasks` (wrong)
+
+### Performance Issues
+
+#### Symptoms
+- Slow responses
+- Timeouts
+- High CPU usage
+
+#### Solutions
+
+**1. Large Result Sets**
+
+Always use limits:
+```json
+{
+  "limit": 100,    // Reasonable limit
+  "offset": 0      // For pagination
+}
+```
+
+**2. Inefficient Queries**
+
+Optimize your filters:
+
+❌ Inefficient:
+```json
+{
+  "filter": {}  // Gets all tasks
+}
+```
+
+✅ Efficient:
+```json
+{
+  "filter": {
+    "completed": false,
+    "project": "Current"
+  },
+  "limit": 50
+}
+```
+
+**3. Indexing Issues**
+
+Rebuild task index:
+1. Settings → Task Genius → Index & Sources
+2. Click "Rebuild Index"
+3. Wait for completion
+4. Restart MCP server
+
+**4. Memory Management**
+
+For large vaults:
+- Increase Obsidian memory limit
+- Close unused plugins
+- Restart Obsidian periodically
+
+## Platform-Specific Issues
+
+### macOS
+
+**Issue: Security Warnings**
+
+Solution:
+```bash
+# Allow Obsidian network access
+System Preferences → Security & Privacy → Firewall → Options
+Add Obsidian to allowed apps
+```
+
+**Issue: Port Binding Failed**
+
+Solution:
+```bash
+# Check System Integrity Protection
+csrutil status
+
+# If needed, use a higher port number (> 1024)
+```
+
+### Windows
+
+**Issue: Windows Defender Blocking**
+
+Solution:
+1. Windows Security → Firewall & network protection
+2. Allow an app through firewall
+3. Add Obsidian.exe
+4. Check both Private and Public
+
+**Issue: PowerShell Execution Policy**
+
+For Claude Desktop/CLI tools:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+### Linux
+
+**Issue: Permission Denied**
+
+Solution:
+```bash
+# For ports < 1024
+sudo setcap 'cap_net_bind_service=+ep' /usr/bin/obsidian
+
+# Or use a higher port
+```
+
+**Issue: SELinux Blocking**
+
+Solution:
+```bash
+# Check SELinux status
+sestatus
+
+# Allow if needed
+setsebool -P httpd_can_network_connect 1
+```
+
+## Client-Specific Issues
+
+### Cursor
+
+**Issue: Configuration Not Loading**
+
+1. Verify config file location
+2. Check JSON syntax
+3. Restart Cursor
+4. Clear Cursor cache
+
+### Claude Desktop
+
+**Issue: Curl Command Failing**
+
+Test manually:
+```bash
+curl -v -X POST http://127.0.0.1:7777/mcp \
+  -H "Authorization: Bearer TOKEN+APPID" \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"initialize"}'
+```
+
+Common fixes:
+- Install/update curl
+- Check PATH variable
+- Use full curl path
+
+### VS Code
+
+**Issue: Extension Not Recognizing MCP**
+
+1. Update VS Code
+2. Reinstall MCP extension
+3. Check workspace settings
+4. Verify configuration scope
+
+## Frequently Asked Questions
+
+### General
+
+**Q: Is MCP secure?**
+
+A: Yes, MCP uses token-based authentication and runs locally by default. For additional security:
+- Keep tokens secret
+- Use local-only mode
+- Regenerate tokens periodically
+- Monitor access logs
+
+**Q: Can I use MCP on mobile?**
+
+A: No, MCP requires desktop Obsidian due to technical limitations of mobile platforms.
+
+**Q: Does MCP work offline?**
+
+A: Yes, MCP runs entirely locally. Internet is only needed for AI services (Claude, ChatGPT, etc.).
+
+**Q: Can multiple AI tools connect simultaneously?**
+
+A: Yes, multiple clients can connect to the same MCP server. Each gets its own session.
+
+### Configuration
+
+**Q: How do I change the port?**
+
+A: Settings → MCP Integration → Port → Enter new number → Restart server
+
+**Q: Can I run multiple MCP servers?**
+
+A: Yes, for different vaults:
+1. Use different ports (7777, 7778, etc.)
+2. Each vault has unique tokens
+3. Configure clients separately
+
+**Q: Should I use Method A or Method B authentication?**
+
+A: Method B (combined Bearer) is recommended for simplicity. Use Method A if your client doesn't support combined headers.
+
+**Q: How do I allow remote access?**
+
+A: Change host from `127.0.0.1` to `0.0.0.0` and ensure firewall allows the port. ⚠️ Understand security implications first.
+
+### Usage
+
+**Q: Why are my queries slow?**
+
+A: Common causes:
+- Large vault (10,000+ tasks)
+- No query limits
+- Inefficient filters
+- Index needs rebuilding
+
+**Q: Can I modify task files directly?**
+
+A: Yes, MCP modifications are the same as manual edits. Files update in real-time.
+
+**Q: What happens if Obsidian crashes?**
+
+A: MCP server stops with Obsidian. Restart Obsidian and re-enable MCP. No data is lost.
+
+**Q: How do I backup my MCP configuration?**
+
+A: Configuration is stored in Obsidian settings. Backup:
+- `.obsidian/plugins/obsidian-task-genius/data.json`
+- Client configuration files
+
+### Limits
+
+**Q: What are the rate limits?**
+
+A: No hard limits, but recommended:
+- Max 100 requests/second
+- Result sets < 1000 items
+- Batch operations < 500 items
+
+**Q: Maximum task content length?**
+
+A: 
+- Task content: 10,000 characters
+- Tags: 50 per task
+- File path: 260 characters (OS limit)
+
+**Q: How many concurrent connections?**
+
+A: Theoretical: Unlimited
+Practical: 10-20 for optimal performance
+
+## Debug Commands
+
+### Test Basic Connectivity
+
+```bash
+# Health check
+curl http://127.0.0.1:7777/health
+
+# Expected: {"status":"ok","version":"1.0.0"}
+```
+
+### Test Authentication
+
+```bash
+# With your actual token and app ID
+curl -X POST http://127.0.0.1:7777/mcp \
+  -H "Authorization: Bearer YOUR_TOKEN+YOUR_APP_ID" \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"initialize"}'
+```
+
+### Test Tool Execution
+
+```bash
+# List available tools
+curl -X POST http://127.0.0.1:7777/mcp \
+  -H "Authorization: Bearer YOUR_TOKEN+YOUR_APP_ID" \
+  -H "mcp-session-id: YOUR_SESSION_ID" \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
+```
+
+### Enable Debug Logging
+
+In MCP settings, set Log Level to "Debug", then check console:
+
+```javascript
+// In Obsidian console
+console.log(app.plugins.plugins['obsidian-task-genius'].mcpServerManager.getStatus())
+```
+
+## Getting Help
+
+If these solutions don't resolve your issue:
+
+1. **Gather Information**:
+   - Obsidian version
+   - Task Genius version  
+   - Error messages
+   - Console logs
+   - Steps to reproduce
+
+2. **Check Resources**:
+   - [GitHub Issues](https://github.com/yourusername/task-genius/issues)
+   - [Discord Community](https://discord.gg/taskgenius)
+   - [Documentation](https://taskgenius.docs)
+
+3. **Report Issue**:
+   - Use GitHub issue template
+   - Include diagnostic info
+   - Describe expected vs actual behavior
+   - Attach relevant logs
+
+<Callout type="warning">
+  **Security Note**: When sharing logs or configuration, always redact authentication tokens and sensitive information.
+</Callout>
+
+## Recovery Procedures
+
+### Reset MCP Configuration
+
+1. Disable MCP server
+2. Close Obsidian
+3. Delete MCP cache: `.obsidian/plugins/obsidian-task-genius/.mcp-cache`
+4. Restart Obsidian
+5. Re-enable MCP
+6. Regenerate token
+7. Reconfigure clients
+
+### Full Plugin Reset
+
+If all else fails:
+
+1. Export your settings (backup `data.json`)
+2. Disable Task Genius
+3. Delete plugin folder
+4. Reinstall Task Genius
+5. Import settings
+6. Re-enable MCP
+
+<Callout type="info">
+  **Remember**: MCP is a powerful feature but still in active development. Report bugs to help improve it for everyone!
+</Callout>

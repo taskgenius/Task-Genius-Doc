@@ -1,0 +1,52 @@
+---
+title: Deep Link Button Examples
+---
+
+# Deep Link Button Variants
+
+This page demonstrates the different button variants available for deep links.
+
+## Primary Variant (Default)
+
+<DeepLinkButton href="obsidian://task-genius/settings">
+  Open Settings (Primary)
+</DeepLinkButton>
+
+<DeepLinkFallback />
+
+## Secondary Variant
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=general" variant="secondary">
+  Open General Settings (Secondary)
+</DeepLinkButton>
+
+<DeepLinkFallback customText="Alternative: Navigate to Obsidian Settings → Task Genius → General" />
+
+## Warning Variant
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=experimental" variant="warning">
+  Open Experimental Settings (Warning)
+</DeepLinkButton>
+
+<DeepLinkFallback customText="⚠️ Manual access: Settings → Task Genius → Experimental (Use with caution)" />
+
+## Usage Examples
+
+### Basic Usage (Primary by default)
+```mdx
+<DeepLinkButton href="obsidian://task-genius/settings">
+  Open Settings
+</DeepLinkButton>
+```
+
+### With Variant
+```mdx
+<DeepLinkButton href="obsidian://task-genius/settings" variant="secondary">
+  Secondary Action
+</DeepLinkButton>
+```
+
+### Custom Fallback Text
+```mdx
+<DeepLinkFallback customText="Your custom fallback message here" />
+```

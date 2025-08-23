@@ -1,0 +1,404 @@
+---
+title: ICS Calendar Integration
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+
+Task Genius provides powerful ICS calendar integration to display external calendar events in your task views, with advanced holiday detection, status mapping, and text processing capabilities.
+
+<VersionCallout version="9.0.0" />
+
+## Overview
+
+The ICS integration allows you to:
+
+- **Import calendar events** from external ICS/iCal sources
+- **Detect and group holidays** to reduce visual clutter
+- **Map events to task statuses** based on timing and properties
+- **Transform event text** using custom replacement rules
+- **Display events** in forecast and calendar views alongside your tasks
+
+## Getting started
+
+### Basic setup
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=ics-integration">
+  Open ICS Settings
+</DeepLinkButton>
+<DeepLinkFallback />
+
+1. Go to `Settings` → `Task Genius` → `ICS Calendar Integration`
+2. Configure global settings for refresh intervals and caching
+3. Add your first calendar source by clicking `Add New Calendar Source`
+
+### Adding a calendar source
+
+When adding a new source, you'll need to configure:
+
+- **Source name**: Display name for the calendar
+- **ICS URL**: The URL to your ICS/iCal file
+- **Refresh interval**: How often to sync (in minutes)
+- **Color**: Optional color for events from this source
+- **Show type**: Display as "Event" or "Badge" in calendar views
+
+#### Supported URL types
+
+- **Google calendar**: Use the public ICS URL from calendar settings
+- **Outlook/Office 365**: Export calendar and use the ICS URL
+- **CalDAV**: Any CalDAV-compatible calendar service
+- **File URLs**: Local or network file paths to ICS files
+
+### Authentication
+
+For private calendars, configure authentication:
+
+- **Basic auth**: Username and password
+- **Bearer token**: API token authentication
+- **Custom headers**: Custom HTTP headers for specialized services
+
+## Holiday detection & grouping
+
+### Overview
+
+Holiday detection automatically identifies and groups consecutive holiday events to reduce clutter in your calendar views.
+
+### Configuration
+
+Enable holiday detection in your calendar source settings:
+
+```json
+{
+  "enabled": true,
+  "groupingStrategy": "first-only",
+  "maxGapDays": 1,
+  "showInForecast": true,
+  "showInCalendar": true
+}
+```
+
+### Grouping strategies
+
+- **None**: Show all events individually
+- **First only**: Show only the first day of consecutive holidays
+- **Summary**: Show a summary with day count (e.g., "Holiday (3 days)")
+- **Range**: Show first and last days (e.g., "Holiday: May 1-3")
+
+### Detection patterns
+
+Configure patterns to identify holiday events:
+
+#### Summary patterns (Regex)
+
+Regular expressions to match event titles:
+
+```
+holiday
+christmas
+day\s+\d+
+\d+\s+days?
+day\s+\d+\s+of\s+\d+
+```
+
+#### Keywords
+
+Simple text matching:
+
+```
+holiday
+vacation
+christmas
+festival
+```
+
+#### Categories
+
+Event categories that indicate holidays:
+
+```
+holiday
+vacation
+festival
+```
+
+### Example: Multi-day holiday calendar
+
+For holiday calendars showing "Christmas Holiday Day 1 of 3", "Christmas Holiday Day 2 of 3", etc.:
+
+1. **Enable holiday detection**
+2. **Set grouping strategy** to "First only"
+3. **Add detection patterns**:
+   - Summary: `holiday`, `day\s+\d+`, `\d+\s+days?`
+   - Keywords: `holiday`, `christmas`
+4. **Configure display**: Show only the first day to avoid repetition
+
+## Status mapping
+
+### Overview
+
+Status mapping automatically assigns task statuses to ICS events based on timing and event properties, integrating with your existing task status system.
+
+### Basic configuration
+
+Enable status mapping in your calendar source:
+
+```json
+{
+  "enabled": true,
+  "overrideIcsStatus": true,
+  "timingRules": {
+    "pastEvents": "x",
+    "currentEvents": "/",
+    "futureEvents": " "
+  }
+}
+```
+
+### Timing rules
+
+Map events based on when they occur:
+
+- **Past events**: Events that have ended (default: "x" - Complete)
+- **Current events**: Events happening today (default: "/" - In Progress)
+- **Future events**: Events in the future (default: " " - Incomplete)
+
+### Property rules (Higher priority)
+
+Override timing rules based on event properties:
+
+#### Holiday mapping
+
+```json
+{
+  "holidayMapping": {
+    "holidayStatus": "-"
+  }
+}
+```
+
+Maps detected holidays to "Cancelled" status to hide from active tasks.
+
+#### Category mapping
+
+Map specific event categories:
+
+```
+holiday:-
+vacation:-
+festival:-
+meeting:/
+work:x
+```
+
+#### Summary pattern mapping
+
+Use regex patterns to map based on event titles:
+
+- Pattern: `^Meeting:` → Status: `/` (In Progress)
+- Pattern: `holiday.*day\s+\d+` → Status: `-` (Cancelled)
+
+### Integration with task status system
+
+Status mapping uses your existing task status configuration:
+
+- Maps to status marks defined in plugin settings
+- Falls back to default marks if custom marks not found
+- Respects your task counting and progress calculation rules
+
+## Text replacements
+
+### Overview
+
+Transform event text using regular expressions to clean up or standardize event titles, descriptions, and locations.
+
+### Creating replacement rules
+
+1. In your calendar source settings, scroll to "Text Replacements"
+2. Click "Add Text Replacement Rule"
+3. Configure the rule:
+   - **Rule name**: Descriptive name
+   - **Target field**: Summary, Description, Location, or All
+   - **Pattern**: Regular expression to match
+   - **Replacement**: Text to replace with (use $1, $2 for capture groups)
+   - **Flags**: Regex flags (e.g., "g" for global, "i" for case-insensitive)
+
+### Common examples
+
+#### Remove meeting prefix
+
+- **Pattern**: `^Meeting: `
+- **Replacement**: `` (empty)
+- **Result**: "Meeting: Weekly Standup" → "Weekly Standup"
+
+#### Replace room numbers
+
+- **Pattern**: `Room (\d+)`
+- **Replacement**: `Conference Room $1`
+- **Result**: "Room 101" → "Conference Room 101"
+
+#### Clean holiday text
+
+- **Pattern**: `holiday.*day\s+\d+\s+of\s+\d+`
+- **Replacement**: `holiday`
+- **Result**: "Christmas holiday day 1 of 3" → "Christmas holiday"
+
+#### Swap words
+
+- **Pattern**: `(\w+) with (\w+)`
+- **Replacement**: `$2 and $1`
+- **Result**: "Meeting with John" → "John and Meeting"
+
+### Testing rules
+
+Use the built-in test feature when creating rules:
+
+1. Enter sample text in the "Test Input" field
+2. See the transformed result in real-time
+3. Adjust pattern and replacement as needed
+
+## Use cases & examples
+
+### 1. Work calendar integration
+
+**Scenario**: Integrate work calendar with meetings and deadlines
+
+**Configuration**:
+
+- **Timing rules**: Past meetings → Complete, Current → In Progress, Future → Incomplete
+- **Category mapping**: `meeting:/`, `deadline:!`
+- **Text replacements**: Remove "Meeting:" prefix, standardize room names
+
+**Result**: Clean integration with task workflow, proper status tracking
+
+### 2. Personal calendar management
+
+**Scenario**: Include personal events without cluttering task lists
+
+**Configuration**:
+
+- **Holiday detection**: Group vacation days, map to "Cancelled" status
+- **Status mapping**: Personal events → "Cancelled" to exclude from active tasks
+- **Display**: Show in calendar but not in forecast
+
+**Result**: Calendar visibility without task interference
+
+### 3. Multi-day holiday calendar
+
+**Scenario**: Holiday calendar with repetitive daily entries
+
+**Configuration**:
+
+- **Detection patterns**: Holiday keywords and day numbering patterns
+- **Grouping strategy**: "First only" to show single entry per holiday period
+- **Text replacements**: Clean up repetitive text
+- **Status mapping**: Holidays → "Cancelled"
+
+**Result**: Clean, non-repetitive holiday display
+
+### 4. Project calendar integration
+
+**Scenario**: Project milestones and deadlines from external system
+
+**Configuration**:
+
+- **Category mapping**: `milestone:!`, `deadline:!`
+- **Text replacements**: Extract project names, clean formatting
+- **Status mapping**: Past milestones → Complete, Future → High Priority
+
+**Result**: Integrated project tracking with proper prioritization
+
+## Advanced configuration
+
+### Performance optimization
+
+For large calendars or multiple sources:
+
+1. **Adjust refresh intervals**: Longer intervals for static calendars
+2. **Limit event count**: Set `maxEventsPerSource` appropriately
+3. **Optimize patterns**: Use specific patterns rather than broad matches
+4. **Cache settings**: Increase `maxCacheAge` for stable calendars
+
+### Network configuration
+
+For corporate or restricted environments:
+
+1. **Timeout settings**: Adjust `networkTimeout` for slow connections
+2. **Authentication**: Configure proper auth for corporate calendars
+3. **Custom headers**: Add required headers for specialized services
+
+### Debugging
+
+If events aren't appearing or processing correctly:
+
+1. **Check console**: Look for parsing errors or network issues
+2. **Test patterns**: Use simple keywords before complex regex
+3. **Verify URLs**: Ensure ICS URLs are accessible and valid
+4. **Review settings**: Check timing rules and property mappings
+
+## Troubleshooting
+
+### Common issues
+
+#### Events not syncing
+
+- Verify ICS URL is accessible
+- Check authentication settings
+- Review network timeout settings
+- Look for console errors
+
+#### Holiday detection not working
+
+- Test with simple keywords first
+- Verify regex pattern syntax
+- Check event data structure in console
+- Ensure patterns match actual event text
+
+#### Status mapping issues
+
+- Verify timing rule configuration
+- Check property rule priority (property rules override timing rules)
+- Ensure status marks exist in plugin settings
+- Test with individual events
+
+#### Performance problems
+
+- Reduce number of detection patterns
+- Increase refresh intervals
+- Limit max events per source
+- Monitor memory usage with large calendars
+
+### Getting help
+
+If you encounter issues:
+
+1. Check the plugin console for error messages
+2. Verify your ICS URL works in other calendar applications
+3. Test with a simple configuration first
+4. Review the plugin documentation for updates
+
+## Settings reference
+
+### Global settings
+
+- **Enable background refresh**: Auto-refresh all sources
+- **Global refresh interval**: Default refresh time (minutes)
+- **Maximum cache age**: How long to keep cached data (hours)
+- **Network timeout**: Request timeout (seconds)
+- **Max events per source**: Limit events loaded per source
+- **Default event color**: Fallback color for events
+
+### Source settings
+
+- **Basic**: Name, URL, enabled status, refresh interval
+- **Display**: Color, show type, event visibility
+- **Authentication**: Auth type and credentials
+- **Holiday config**: Detection patterns, grouping strategy
+- **Status mapping**: Timing rules, property rules
+- **Text replacements**: Transformation rules
+
+### Integration settings
+
+Status mapping integrates with existing Task Genius settings:
+
+- **Task status marks**: Uses your defined status characters
+- **Task counting**: Respects your counting configuration
+- **Progress calculation**: Integrates with progress bar system

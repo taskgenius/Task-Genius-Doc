@@ -1,0 +1,105 @@
+---
+title: Table View
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import { ListIcon, GitBranchIcon, ArrowUpDownIcon } from "lucide-react";
+
+The Table View provides a comprehensive tabular interface for viewing, editing, and managing your tasks in Task Genius. It offers powerful features like sorting, filtering, inline editing, and both flat and hierarchical tree views.
+
+<VersionCallout version="8.9.0" />
+
+## Open the Table View
+
+1. Open the [Task Genius View](/docs/task-view).
+2. Select the `Table` nav item in the left sidebar.
+3. The Table View will load, displaying your tasks in a structured table format.
+
+## Usage
+
+The Table View presents your tasks in a spreadsheet-like interface with powerful data management capabilities.
+
+The view consists of:
+
+1. **Table Header Bar:** Contains controls for view mode toggle (flat/tree), and column visibility settings.
+2. **Table Headers:** Column headers that support sorting (click to sort) and resizing (drag column borders).
+3. **Table Body:** The main area displaying task data in rows and columns.
+4. **Selection Controls:** Support for single and multi-row selection using click and Ctrl/Cmd+click.
+
+### Available Columns
+
+The table supports various column types that can be shown or hidden:
+
+- **Status:** Task completion status with visual indicators
+- **Content:** Task description and details
+- **Priority:** Task priority level (High, Medium, Low)
+- **Due Date:** When the task is due
+- **Start Date:** When the task should start
+- **Scheduled Date:** When the task is scheduled
+- **Created Date:** When the task was created
+- **Completed Date:** When the task was completed
+- **Tags:** Associated task tags
+- **Project:** Project assignment
+- **Context:** Task context
+- **Recurrence:** Recurring task settings
+- **Estimated Time:** Time estimated to complete
+- **Actual Time:** Time actually spent
+- **File:** Source file location
+
+### View Modes
+
+#### Flat View
+
+Displays all tasks in a simple list format with each task on its own row. You can click on <ListIcon className="inline-block w-5 h-5" /> button to toggle the view mode.
+
+#### Tree View
+
+Organizes tasks hierarchically, showing parent-child relationships and allowing you to expand/collapse task groups. You can click on <GitBranchIcon className="inline-block w-5 h-5" /> button to toggle the view mode.
+
+### Sorting and Filtering
+
+- **Click column headers** or <ArrowUpDownIcon className="inline-block w-5 h-5" /> button to sort by that column. You can click again to reverse sort order.
+- **Visual sort indicators** show current sort field and direction.
+- Tasks are automatically filtered and sorted based on your current criteria
+
+### Inline Editing
+
+When inline editing is enabled:
+
+- **Double-click any cell** to start editing
+- **Press Enter** to save changes
+- **Press Escape** to cancel editing
+- **Date fields** show date pickers for easy selection
+- **Priority fields** provide dropdown selection
+- **Status fields** provide dropdown selection
+- **Tag fields** support comma-separated values
+
+### Row Selection
+
+- **Single-click** to select a row
+- **Ctrl/Cmd+click** for multi-selection
+- **Right-click** for context menu options
+
+### Virtual Scrolling
+
+For large task lists, the table uses virtual scrolling to maintain performance by only rendering visible rows.
+
+### Column Management
+
+Use the column visibility controls in the header bar to:
+
+- **Show/hide columns** based on your needs
+- **Resize columns** by dragging column borders
+- Settings are automatically saved
+
+### Keyboard Shortcuts
+
+- **Escape:** Cancel current cell editing
+- **Tab:** Move to next cell
+- **Shift+Tab:** Move to previous cell
+- **Arrow keys:** Navigate between cells (when editing)
+- **Enter:** Confirm cell editing
+
+## Settings
+
+You can read more about the settings in the [Basic view settings](/docs/task-view/basic-view-settings#basic-settings) page.

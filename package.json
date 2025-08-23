@@ -1,0 +1,41 @@
+{
+  "name": "taskgenius",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev --turbo",
+    "start": "next start",
+    "postinstall": "fumadocs-mdx"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "fast-glob": "^3.3.3",
+    "fumadocs-core": "15.2.12",
+    "fumadocs-mdx": "11.6.1",
+    "fumadocs-ui": "15.2.12",
+    "gray-matter": "^4.0.3",
+    "gsap": "^3.13.0",
+    "lucide-react": "^0.503.0",
+    "mermaid": "^11.6.0",
+    "next": "15.3.1",
+    "next-themes": "^0.4.6",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "remark": "^15.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-mdx": "^3.1.0",
+    "remark-stringify": "^11.0.0",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.4",
+    "@types/mdx": "^2.0.13",
+    "@types/node": "22.15.2",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.4",
+    "typescript": "^5.8.3"
+  }
+}

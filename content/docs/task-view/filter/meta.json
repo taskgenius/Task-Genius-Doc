@@ -1,0 +1,6 @@
+{
+  "title": "Filter",
+  "description": "Task Genius filter documentation",
+  "root": false,
+  "pages": ["basic-filter", "advanced-filter", "view-filter", "popover-filter"]
+}

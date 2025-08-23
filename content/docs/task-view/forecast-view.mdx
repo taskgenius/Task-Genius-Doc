@@ -1,0 +1,107 @@
+---
+title: Forecast View
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import {
+  ListIcon,
+  GitBranchIcon,
+  SidebarIcon,
+  XIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+} from "lucide-react"; // Assuming Icon component is available
+
+The Forecast View provides a calendar-based perspective on your tasks, showing items with upcoming scheduled or due dates.
+
+<VersionCallout version="7.0.0" />
+
+## Open the forecast view
+
+1.  Open the [Task Genius View](/docs/task-view).
+2.  Select `Forecast` in the sidebar.
+3.  The Forecast View will load, displaying the calendar, task stats, upcoming tasks, and the main task list.
+
+## Usage
+
+### Header Bar
+
+The header bar at the top of the Task Panel displays key information and controls:
+
+- **Title:** Shows "Forecast".
+- **Task & Project Count:** Displays the total number of tasks loaded and the number of unique projects they belong to (e.g., "15 tasks, 3 projects").
+- **View Toggle:** Switches the Task Panel between List view (<ListIcon className="inline-block w-5 h-5" />) and Tree view (<GitBranchIcon className="inline-block w-5 h-5" />).
+- **Sidebar Toggle (Mobile):** On mobile devices, a <SidebarIcon className="inline-block w-5 h-5" /> icon appears to show/hide the Left Sidebar.
+
+### Left Sidebar
+
+The left sidebar contains navigation and overview components:
+
+#### Stats Bar
+
+Located above the calendar, this bar shows counts for tasks categorized by their relevant date (Scheduled or Due):
+
+- **Past Due:** Count of tasks whose relevant date is before today.
+- **Today:** Count of tasks whose relevant date is today.
+- **Future:** Count of tasks whose relevant date is after today.
+
+Clicking on any of these stats will filter the Task Panel to show only tasks in that category. Click again to remove the filter.
+
+#### Calendar Component
+
+Displays a monthly calendar.
+
+- Days with tasks are marked.
+- Clicking a date selects it, updating the "Coming Up" section and the Task Panel to show tasks relevant to that date and beyond.
+- The current date is highlighted.
+
+#### Coming Up Component
+
+Below the calendar, this section lists tasks with relevant dates occurring in the 15 days _after_ the date currently selected in the calendar.
+
+- Each entry shows the day of the week, date (e.g., "Mon, Jan 1"), and the number of tasks for that day.
+- Clicking an entry selects that date in the calendar.
+- On mobile, a close button (<XIcon className="inline-block w-5 h-5" />) is available to hide the sidebar.
+
+### Task Panel
+
+The main panel on the right displays the tasks organized by date.
+
+#### Date Sections
+
+Tasks are grouped into collapsible sections based on their relevant date:
+
+- **Past Due:** Contains all tasks with a relevant date before today. This section appears first if the selected date is today or in the future.
+- **Selected Date Section:** Shows tasks for the date selected in the calendar. The title format depends on the selected date relative to today (e.g., "Today — January 1, 2024", "Tomorrow, Tuesday, January 2, 2024", "Wednesday, January 3, 2024").
+- **Future Date Sections:** Shows tasks for dates after the selected date. Sections for the next 7 days after the selected date are expanded by default.
+
+Each section header displays:
+
+- An expand/collapse toggle (<ChevronDownIcon className="inline-block w-5 h-5" /> / <ChevronRightIcon className="inline-block w-5 h-5" />).
+- The section title (e.g., "Past Due", "Today — ...").
+- A badge showing the number of tasks in that section.
+
+#### View Mode
+
+The **View Toggle** button in the Header Bar switches this panel between:
+
+- **List View (<ListIcon className="inline-block w-5 h-5" />):** Shows tasks as a flat list within each date section.
+- **Tree View (<GitBranchIcon className="inline-block w-5 h-5" />):** Organizes tasks hierarchically based on parent tasks or project structure (if applicable).
+
+#### Task Sorting
+
+Within each date section, tasks are automatically sorted first by **Priority** (highest to lowest) and then by their **Relevant Date** (earliest to latest).
+
+#### Relevant Date Logic
+
+The view uses the `scheduledDate` of a task if available. If a task has no `scheduledDate`, it uses the `dueDate`. Tasks without either date are not displayed in the Forecast View.
+
+## Settings
+
+You can read more about the settings in the [Basic view settings](/docs/task-view/basic-view-settings#basic-settings) page.
+
+### First Day of Week
+
+<VersionCallout version="8.6.0" />
+
+You can set the first day of week in

@@ -1,0 +1,91 @@
+---
+title: Review View
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import { FolderCheckIcon, FolderIcon, SidebarIcon } from "lucide-react";
+
+The Review View helps you systematically review tasks on a project-by-project basis according to a defined schedule. It allows you to configure review frequencies for each project and keeps track of when each project was last reviewed.
+
+<VersionCallout version="7.0.0" />
+
+## Open the review view
+
+1. Open the [Task Genius View](/docs/task-view).
+2. Select `Review` nav item in the left sidebar.
+3. You will see the tasks grouped by project in the right panel.
+
+## Usage
+
+The Review View features a two-column layout:
+
+1.  **Project Sidebar (Left):** Lists all projects containing tasks.
+2.  **Task Review Area (Right):** Displays tasks for the selected project and provides review controls.
+
+On mobile devices, the Project Sidebar is initially hidden and can be toggled using the <SidebarIcon className="inline-block w-5 h-5" />.
+
+### Project Sidebar
+
+The sidebar lists your projects, grouped into two sections:
+
+- **Configured for Review:** Projects for which you have set a review schedule. These projects have a <FolderCheckIcon className="inline-block w-5 h-5" />. Projects due for review according to their schedule are highlighted.
+- **Not Configured:** Projects without a review schedule. These projects have a <FolderIcon className="inline-block w-5 h-5" />.
+
+Clicking on a project name in the sidebar selects it for review in the right-hand area.
+
+### Task Review Area
+
+When you select a project, this area displays its details and tasks.
+
+#### Header
+
+The header shows:
+
+- **Project Title:** The name of the selected project.
+- **Review Information:**
+  - If configured: The review frequency (e.g., "Review every weekly") and the date it was last reviewed (e.g., "Last reviewed: 1/1/2024"). Clicking the frequency text opens the configuration modal.
+  - If not configured: A message indicating "No review schedule configured for this project".
+- **Action Button:**
+  - If configured: A "**Mark as Reviewed**" button.
+  - If not configured: A "**Configure Review Schedule**" button.
+
+#### Configuring the Review Schedule
+
+You can configure the review schedule for a project by:
+
+1.  Clicking the "**Configure Review Schedule**" button (for unconfigured projects).
+2.  Clicking the frequency text in the header (for already configured projects).
+
+This opens a modal where you can set:
+
+- **Review Frequency:** Choose from predefined options (daily, weekly, every 2 weeks, monthly, quarterly, every 6 months, yearly) or select "Custom..." to define your own (e.g., "every 10 days").
+- The modal also displays when the project was last reviewed.
+
+#### Task List & Filtering
+
+By default, when you select a project that has been reviewed before, the task list is filtered to show only:
+
+- Tasks created _after_ the last review date.
+- Tasks that existed during the last review but were _not completed_ then and are _still not completed_.
+- Tasks that were _not part of the last review_ (e.g., older tasks added to the project later).
+
+Completed tasks from the previous review session are hidden by default to focus your attention on what's new or still pending.
+
+- A message like "Showing new and in-progress tasks only. X completed tasks from previous reviews are hidden." will appear below the header.
+- You can click "**Show all tasks**" to disable this filter and view every task in the project, including previously reviewed and completed ones.
+- Click "**Show only new and in-progress tasks**" to re-enable the default filter.
+
+If a project has never been reviewed, all its tasks are shown initially.
+
+#### Marking a Project as Reviewed
+
+Clicking the "**Mark as Reviewed**" button performs two actions:
+
+1.  Updates the "Last Reviewed" timestamp for the project to the current date and time.
+2.  Records the IDs of all tasks currently associated with the project (regardless of whether they are visible due to filtering). This list is used for filtering in subsequent reviews.
+
+After marking as reviewed, the task list will refresh based on the default filtering logic (hiding completed tasks from the review you just finished).
+
+## Settings
+
+You can read more about the settings in the [Basic view settings](/docs/task-view/basic-view-settings#basic-settings) page.

@@ -1,0 +1,406 @@
+---
+title: MCP Integration
+description: Connect AI tools to Task Genius via Model Context Protocol
+---
+
+# MCP Integration
+
+Task Genius includes a built-in MCP (Model Context Protocol) server that allows AI tools and applications to interact with your task data. This enables powerful automation and AI-assisted task management workflows.
+
+## What is MCP?
+
+Model Context Protocol (MCP) is an open standard that enables AI assistants to securely connect to external data sources and tools. With Task Genius's MCP integration, you can:
+
+- Query and search tasks with advanced filters
+- Create new tasks with full metadata support
+- Update task status and properties
+- Delete tasks
+- Batch operations for efficiency
+- Access task statistics and insights
+
+## Getting Started
+
+### Prerequisites
+
+- Task Genius must be running on desktop (MCP is not available on mobile)
+- The AI tool you're using must support MCP connections
+
+### Quick Setup
+
+<div className="steps">
+
+#### Step 1: Enable MCP Server
+
+1. Open Obsidian Settings
+2. Navigate to **Task Genius → MCP Integration**
+3. Toggle **Enable MCP Server** to ON
+4. Review and accept the security warning
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=mcp-integration&action=enable">
+  Open MCP Settings
+</DeepLinkButton>
+
+#### Step 2: Configure Security
+
+The MCP server uses token-based authentication to secure your data:
+
+- **Authentication Token**: Generated automatically when you enable MCP
+- **Host**: Default is `127.0.0.1` (local only). Use `0.0.0.0` for network access
+- **Port**: Default is `7777`
+
+<Callout type="warning">
+  Keep your authentication token secure! Anyone with this token can access and modify your tasks.
+</Callout>
+
+#### Step 3: Connect Your AI Tool
+
+Task Genius supports multiple AI applications:
+
+</div>
+
+## Supported Clients
+
+### Cursor
+
+Cursor supports one-click installation via deeplink:
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=mcp-integration&section=cursor" varinat="secondary">
+  Configure Cursor
+</DeepLinkButton>
+
+Or add manually to your Cursor settings:
+
+```json
+{
+  "mcpServers": {
+    "your-vault-tasks": {
+      "url": "http://127.0.0.1:7777/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_TOKEN+YOUR_APP_ID"
+      }
+    }
+  }
+}
+```
+
+### Claude Desktop
+
+Add to your Claude Desktop configuration file:
+
+**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`  
+**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "your-vault-tasks": {
+      "command": "curl",
+      "args": [
+        "-X", "POST",
+        "-H", "Authorization: Bearer YOUR_TOKEN+YOUR_APP_ID",
+        "-H", "Content-Type: application/json",
+        "--data-raw", "@-",
+        "http://127.0.0.1:7777/mcp"
+      ]
+    }
+  }
+}
+```
+
+### Claude Code
+
+Install via command line:
+
+```bash
+claude mcp add --transport http your-vault-tasks http://127.0.0.1:7777/mcp \
+  --header "Authorization: Bearer YOUR_TOKEN+YOUR_APP_ID"
+```
+
+### VS Code
+
+Add to your VS Code settings:
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "your-vault-tasks": {
+        "type": "http",
+        "url": "http://127.0.0.1:7777/mcp",
+        "headers": {
+          "Authorization": "Bearer YOUR_TOKEN+YOUR_APP_ID"
+        }
+      }
+    }
+  }
+}
+```
+
+### Windsurf
+
+Add to your Windsurf configuration:
+
+```json
+{
+  "mcpServers": {
+    "your-vault-tasks": {
+      "serverUrl": "http://127.0.0.1:7777/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_TOKEN+YOUR_APP_ID"
+      }
+    }
+  }
+}
+```
+
+### Zed
+
+Add to your Zed settings:
+
+```json
+{
+  "context_servers": {
+    "your-vault-tasks": {
+      "command": {
+        "path": "curl",
+        "args": [
+          "-X", "POST",
+          "-H", "Authorization: Bearer YOUR_TOKEN+YOUR_APP_ID",
+          "-H", "Content-Type: application/json",
+          "--data-raw", "@-",
+          "http://127.0.0.1:7777/mcp"
+        ]
+      },
+      "settings": {}
+    }
+  }
+}
+```
+
+## Available Tools
+
+The MCP server provides a comprehensive set of tools for task management:
+
+### Query Tools
+
+- **query_tasks**: Advanced task search with filters
+- **query_project_tasks**: Get all tasks for a project
+- **query_context_tasks**: Get all tasks for a context
+- **query_by_priority**: Filter tasks by priority level
+- **query_by_due_date**: Find tasks within date ranges
+- **search_tasks**: Full-text search across tasks
+
+### Create Tools
+
+- **create_task**: Create a single task with metadata
+- **create_task_in_daily_note**: Add task to today's note
+- **add_project_quick_capture**: Quick capture with project tag
+- **batch_create_tasks**: Create multiple tasks at once
+- **batch_create_subtasks**: Add subtasks to existing task
+
+### Update Tools
+
+- **update_task**: Modify task properties
+- **update_task_status**: Change completion status
+- **batch_update_task_status**: Update multiple statuses
+- **batch_update_text**: Find and replace in tasks
+- **postpone_tasks**: Reschedule task due dates
+
+### List Tools
+
+- **list_tasks_for_period**: Get tasks for day/month/year
+- **list_tasks_in_range**: Get tasks between dates
+- **list_all_metadata**: Get all tags, projects, contexts
+
+### Delete Tools
+
+- **delete_task**: Remove a task by ID
+
+## Authentication
+
+Task Genius supports two authentication methods:
+
+### Method B: Combined Bearer (Recommended)
+
+Single header with token and app ID combined:
+
+```http
+Authorization: Bearer YOUR_TOKEN+YOUR_APP_ID
+```
+
+### Method A: Custom Headers
+
+Separate headers for token and app ID:
+
+```http
+Authorization: Bearer YOUR_TOKEN
+mcp-app-id: YOUR_APP_ID
+```
+
+## API Examples
+
+### Initialize Session
+
+```bash
+curl -X POST http://127.0.0.1:7777/mcp \
+  -H "Authorization: Bearer YOUR_TOKEN+YOUR_APP_ID" \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"initialize"}'
+```
+
+### Query Tasks
+
+```bash
+curl -X POST http://127.0.0.1:7777/mcp \
+  -H "Authorization: Bearer YOUR_TOKEN+YOUR_APP_ID" \
+  -H "mcp-session-id: SESSION_ID" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 2,
+    "method": "tools/call",
+    "params": {
+      "name": "query_tasks",
+      "arguments": {
+        "filter": {
+          "completed": false,
+          "priority": 5
+        },
+        "limit": 10
+      }
+    }
+  }'
+```
+
+### Create Task
+
+```bash
+curl -X POST http://127.0.0.1:7777/mcp \
+  -H "Authorization: Bearer YOUR_TOKEN+YOUR_APP_ID" \
+  -H "mcp-session-id: SESSION_ID" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 3,
+    "method": "tools/call",
+    "params": {
+      "name": "create_task",
+      "arguments": {
+        "content": "Review quarterly goals",
+        "dueDate": "2025-08-31",
+        "priority": 4,
+        "project": "Planning",
+        "tags": ["review", "quarterly"]
+      }
+    }
+  }'
+```
+
+## Security Considerations
+
+<Callout type="error">
+  **Important Security Notes:**
+  
+  - The MCP server provides full access to your task data
+  - Keep your authentication token secret
+  - Use `127.0.0.1` for local-only access
+  - Only use `0.0.0.0` if you need network access and understand the risks
+  - Consider firewall rules when exposing the server
+</Callout>
+
+## Troubleshooting
+
+### Server Won't Start
+
+1. Check if the port is already in use
+2. Try using "Use Next Available Port" button
+3. Restart Obsidian if needed
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=mcp-integration&action=test" variant="secondary">
+  Test Connection
+</DeepLinkButton>
+
+### Authentication Failures
+
+1. Verify your token is correct
+2. Check that app ID is included
+3. Ensure headers are properly formatted
+4. Try regenerating the token
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=mcp-integration&action=regenerate-token" variant="warning">
+  Regenerate Token
+</DeepLinkButton>
+
+### Connection Issues
+
+1. Verify the server is running
+2. Check firewall settings
+3. Ensure correct host and port
+4. Test with curl command first
+
+## Advanced Configuration
+
+### Custom Port
+
+If port 7777 is in use, you can change it:
+
+```bash
+# In settings, change port to 8888
+# Then update your client configuration accordingly
+```
+
+### Network Access
+
+For access from other devices:
+
+1. Change host to `0.0.0.0`
+2. Configure firewall rules
+3. Use your machine's IP address in clients
+
+<Callout type="warning">
+  Network access exposes your data to potential security risks. Only enable if necessary.
+</Callout>
+
+### Logging
+
+Adjust log level for debugging:
+
+- **Error**: Only show errors
+- **Warning**: Errors and warnings
+- **Info**: General information (default)
+- **Debug**: Detailed debugging output
+
+## Use Cases
+
+### AI-Powered Task Management
+
+- "Find all high-priority tasks due this week"
+- "Create a task list for my project meeting"
+- "Mark all tasks in 'ProjectX' as completed"
+- "Generate a weekly review of completed tasks"
+
+### Automation Workflows
+
+- Automatically create tasks from emails
+- Sync tasks with external systems
+- Generate daily task reports
+- Bulk update task properties
+
+### Integration Examples
+
+- Connect ChatGPT to manage tasks via conversation
+- Use Claude to analyze and organize your task backlog
+- Build custom scripts to automate recurring workflows
+
+## Getting Help
+
+If you encounter issues:
+
+1. Check the [troubleshooting section](#troubleshooting)
+2. Review server logs in Obsidian console
+3. Test with the built-in connection tester
+4. Report issues on [GitHub](https://github.com/yourusername/task-genius)
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=mcp-integration">
+  Open MCP Settings
+</DeepLinkButton>

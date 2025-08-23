@@ -1,0 +1,38 @@
+---
+title: In-Editor Task Filtering
+---
+
+Focus on the tasks that matter within a specific note without leaving the editor. Task Genius provides a dynamic filtering panel.
+
+## Usage
+
+1.  Open the Obsidian command palette (`Ctrl/Cmd + P`).
+2.  Run the command: `Task Genius: Toggle task filter panel` (Note: You need to focus on the editor first).
+3.  A panel will appear (usually at the top or side of the editor pane) with filtering options.
+
+## Filtering Options
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=task-filter">
+  Open Filter Settings
+</DeepLinkButton>
+<DeepLinkFallback />
+
+Use the panel to filter the tasks displayed in the current editor based on:
+
+- **Status**: Show only tasks with specific statuses (e.g., `[ ]`, `[/]`, `[x]`).
+- **Content**: Filter by text or tags present in the task line (e.g., `#projectA`, `urgent`).
+- **Relationships**: Filter based on task hierarchy:
+  - Show only parent tasks.
+  - Show only child tasks.
+  - Show tasks related to the current cursor position (parent/children/siblings).
+
+## Presets
+
+- **Save**: If you frequently use a specific set of filter criteria, you can save them as a named preset within the panel.
+- **Load**: Quickly apply previously saved presets.
+
+## Toggling
+
+Use the same command (`Task Genius: Toggle task filter panel`) or a button within the panel itself to hide the filters and show all tasks again.
+
+Usually, you can toggle the filter panel on the top-right corner of the editor view.
