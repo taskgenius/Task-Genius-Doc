@@ -1,0 +1,32 @@
+---
+title: File Filter
+---
+
+File Filter controls which files are considered by Task Genius.
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=file-filter">
+  Open File Filter Settings
+</DeepLinkButton>
+<DeepLinkFallback />
+
+## Include / Exclude
+
+- Include folders/files to explicitly index
+- Exclude folders/files to skip from indexing
+- Patterns should be kept simple and reviewed periodically
+
+## Interactions With Other Filters
+
+- Global filtering (Tasks/Views) can further restrict items
+- File Filter is evaluated early; downstream filters only see remaining items
+
+## Performance Notes
+
+- Broad include/exclude patterns can be expensive on large vaults
+- Prefer narrower folder scopes and explicit includes when possible
+
+## Troubleshooting
+
+- Unexpected items? Re-check both File Filter and view-level filters
+- After changes, force reindex if necessary: “Task Genius: Force reindex all tasks”
+

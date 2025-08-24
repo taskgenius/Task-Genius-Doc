@@ -1,0 +1,354 @@
+---
+title: VS Code Configuration
+description: Setup guide for VS Code with Task Genius MCP
+---
+
+This guide shows you how to configure VS Code to work with your Task Genius tasks using Model Context Protocol (MCP).
+
+## Prerequisites
+
+- VS Code 1.102 or later
+- GitHub Copilot access
+- Task Genius MCP server enabled in Obsidian
+- Your authentication credentials from Task Genius settings
+
+## Quick Setup
+
+The fastest way to add Task Genius to VS Code:
+
+<div className="steps">
+
+### Step 1: Enable MCP Support
+
+MCP support is enabled by default in VS Code. Verify with:
+- Open Settings (`Cmd/Ctrl + ,`)
+- Search for `chat.mcp.enabled`
+- Ensure it's checked
+
+### Step 2: Add Task Genius Server
+
+Run the command from Command Palette (`Cmd/Ctrl + Shift + P`):
+```
+MCP: Add Server
+```
+
+Choose:
+1. **Server Type**: HTTP
+2. **Name**: `task-genius`
+3. **URL**: `http://127.0.0.1:7777/mcp`
+4. **Scope**: Workspace or Global
+
+### Step 3: Configure Authentication
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=mcp-integration">
+  Get Credentials from Task Genius
+</DeepLinkButton>
+
+Add authentication header in the configuration dialog:
+- **Header Name**: `Authorization`
+- **Header Value**: `Bearer YOUR_TOKEN+YOUR_APP_ID`
+
+</div>
+
+## Manual Configuration
+
+### Workspace Configuration
+
+Create `.vscode/mcp.json` in your project:
+
+```json
+{
+  "servers": {
+    "task-genius": {
+      "type": "http",
+      "url": "http://127.0.0.1:7777/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_TOKEN+YOUR_APP_ID"
+      }
+    }
+  }
+}
+```
+
+### Global Configuration
+
+For all workspaces, run:
+```
+MCP: Open User Configuration
+```
+
+Or create/edit `~/mcp.json`:
+
+```json
+{
+  "servers": {
+    "task-genius": {
+      "type": "http",
+      "url": "http://127.0.0.1:7777/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_TOKEN+YOUR_APP_ID"
+      }
+    }
+  }
+}
+```
+
+## Using Task Genius in VS Code
+
+### Agent Mode
+
+1. Open Chat view (`Ctrl/Cmd + Shift + I`)
+2. Select **Agent** mode from dropdown
+3. Click **Tools** to see Task Genius tools
+4. Start chatting about your tasks
+
+### Common Operations
+
+```text
+"Show today's high-priority tasks"
+"Create task: Review code changes, priority 4"
+"Mark 'Review code changes' as complete"
+"List overdue tasks"
+"Show tasks for project ClientAPI"
+```
+
+### Direct Tool Reference
+
+Type `#` in chat to directly reference tools:
+```text
+#task-genius.create_task Create a new feature task
+#task-genius.query_tasks Show all incomplete tasks
+```
+
+### Tool Sets
+
+Group frequently used tools:
+
+1. Create a tool set in settings
+2. Name it (e.g., "daily-review")
+3. Add Task Genius tools
+4. Reference with `#daily-review` in chat
+
+## Advanced Configuration
+
+### Multiple Vaults
+
+```json
+{
+  "servers": {
+    "personal-tasks": {
+      "type": "http",
+      "url": "http://127.0.0.1:7777/mcp",
+      "headers": {
+        "Authorization": "Bearer TOKEN1+APPID1"
+      }
+    },
+    "work-tasks": {
+      "type": "http",
+      "url": "http://127.0.0.1:7778/mcp",
+      "headers": {
+        "Authorization": "Bearer TOKEN2+APPID2"
+      }
+    }
+  }
+}
+```
+
+### Secure Credentials
+
+Use input variables to avoid hardcoding tokens:
+
+```json
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "task-genius-auth",
+      "description": "Task Genius Authentication (TOKEN+APPID)",
+      "password": true
+    }
+  ],
+  "servers": {
+    "task-genius": {
+      "type": "http",
+      "url": "http://127.0.0.1:7777/mcp",
+      "headers": {
+        "Authorization": "Bearer ${input:task-genius-auth}"
+      }
+    }
+  }
+}
+```
+
+### Dev Container Support
+
+Add to `.devcontainer/devcontainer.json`:
+
+```json
+{
+  "customizations": {
+    "vscode": {
+      "mcp": {
+        "servers": {
+          "task-genius": {
+            "type": "http",
+            "url": "http://host.docker.internal:7777/mcp",
+            "headers": {
+              "Authorization": "Bearer ${localEnv:TASK_GENIUS_AUTH}"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Settings & Features
+
+### Auto-start Servers
+
+Enable automatic server start:
+```json
+{
+  "chat.mcp.autostart": true
+}
+```
+
+### Tool Confirmation
+
+Control tool execution approval:
+- **Always ask**: Default, confirms each tool use
+- **Auto-confirm specific tools**: Use dropdown in confirmation dialog
+- **Trust all**: Enable in settings (use with caution)
+
+### Manage Servers
+
+Access server management:
+1. **Extensions View**: `MCP SERVERS - INSTALLED` section
+2. **Command Palette**: `MCP: List Servers`
+3. **Configuration File**: Click inline actions in `mcp.json`
+
+Available actions:
+- Start/Stop server
+- View logs
+- Reset cached tools
+- Test connection
+- Uninstall
+
+## Troubleshooting
+
+### Connection Issues
+
+1. **Verify Task Genius MCP is running:**
+   ```bash
+   curl http://127.0.0.1:7777/health
+   ```
+
+2. **Check VS Code MCP status:**
+   ```
+   MCP: Show Installed Servers
+   ```
+
+3. **View server logs:**
+   ```
+   MCP: List Servers > task-genius > Show Output
+   ```
+
+### Authentication Errors
+
+| Error | Solution |
+|-------|----------|
+| "401 Unauthorized" | Regenerate token in Obsidian settings |
+| "Invalid header format" | Use format: `Bearer TOKEN+APPID` |
+| "Connection refused" | Ensure MCP server is enabled in Task Genius |
+
+### Tools Not Available
+
+1. **Refresh tools cache:**
+   ```
+   MCP: Reset Cached Tools
+   ```
+
+2. **Restart server:**
+   ```
+   MCP: List Servers > task-genius > Restart
+   ```
+
+3. **Check tool limit:**
+   - Maximum 128 tools per request
+   - Deselect unused tools in Tools picker
+
+## Best Practices
+
+### Performance
+
+- Be specific in queries for faster responses
+- Use tool sets for common operations
+- Enable virtual tools for large tool collections:
+  ```json
+  {
+    "github.copilot.chat.virtualTools.threshold": 50
+  }
+  ```
+
+### Security
+
+- Store credentials using input variables
+- Use workspace settings for project-specific tasks
+- Never commit `mcp.json` with credentials
+- Regularly regenerate authentication tokens
+
+### Workflow Tips
+
+1. **Daily Review:**
+   - Create "daily-review" tool set
+   - Include query_tasks, update_task_status tools
+   - Quick access with `#daily-review`
+
+2. **Project Management:**
+   - Workspace-specific configuration per project
+   - Use project tags in Task Genius
+   - Filter by project in queries
+
+3. **Quick Capture:**
+   - Set up keyboard shortcut for Chat view
+   - Use `#task-genius.create_task` for quick entry
+   - Enable auto-start for instant access
+
+## Integration Examples
+
+### With Git Workflows
+
+```text
+"Create task for PR #123 review"
+"List tasks tagged with current-sprint"
+"Mark deployment tasks as complete"
+```
+
+### With Development Tasks
+
+```text
+"Add task: Fix TypeScript errors in components folder"
+"Show all tasks related to API refactoring"
+"Create subtasks for implementing user authentication"
+```
+
+### With Team Collaboration
+
+```text
+"List tasks assigned to team-frontend project"
+"Show high-priority bugs for this week"
+"Create task in daily note: Discuss architecture changes"
+```
+
+## Next Steps
+
+- Explore [Task Genius use cases](/docs/mcp-integration/use-cases) for workflow ideas
+- Check the [API reference](/docs/mcp-integration/api-reference) for all available operations
+- Learn about [MCP prompts and resources](/docs/mcp-integration/advanced-features)
+- See [troubleshooting guide](/docs/mcp-integration/troubleshooting) for detailed solutions
+
+<Callout type="success">
+  **Pro Tip**: Start with Agent mode and the Tools picker to explore Task Genius capabilities before creating custom tool sets.
+</Callout>

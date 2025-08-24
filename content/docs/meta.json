@@ -18,18 +18,22 @@
     "task-gutter",
     "date-priority",
     "filtering",
+    "time-parsing",
     "workflows",
+    "task-timer",
     "append-date",
     "---File---",
     "task-mover",
     "task-sorter",
     "quick-capture",
+    "file-filter",
     "---Integration---",
     "mcp-integration",
     "ics-support",
     "---Other---",
     "commands",
     "reward",
-    "habit"
+    "habit",
+    "project"
   ]
 }

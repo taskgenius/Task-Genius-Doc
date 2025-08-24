@@ -1,0 +1,262 @@
+---
+title: Time Parsing
+---
+
+import { TimeParsingExample } from '@/components/TimeParsingExample';
+
+Time Parsing enables natural-language date/time handling in Task Genius with enhanced support for specific times and time ranges.
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=time-parsing">
+  Open Time Parsing Settings
+</DeepLinkButton>
+<DeepLinkFallback />
+
+## Overview
+
+Task Genius provides comprehensive time parsing that goes beyond basic date recognition to include:
+
+- **Single Times**: Specific times like `12:00`, `2:30 PM`, `14:30:00`
+- **Time Ranges**: Duration blocks like `9:00-17:00`, `2:30 PM - 4:00 PM`
+- **Date + Time Combinations**: Full scheduling like `2024-12-25 14:30` or `tomorrow 3pm`
+- **Time-Only Expressions**: Times without dates that inherit context intelligently
+
+### Interface Options
+- **Desktop**: Uses a popover date/time picker for quick selection
+- **Mobile**: Uses a modal with the same functionality
+
+## Supported Time Formats
+
+### Single Times
+
+Task Genius recognizes various time formats for precise scheduling:
+
+#### 24-Hour Format
+<TimeParsingExample>
+
+```markdown
+- [ ] Meeting 📅 14:30
+- [ ] Call client 📅 09:15:00
+- [ ] Lunch break 📅 12:00
+```
+
+</TimeParsingExample>
+
+#### 12-Hour Format with AM/PM
+<TimeParsingExample>
+
+```markdown
+- [ ] Morning standup 📅 9:00 AM
+- [ ] Afternoon review 📅 2:30 PM
+- [ ] Evening workout 📅 6:00:00 PM
+```
+
+</TimeParsingExample>
+
+#### Combined Date and Time
+<TimeParsingExample>
+
+```markdown
+- [ ] Project deadline 📅 2024-12-25 23:59
+- [ ] Doctor appointment 📅 tomorrow 2:30 PM
+- [ ] Team meeting 📅 next friday 10:00 AM
+```
+
+</TimeParsingExample>
+
+### Time Ranges
+
+For tasks that span a duration, use time ranges with various separators:
+
+#### Standard Range Formats
+<TimeParsingExample variant="range">
+
+```markdown
+- [ ] Workshop 📅 9:00-17:00
+- [ ] Conference call 📅 2:30 PM - 4:00 PM  
+- [ ] Study session 📅 14:00~16:30
+- [ ] Office hours 📅 9:00 AM - 12:00 PM
+```
+
+</TimeParsingExample>
+
+#### Midnight Crossing Ranges
+<TimeParsingExample variant="range">
+
+```markdown
+- [ ] Night shift 📅 23:00-07:00
+- [ ] Late project work 📅 22:30 - 01:30
+```
+
+</TimeParsingExample>
+
+### Time-Only Expressions
+
+When you specify times without explicit dates, Task Genius intelligently determines the appropriate date using this priority order:
+
+1. **Current Line Date**: Date mentioned in the same line
+2. **File Metadata Date**: Date from frontmatter or file properties  
+3. **Daily Note Date**: Date extracted from daily note title/path
+4. **File Creation Time**: When the file was created
+
+#### Examples
+<TimeParsingExample variant="inheritance">
+
+```markdown
+# 2024-12-25 Daily Note
+- [ ] Morning coffee 📅 8:00 AM    # Uses 2024-12-25
+- [ ] Team sync 📅 10:30-11:00     # Uses 2024-12-25
+
+## Project Tasks
+- [ ] Code review 📅 14:00         # Inherits from daily note date
+```
+
+</TimeParsingExample>
+
+## Supported Date Inputs
+
+In addition to enhanced time parsing, all existing date formats continue to work:
+
+### Natural Language
+- `today`, `tomorrow`, `yesterday`
+- `next monday`, `next week`, `next month`
+- `in 2 days`, `in 3 weeks`, `in 1 hour`
+
+### Explicit Formats
+- `2025-09-30`, `09/30/2025`
+- `Dec 25, 2024`, `25 December 2024`
+
+### Combined Examples
+<TimeParsingExample variant="combined">
+
+```markdown
+- [ ] Project kickoff 📅 next monday 9:00 AM
+- [ ] Deadline 📅 in 2 weeks 17:00
+- [ ] Review meeting 📅 tomorrow 14:30-15:30
+```
+
+</TimeParsingExample>
+
+## Timeline View Enhancements
+
+The enhanced time parsing significantly improves the Timeline view experience:
+
+### Chronological Ordering
+- Tasks with specific times appear in chronological order within each day
+- Time-only tasks are sorted by their actual parsed times (not defaulting to 00:00)
+- Tasks without times appear separately or with default time indicators
+
+### Time Range Visualization
+- Tasks with time ranges show the start time prominently
+- Range duration is displayed when viewing task details
+- Visual indicators distinguish between single times and ranges
+
+### Time-Based Grouping
+- Tasks at the same time are grouped together
+- Clear separation between timed and untimed tasks
+- Improved readability for daily schedule overview
+
+## Editor Interactions
+
+### Live Preview Mode
+- Click date icons/markers to open the time picker
+- Time components are highlighted and editable
+- Real-time validation of time formats
+
+### Source Mode
+- Direct text editing with format validation
+- Auto-completion for common time patterns
+- Syntax highlighting for recognized time expressions
+
+### Keyboard Shortcuts
+- Follow your editor environment settings
+- Quick time insertion commands available
+- Tab completion for time formats
+
+## Settings & Configuration
+
+### Time Format Preferences
+- **Default Format**: Choose between 12-hour and 24-hour display
+- **AM/PM Handling**: Set default period for ambiguous times
+- **Range Separators**: Customize which separators to recognize
+
+### Parsing Behavior
+- **Midnight Crossing**: How to handle ranges that span midnight
+- **Fallback Strategy**: What to do when time parsing fails
+- **Date Inheritance**: Priority order for time-only expressions
+
+### Locale Support
+- Locale-aware parsing respects your system settings
+- Regional time format preferences
+- Internationalized error messages
+
+## Troubleshooting
+
+### Common Issues
+
+#### Time Not Recognized
+**Problem**: Your time format isn't being parsed
+**Solutions**:
+- Try explicit formats: `14:30` instead of `2:30`
+- Add AM/PM for 12-hour times: `2:30 PM`
+- Check for typos in separators: `-` vs `–` vs `~`
+
+#### Wrong Date Applied
+**Problem**: Time-only expressions get unexpected dates
+**Solutions**:
+- Add explicit date: `2024-12-25 14:30`
+- Check file metadata for conflicting dates
+- Verify daily note date format in filename
+
+#### Timeline Display Issues
+**Problem**: Tasks appear at wrong times in timeline
+**Solutions**:
+- Refresh the timeline view
+- Check time format consistency
+- Verify timezone settings in Obsidian
+
+#### Range Parsing Problems
+**Problem**: Time ranges not recognized properly
+**Solutions**:
+- Use standard separators: `-`, ` - `, or `~`
+- Ensure both times use same format (both 24h or both 12h)
+- Check for midnight crossing configuration
+
+### Format Validation
+
+If a time expression isn't recognized:
+1. **Try explicit formats**: Use `YYYY-MM-DD HH:mm` for guaranteed parsing
+2. **Check locale settings**: Confirm your system/Obsidian locale matches expected format
+3. **Use standard separators**: Stick to `-`, ` - `, or `~` for ranges
+4. **Verify AM/PM**: Always include AM/PM for 12-hour format times
+
+### Performance Considerations
+
+For large vaults with many tasks:
+- Time parsing is optimized for performance
+- File metadata is cached to avoid repeated file system access
+- Background processing handles bulk time parsing operations
+
+## Migration from Basic Time Parsing
+
+Existing tasks with basic time information are automatically enhanced:
+- Previous date-only tasks continue to work unchanged
+- Tasks with basic time info get enhanced time components
+- No manual migration required - enhancement happens automatically
+- All existing functionality remains backward compatible
+
+## Best Practices
+
+### Consistent Formatting
+- Choose either 12-hour or 24-hour format and stick with it
+- Use the same range separator throughout your vault
+- Be explicit with AM/PM when using 12-hour format
+
+### Effective Time Ranges
+- Use ranges for tasks that have a specific duration
+- Consider using single times for deadlines or start times
+- Leverage midnight crossing for shift work or late-night tasks
+
+### Date Inheritance Optimization
+- Use daily notes for time-only task organization
+- Set file metadata dates for project-specific task files
+- Organize tasks hierarchically to benefit from parent date inheritance

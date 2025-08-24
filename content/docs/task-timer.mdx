@@ -1,0 +1,68 @@
+---
+title: Task Timer
+---
+
+The Task Timer lets you track time spent on tasks, export/import timer data, and show formatted durations in your notes.
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=task-timer">
+  Open Task Timer Settings
+</DeepLinkButton>
+<DeepLinkFallback />
+
+## Enable the Task Timer
+
+- Go to Obsidian → Settings → Task Genius → Task Timer
+- Toggle “Enable Task Timer”
+
+Once enabled, additional options for detection and formatting appear.
+
+## Metadata Detection
+
+Task Timer can automatically enable for specific files using simple metadata rules:
+
+- Frontmatter field: Name of a boolean field in frontmatter that enables the timer (e.g. `task-timer: true`)
+- Folder paths: Comma-separated list of folders where the timer is active
+- Tags: Comma-separated list of tags that enable the timer
+
+Tip: You can mix these to control scope precisely.
+
+## Time Format Template
+
+Customize how durations render using tokens:
+
+- {h} = hours
+- {m} = minutes
+- {s} = seconds
+
+Examples:
+
+- {h}hrs{m}mins → 2hrs30mins
+- {h}h {m}m {s}s → 2h 30m 45s
+- {h}:{m}:{s} → 2:30:45
+- ({m}mins) → (150mins)
+
+## Block References
+
+Choose a prefix for generated block reference IDs (e.g. `timer` generates IDs like `^timer-123456-7890`).
+
+## Data Management Commands
+
+Use the command palette (Cmd/Ctrl+P) to:
+
+- Export task timer data
+- Import task timer data
+- Export task timer data (YAML)
+- Create task timer backup
+- Show task timer statistics
+
+## Troubleshooting
+
+- Timer not appearing? Ensure it’s enabled and your file matches the detection rules (frontmatter/folder/tags)
+- Unexpected format output? Double-check the time format template tokens
+
+## Best Practices
+
+- Keep detection rules as narrow as needed to reduce noise
+- Choose a consistent time format for better readability across notes
+- Use exports/backups for periodic snapshots of your work
+

@@ -151,27 +151,28 @@ After enabling, you'll see:
 
 Choose your AI tool and follow the specific configuration guide:
 
-<div className="grid grid-cols-2 gap-4 mt-4">
-  <a href="/docs/mcp-integration/clients/cursor" className="card">
-    <h4>🖱️ Cursor</h4>
-    <p>One-click setup with deeplink</p>
-  </a>
-  
-  <a href="/docs/mcp-integration/clients/claude-desktop" className="card">
-    <h4>🖥️ Claude Desktop</h4>
-    <p>Native desktop integration</p>
-  </a>
-  
-  <a href="/docs/mcp-integration/clients/claude-code" className="card">
-    <h4>⌨️ Claude Code</h4>
-    <p>Command-line interface</p>
-  </a>
-  
-  <a href="/docs/mcp-integration/clients/vscode" className="card">
-    <h4>📝 VS Code</h4>
-    <p>Editor integration</p>
-  </a>
-</div>
+<Cards>
+  <Card
+    title="🖱️ Cursor"
+    description="One-click setup with deeplink"
+    href="/docs/mcp-integration/clients/cursor"
+  />
+  <Card
+    title="🖥️ Claude Desktop"
+    description="Native desktop integration"
+    href="/docs/mcp-integration/clients/claude-desktop"
+  />
+  <Card
+    title="⌨️ Claude Code"
+    description="Command-line interface"
+    href="/docs/mcp-integration/clients/claude-code"
+  />
+  <Card
+    title="📝 VS Code"
+    description="Editor integration"
+    href="/docs/mcp-integration/clients/vscode"
+  />
+</Cards>
 
 ### Step 4: Test Connection
 
