@@ -1,6 +1,7 @@
 import type { BaseLayoutProps, LinkItemType } from "fumadocs-ui/layouts/shared";
 import {
   CalendarCheck,
+  EditIcon,
   Gift,
   Layout,
   Route,
@@ -120,55 +121,56 @@ export const baseOptions: BaseLayoutProps = {
       url: "/docs/getting-started",
       items: [
         {
-          icon: <Book />,
+          icon: <ComponentIcon />,
           text: "Getting Started",
-          description: "Learn to use Task Genius.",
+          description: "Quick setup and first steps",
           url: "/docs/getting-started",
           menu: {
             className: "lg:col-start-1",
           },
         },
         {
-          icon: <ComponentIcon />,
-          text: "Progress Bars",
-          description: "See customisable progress bars.",
-          url: "/docs/progress-bars",
+          icon: <Layout />,
+          text: "Task Views",
+          description: "10+ specialized task views",
+          url: "/docs/task-view",
           menu: {
-            className: "lg:col-start-2",
+            className: "lg:col-start-2 lg:col-span-1",
           },
         },
         {
-          icon: <Layout />,
-          text: "Task View",
-          description: "View your tasks via Task Genius.",
-          url: "/docs/task-view",
+          icon: <CalendarCheck />,
+          text: "Workflows",
+          description: "Multi-stage task processes",
+          url: "/docs/workflows",
+          menu: {
+            className: "lg:col-start-3",
+          },
+        },
+        {
+          icon: <EditIcon />,
+          text: "Task Gutter",
+          description: "Edit inline tasks",
+          url: "/docs/task-gutter",
           menu: {
             className: "lg:col-start-1 lg:col-span-1",
           },
         },
         {
-          icon: <CalendarCheck />,
-          text: "Habit",
-          description: "Learn to use Habit.",
-          url: "/docs/habit",
-          menu: {
-            className: "lg:col-start-3 lg:row-start-1",
-          },
-        },
-        {
           icon: <Server />,
-          text: "Statuses",
-          description: "See the available statues.",
-          url: "/docs/task-status",
+          text: "MCP Integration",
+          description: "AI assistant integration",
+          url: "/docs/mcp-integration",
           menu: {
-            className: "lg:col-start-2",
+            className: "lg:col-start-2 lg:col-span-1",
           },
         },
+        
         {
           icon: <Gift />,
-          text: "Reward",
-          description: "Learn to use reward system of Task Genius.",
-          url: "/docs/reward",
+          text: "Habit Tracking",
+          description: "Build habits with rewards",
+          url: "/docs/habit",
           menu: {
             className: "lg:col-start-3",
           },
