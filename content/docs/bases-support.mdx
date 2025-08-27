@@ -1,0 +1,134 @@
+---
+title: Bases Support
+description: Use Task Genius views within Obsidian Bases for enhanced data visualization
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+
+<VersionCallout version="9.8.0" />
+
+Task Genius now fully supports [Obsidian Bases](https://help.obsidian.md/bases), the core plugin introduced in Obsidian 1.9.0 that allows you to create database-like views of your notes. This integration extends Task Genius's powerful task management capabilities to work seamlessly with Obsidian's native file indexing system.
+
+## What are Bases?
+
+Bases is a core Obsidian plugin that lets you create database-like views of your notes. Using a base, you can view, edit, sort, and filter files and their properties. Each base can have several views with different layouts such as tables and cards.
+
+All data in Obsidian Bases is stored in your local Markdown files and their properties. The views are described by the Bases syntax, which can be saved as a `.base` file or embedded in code blocks within your Markdown files.
+
+## Task Genius Integration
+
+Task Genius extends Bases functionality by:
+
+### 1. **Base View Support**
+
+You can now select any existing Task Genius view as a view type within a Base. This means you can use:
+- Inbox View
+- Forecast View
+- Project View
+- Tag View
+- Review View
+- Flag View
+- Event View (Calendar)
+- Status View
+- Habit View
+- Plan View (Gantt)
+- Matrix View
+- Custom Views
+
+### 2. **Enhanced Data Sources**
+
+Task Genius supports default source from base view:
+- **Bases Data Source**: Leverages Obsidian's native file indexing
+- **Note Properties**: Uses file properties as task metadata
+- **File-as-Task**: Treats entire notes as tasks when used in a Base
+
+### 3. **Seamless Property Mapping**
+Task Genius automatically maps common file properties to task attributes:
+- `due` → Due date
+- `scheduled` → Scheduled date
+- `status` → Task status
+- `priority` → Task priority
+- `tags` → Task tags
+- `project` → Project assignment
+
+## How to Use
+
+### Creating a Task Genius Base View
+
+1. **Create a new Base** or open an existing one
+2. **Add a new view** to your Base
+3. **Select a Task Genius view type** from the available options
+4. **Configure the view settings** as you would in the standard Task Genius interface
+
+### Using File Properties
+
+You can leverage file properties to enhance task management:
+
+```yaml
+---
+dueDate: 2025-09-15
+priority: high
+status: in-progress
+project: "Website Redesign"
+tags: [design, urgent]
+---
+
+# Design Homepage Mockup
+
+This note becomes a task when viewed in a Task Genius Base view.
+```
+
+## Benefits
+
+### Unified Task Management
+- View all file tasks alongside your notes and documents
+- Maintain context between tasks and their related content
+- Use familiar Task Genius features within Bases
+
+### Flexible Organization
+- Create multiple views of the same data
+- Switch between task-focused and document-focused perspectives
+- Combine Task Genius's powerful filtering with Bases queries
+
+### Enhanced Workflows
+- Use Bases for project management with Task Genius views
+- Create reading lists that integrate with task tracking
+- Build knowledge bases with actionable items
+
+## Configuration
+
+### Settings
+
+Access Bases-specific settings in Task Genius:
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=bases-support">
+  Open Bases Support Settings
+</DeepLinkButton>
+<DeepLinkFallback />
+
+#### How To Use
+
+1. Open Task Genius settings
+2. Navigate to the "Integrations" tab
+3. Find "Bases Support" section
+4. Enable the "Bases Support" option
+
+## Limitations
+
+- Some Task Genius features may have limited functionality in Base views
+- Complex task dependencies work best with regular markdown files, not with the tasks in markdown notes
+- Canvas integration is view-only in Bases context
+
+## Troubleshooting
+
+### Property Sync Issues
+- Confirm property mappings in settings
+
+### Performance
+- Limit Base sources to specific folders for large vaults
+- Use focused queries to reduce processing overhead
+
+## See Also
+- [Task View Documentation](/docs/task-view)
+- [Obsidian Bases Documentation](https://help.obsidian.md/bases)
+- [File Properties in Obsidian](https://help.obsidian.md/Editing+and+formatting/Properties)
