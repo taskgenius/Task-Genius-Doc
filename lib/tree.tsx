@@ -22,7 +22,6 @@ export function TreeContextProvider(props: {
 
   // I found that object-typed props passed from a RSC will be re-constructed, hence breaking all hooks' dependencies
   // using the id here to make sure this never happens
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const tree = useMemo(() => props.tree, [props.tree.$id ?? props.tree]);
   const path = useMemo(
     () => searchPath(tree.children, pathname) ?? [],

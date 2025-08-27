@@ -71,5 +71,5 @@ export async function generateMetadata({
       card: "summary_large_image",
       images: image,
     },
-  } satisfies Metadata;
+  } as Metadata;
 }

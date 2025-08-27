@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 export function Mermaid({ chart }: { chart: string }) {
   const id = useId();
   const [svg, setSvg] = useState("");
-  const containerRef = useRef<HTMLDivElement>(null!);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();
 
   useEffect(() => {
@@ -26,6 +26,7 @@ export function Mermaid({ chart }: { chart: string }) {
 
       try {
         mermaid.initialize(mermaidConfig);
+        if (!containerRef.current) return;
         const { svg } = await mermaid.render(
           // strip invalid characters for `id` attribute
           id.replaceAll(":", ""),

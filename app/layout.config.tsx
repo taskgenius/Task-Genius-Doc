@@ -2,12 +2,11 @@ import type { BaseLayoutProps, LinkItemType } from "fumadocs-ui/layouts/shared";
 import {
   CalendarCheck,
   Gift,
-  Heart,
   Layout,
   Route,
   Server,
 } from "lucide-react";
-import { Book, ComponentIcon, Pencil } from "lucide-react";
+import { Book, ComponentIcon } from "lucide-react";
 
 export const linkItems: LinkItemType[] = [
   {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { File, FilesIcon, FileSymlink } from "lucide-react";
+import { FileSymlink } from "lucide-react";
 import type { RoadmapPageType } from "@/lib/source"; // Assuming this type is correctly defined and exported
 
 export function RoadmapItemCard({ item }: { item: RoadmapPageType }) {

@@ -4,12 +4,10 @@ import {
   ArrowRightIcon,
   CheckCircleIcon,
   Github,
-  Mail,
   MessageCircle,
 } from "lucide-react";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import LatestVersion from "@/components/LatestVersion";
-import AnimatedFeatureList from "@/components/AnimatedFeatureList";
 
 export default function HomePage() {
   return (

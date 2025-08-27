@@ -1,5 +1,3 @@
-import { CalendarIcon } from "lucide-react";
-
 interface FormattedDateProps {
   dateString: string | undefined;
 }

@@ -132,7 +132,7 @@ export async function generateMetadata({
         card: "summary_large_image",
         images: "/banner.png",
       },
-    } satisfies Metadata;
+    } as Metadata;
   }
 
   // For specific release page
@@ -150,5 +150,5 @@ export async function generateMetadata({
       card: "summary_large_image",
       images: image,
     },
-  } satisfies Metadata;
+  } as Metadata;
 }
