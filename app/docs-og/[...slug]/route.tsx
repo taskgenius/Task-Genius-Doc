@@ -14,7 +14,7 @@ export async function GET(
     title: page.data.title,
     description: page.data.description,
     site: "Task Genius",
-    icon: "/favicon.ico",
+    icon: "https://taskgenius.md/favicon.ico",
     primaryColor: "#0ea5e9",
     primaryTextColor: "#ffffff",
     width: 1200,
