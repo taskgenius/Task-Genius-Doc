@@ -1,0 +1,190 @@
+---
+title: Desktop Integration
+description: System tray, notifications, and desktop features for Task Genius
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+
+# Desktop Integration
+
+<VersionCallout version="9.8.0" />
+
+Task Genius provides powerful desktop integration features including system tray support, desktop notifications, and quick access to tasks from anywhere on your system.
+
+<Callout type="info">
+Desktop integration features are only available in the Obsidian desktop app. Mobile versions do not support these features.
+</Callout>
+
+## Features Overview
+
+
+### Tasks Status Bar/Tray Indicator (In Obsidian)
+- **Compact Display**: Shows task count in Obsidian's status bar
+- **Quick Menu**: Right-click for task actions
+- **Flexible Modes**: Choose between system tray, status bar, or both
+
+#### System Tray Integration
+- **Task Count Badge**: See pending tasks at a glance
+- **Quick Actions Menu**: Access tasks without opening Obsidian (And edit them via dropdown menu)
+- **Theme-Aware Icons**: Automatically adapts to light/dark themes
+- **Platform Support**: Works on Windows, macOS, and Linux
+
+### Desktop Notifications
+- **Task Reminders**: Get notified before tasks are Due
+- **Click Actions**: Open tasks directly from notifications
+
+## How to Use
+
+### Getting Started
+
+#### 1. Enable Desktop Integration
+
+<DeepLinkButton href="obsidian://task-genius/settings?tab=desktop-integration">
+  Open Desktop Settings
+</DeepLinkButton>
+<DeepLinkFallback />
+
+- Open Task Genius settings, if you didn't install yet: [Install Task Genius](/docs/installation)
+- Navigate to the **Desktop Integration** tab
+- Toggle **Enable notifications** to activate desktop features
+
+#### 2. Choose Your Tray Mode
+Select how you want to see task indicators:
+- **System Tray**: Shows in your OS system tray/menu bar
+- **Status Bar**: Shows in Obsidian's bottom status bar
+- **Both**: Shows in both locations simultaneously
+
+#### 3. Configure Notifications
+Set up when and how you receive notifications:
+- **Daily Summary**: Set a time for your morning task digest
+- **Task Reminders**: Choose how many minutes before due time to notify
+
+### System Tray Features
+
+The system tray provides quick access to your tasks without switching to Obsidian:
+
+#### Task Count Display
+
+- **macOS**: Shows count as text next to icon
+- **Windows/Linux**: Updates tooltip with count
+
+#### Right-Click Menu
+
+Access these features from the tray menu:
+- **Open Task Genius**: Launch the main task view
+- **Send Daily Summary**: Get immediate task overview
+- **Top 7 Tasks**: Quick view of urgent tasks with actions:
+  - Edit in file
+  - Mark complete
+  - Snooze (1d, 2d, 3d, 1w, or custom)
+  - Set priority (Highest to Lowest)
+
+### Status Bar Features
+
+The status bar indicator provides in-app quick access:
+
+#### Click Actions
+
+- Left-click opens a context menu with:
+  - Task list with inline actions
+  - Quick complete buttons
+  - Snooze options
+  - Priority adjustments
+
+#### Visual Indicators
+
+- Shows pending task count
+- Updates automatically when tasks change
+- Theme-aware styling
+
+### Desktop Notifications
+
+Task Genius sends two types of notifications:
+
+#### Daily Summary
+
+- **When**: At your configured time (default 9:00 AM)
+- **What**: List of tasks due today
+- **Actions**: Click to open Task Genius
+
+#### Task Reminders
+
+- **When**: X minutes before task due time (configurable)
+- **What**: Individual task reminder
+- **Actions**: Click to open the specific task
+
+### Configuration Options
+
+#### Notification Settings
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| Enable notifications | Master toggle for all desktop features | Off |
+| Daily summary | Send morning task digest | On (9:00 AM) |
+| Per-task reminders | Notify before each task | Off (10 min) |
+| Tray indicator | Where to show task count | Status bar |
+
+## Platform-Specific Notes
+
+### macOS
+
+- System tray appears in menu bar
+- Supports native notification center
+- Template images for automatic theme switching
+
+### Windows
+- System tray in notification area
+- Windows 10/11 notification support
+- Tooltip shows task count
+
+### Linux
+- System tray support varies by desktop environment
+- Works best with GNOME, KDE, XFCE
+- Falls back to status bar if tray unavailable
+
+## Troubleshooting
+
+### Tray Icon Not Showing
+1. Check if tray mode is set to "System tray" or "Both"
+2. Ensure Obsidian has system tray permissions
+3. Try restarting Obsidian
+4. On Linux, install system tray support for your DE
+
+### Notifications Not Working
+1. Check OS notification permissions for Obsidian
+2. Ensure notifications are enabled in settings
+3. Verify notification times are correctly set
+4. Test with "Send now" button in settings
+
+### Task Count Incorrect
+1. Wait for task indexing to complete
+2. Use "Refresh" option from tray menu
+3. Check task filter settings
+4. Verify ICS events are properly configured
+
+## Tips & Best Practices
+
+<Callout type="tip">
+**Morning Routine**: Set daily summary 15 minutes before you start work to review and plan your day.
+</Callout>
+
+<Callout type="tip">
+**Snooze Wisely**: Use quick snooze options (1d, 2d) for tasks that can wait, but set custom dates for important deadlines.
+</Callout>
+
+<Callout type="tip">
+**Priority Management**: Use the tray menu to quickly adjust priorities without opening Obsidian.
+</Callout>
+
+## Privacy & Performance
+
+- **Local Processing**: All notifications are processed locally
+- **No External Services**: No data sent to external servers
+- **Smart Updates**: Only refreshes when tasks change
+
+## Related Features
+
+- [Task View](/docs/task-view) - Main task management interface
+- [Quick Capture](/docs/quick-capture) - Rapidly add new tasks
+- [Filtering](/docs/filtering) - Configure which tasks appear
+- [ICS Support](/docs/ics-support) - Calendar integration settings

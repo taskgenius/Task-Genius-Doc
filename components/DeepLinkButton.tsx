@@ -24,13 +24,15 @@ const deepLinkButtonVariants = cva(
 interface DeepLinkButtonProps
   extends VariantProps<typeof deepLinkButtonVariants> {
   href: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  text?: string;
   className?: string;
 }
 
 export function DeepLinkButton({ 
   href, 
   children, 
+  text,
   variant, 
   className 
 }: DeepLinkButtonProps) {
@@ -39,7 +41,7 @@ export function DeepLinkButton({
       <button
         className={cn(deepLinkButtonVariants({ variant }), className, "hover:cursor-pointer")}
       >
-        {children}
+        {children || text || "Open in Obsidian"}
       </button>
     </a>
   );
@@ -56,3 +58,6 @@ export function DeepLinkFallback({ customText }: DeepLinkFallbackProps = {}) {
     </p>
   );
 }
+
+// Default export for MDX import
+export default DeepLinkButton;
