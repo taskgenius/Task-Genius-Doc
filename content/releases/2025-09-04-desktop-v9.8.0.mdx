@@ -1,0 +1,136 @@
+---
+title: "Desktop v9.8.0"
+date: "2025-09-04"
+version: "9.8.0"
+platform: "desktop"
+access: "public"
+---
+
+
+
+## Breaking Changes
+
+- **Dataflow**: Complete TaskManager to Dataflow migration with enhanced APIs
+
+## Features
+
+- **Settings**: Added global Ctrl+K/Cmd+K shortcut for search
+- **Views**: Added region-based organization with drag-and-drop sorting
+- **Projects**: Added completed/total task counts to project badges
+- **Projects**: Added progress bar to Projects view
+- **Tasks**: Added task deletion with cascade support
+- **Quick Capture**: Added start and scheduled date fields to electron quick capture
+- **Quick Capture**: Added electron-based quick capture window
+- **Parser**: Added case-insensitive tag prefix matching
+- **Habits**: Improved habit property handling and added reindex command
+- **Settings**: Improved heading filter UI and fixed matching logic
+- **Settings**: Improved input fields with native HTML5 types
+- **Tray**: Added theme-aware Task Genius icon for system tray
+- **Notifications**: Added flexible tray modes and improved task filtering
+- **Notifications**: Added desktop notifications and tray menu integration
+- **Settings**: Added bases-support URL and improved modal styling
+- **Modal**: Added external link button to IframeModal header
+- **FileSource**: Added status mapping between checkboxes and file metadata
+- **Time Parsing**: Added enhanced time parsing with date inheritance and timeline improvements
+- **Time Parsing**: Added enhanced time parsing with range and component extraction
+- **URI**: Added enhanced deep-link support with path-based routing
+- **Core**: Integrated FileSource and added URI handler support
+- **Manager**: Enhanced FileTaskManager with expanded functionality
+- **FileSource**: Enhanced FileSource task handling and WriteAPI support
+- **Filter**: Enhanced file filter manager and settings UI
+- **File Source**: Added path-based task recognition strategy
+- **Settings**: Added automatic settings migration system
+- **FileSource**: Implemented file-based task recognition system
+- **Dataflow**: Implemented WriteAPI with event-based skip mechanism for views
+- **Dataflow**: Added WriteAPI for task write operations
+- **MCP**: Added batch task creation and fixed subtask insertion
+
+## Fixes
+
+- **Settings**: Corrected event reason from 'view-deleted' to 'view-updated'
+- **Habits**: Prevented all habits being checked when selecting one
+- **Task View**: Resolved text display sync issues in markdown rendering
+- **Filter**: Improved filter input performance with increased debounce delays
+- **Quick Capture**: Resolved tag duplication in autocomplete suggestions
+- **Parser**: Respected custom project/context/area prefixes in task parsing
+- **Dates**: Applied timezone handling to InlineEditor and TaskPropertyTwoColumnView
+- **Dates**: Corrected timezone handling for date display in task views
+- **Task Regex**: Improved task regex to prevent matching nested brackets in status
+- **Habits**: Improved habit sync and progress visualization
+- **Tray**: Improved icon visibility and window focus behavior
+- **Memory**: Resolved memory leaks by adding proper cleanup handlers
+- **Tray**: Added cleanup handler for hard reloads and improved electron API access
+- **Dataflow**: Corrected event cleanup in DataflowOrchestrator
+- **Renderer**: Removed priority emojis from markdown content regardless of position
+- **Task View**: Resolved task sorting instability and scroll jumping
+- **Date**: Fixed date and priority issue when using inline editor update content
+- **Type**: Fixed type issue with TFile
+- **WriteAPI**: Prevented writing empty tag arrays to frontmatter
+- **WriteAPI**: Corrected typo in console log message
+- **Settings**: Made performSearch method public for external access
+- **Views**: Excluded badge tasks from forecast view
+- **ICS**: Restored workspace event listeners for ICS updates
+- **Dataflow**: Resolved initialization race condition causing empty data on first load
+- **Priority**: Resolved priority parsing and caching issues
+- **Dataflow**: Resolved data loss on restart and integrated FileSource
+- **Calendar**: Fixed display of ICS badge events in calendar views
+- **Dataflow**: Resolved blank TaskView and integrated ICS events
+- **Dataflow**: Resolved data persistence and task parsing issues
+- **Build**: Resolved merge conflicts and compilation errors after rebase
+- **MCP**: Improved task retrieval after creation and updates
+
+## Performance
+
+- **View Settings**: Optimized view settings updates to avoid full refresh
+
+## Refactors
+
+- **Styles**: Extracted inline styles to CSS files
+- **Settings**: Replaced custom list UI with ListConfigModal and used native debounce
+- **Build**: Migrated to TypeScript path aliases and updated esbuild to v0.25.9
+- **Components**: Added missing re-exports for backward compatibility (phase 5)
+- **Components**: Added barrel exports for ui modules (phase 4)
+- **Settings**: Standardized settings under features/settings with tabs/components/core structure (phase 3)
+- **Components**: Consolidated feature modules under src/components/features/* with transitional re-exports (phase 2)
+- **Components**: Extracted shared UI into src/components/ui/* with transitional re-exports (phase 1)
+- **Settings**: Restructured beta features into dedicated tabs
+- **Quadrant**: Replaced custom feedback elements with Obsidian Notice API
+- **Settings**: Consolidated dataflowEnabled into enableIndexer
+- **Bases**: Enhanced Bases API compatibility and content handling
+- **Canvas**: Consolidated Canvas parsing into core CanvasParser
+- **Worker**: Removed unused imports from WorkerOrchestrator fallback
+- **Dataflow**: Consolidated time parsing types and removed debug files
+- **Orchestrator**: Cleaned up FileSource initialization
+- **Settings**: Updated settings UI for FileSource configuration
+- **Settings**: Converted File Task configuration to dynamic add/remove components
+- **Dataflow**: Completed TaskManager to Dataflow migration with enhanced APIs
+- **Dataflow**: Major architecture improvements and bug fixes
+- **Components**: Improved view management and ICS integration
+- **Dataflow**: Optimized single task updates and cache invalidation
+- **Settings**: Consolidated project configuration into unified tab
+- **Dataflow**: Optimized worker parallelization and fixed tgProject handling
+- **Editor Extensions**: Restructured editor-ext and standardized kebab-case naming
+- **Dataflow**: Reorganized workers and fixed import paths
+- **Dataflow**: Fixed import paths and added dataflow event support
+- **Architecture**: Completed dataflow migration and file reorganization
+- **Dataflow**: Implemented new task data architecture foundation
+
+## Documentation
+
+- **Bug Review**: Added bug review and fix documentation
+- **Architecture**: Updated architecture documentation and file specifications
+- **FileSource**: Added comprehensive specification and implementation docs
+- **Editor Extensions**: Added editor-extensions refactoring plan documentation
+
+## Tests
+
+- **Priority**: Added user scenario test for priority parsing
+- **FileSource**: Added comprehensive test suite for FileSource feature
+
+## Styles
+
+- **Task List**: Improved multi-line content layout flexibility
+- **Settings**: Added tg- prefix to CSS classes to avoid conflicts with other plugins
+- **Code Formatting**: Applied prettier formatting to task view components
+- **Indentation**: Fixed indentation and improved configuration passing
+- **Linting**: Applied code formatting and linting updates
