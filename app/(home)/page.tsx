@@ -5,15 +5,19 @@ import {
   CheckCircleIcon,
   Github,
   MessageCircle,
+  Star,
+  Download,
 } from "lucide-react";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import LatestVersion from "@/components/LatestVersion";
+import GitHubStats from "@/components/GitHubStats";
 
 export default function HomePage() {
   return (
     <main className="container md:mx-auto max-w-6xl md:px-4 py-12 md:py-20 ">
       <section className="-mt-20 border border-fd-border border-b-0 grid-background-small p-12 px-12 relative">
-        <div className="absolute bottom-0 right-0 p-2 py-1 hover:text-fd-primary">
+        <div className="absolute bottom-0 right-0 p-2 py-1 hover:text-fd-primary flex items-bottom">
+          <GitHubStats repo={"Obsidian-Task-Genius"} owner="Quorafind" />
           <LatestVersion />
         </div>
       </section>
