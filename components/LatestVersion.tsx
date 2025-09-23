@@ -1,33 +1,15 @@
-"use client";
-
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { fetchGitHubStats } from "@/lib/github";
 
-const TARGET_URL =
-  "https://api.github.com/repos/Quorafind/Obsidian-Task-Genius/releases/latest";
-
-export default function LatestVersion() {
-  const [version, setVersion] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchLatestVersion() {
-      try {
-        const response = await fetch(TARGET_URL, { cache: "no-store" });
-        const data = await response.json();
-        setVersion(data.tag_name);
-      } catch (error) {
-        console.error("Failed to fetch latest version:", error);
-      }
-    }
-
-    fetchLatestVersion();
-  }, []);
+export default async function LatestVersion() {
+  const stats = await fetchGitHubStats("Quorafind", "Obsidian-Task-Genius");
+  const version = stats.latestVersion || "1.0.0";
 
   return (
     <>
       <Link
         href={`https://github.com/Quorafind/Obsidian-Task-Genius/releases/tag/${
-          version || "latest"
+          stats.latestVersion || "latest"
         }`}
         target="_blank"
         rel="noopener noreferrer"
@@ -35,7 +17,7 @@ export default function LatestVersion() {
         <span className={"text-sm text-fd-muted-foreground"}>
           Latest version:{" "}
         </span>
-        <span className={"text-sm font-medium"}>{version || "1.0.0"}</span>
+        <span className={"text-sm font-medium"}>{version}</span>
       </Link>
     </>
   );

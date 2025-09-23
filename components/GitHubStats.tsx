@@ -1,86 +1,109 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Star, Download } from "lucide-react";
+import Link from "next/link";
 
 interface GitHubStatsProps {
   owner: string;
   repo: string;
 }
 
-interface RepoData {
-  stargazers_count: number;
-  totalDownloads: number;
+interface GitHubRelease {
+  assets: Array<{
+    download_count: number;
+  }>;
+}
+
+async function getGitHubStats(
+  owner: string,
+  repo: string
+): Promise<{
+  stars: number;
+  downloads: number;
+}> {
+  const token = process.env.GITHUB_TOKEN;
+  const headers = {
+    Accept: "application/vnd.github.v3+json",
+    ...(token && { Authorization: `Bearer ${token}` }),
+  };
+
+  try {
+    // Fetch repository data
+    const repoResponse = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}`,
+      {
+        headers,
+        next: { revalidate: 86400 }, // Cache for 24 hours
+      }
+    );
+
+    if (!repoResponse.ok) {
+      throw new Error(`Repository fetch failed: ${repoResponse.status}`);
+    }
+
+    const repoData = await repoResponse.json();
+
+    // Fetch releases for download counts
+    const releasesResponse = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}/releases`,
+      {
+        headers,
+        next: { revalidate: 86400 }, // Cache for 24 hours
+      }
+    );
+
+    let totalDownloads = 0;
+
+    if (releasesResponse.ok) {
+      const releases: GitHubRelease[] = await releasesResponse.json();
+
+      if (Array.isArray(releases)) {
+        releases.forEach((release) => {
+          if (release.assets && Array.isArray(release.assets)) {
+            release.assets.forEach((asset) => {
+              totalDownloads += asset.download_count || 0;
+            });
+          }
+        });
+      }
+    }
+
+    // 补偿因错误操作删除的 9.7.x 之前版本的历史下载量
+    // Due to accidental deletion of releases before v9.7.x, add compensation for historical download counts
+    const HISTORICAL_DOWNLOADS_COMPENSATION = 56200;
+    totalDownloads += HISTORICAL_DOWNLOADS_COMPENSATION;
+
+    return {
+      stars: repoData.stargazers_count || 0,
+      downloads: totalDownloads,
+    };
+  } catch (error) {
+    console.error("Error fetching GitHub stats:", error);
+    return {
+      stars: 0,
+      downloads: 0,
+    };
+  }
 }
 
 function formatNumber(num: number): string {
-  if (num >= 1000000) {
-    return `${(num / 1000000).toFixed(1)}M`;
+  if (num < 1000) {
+    return num.toString();
   }
-  if (num >= 1000) {
-    return `${(num / 1000).toFixed(0)}K`;
+
+  if (num < 100000) {
+    const value = (num / 1000).toFixed(1);
+    const formattedValue = value.endsWith(".0") ? value.slice(0, -2) : value;
+    return `${formattedValue}K`;
   }
-  return num.toString();
+
+  if (num < 1000000) {
+    return `${Math.floor(num / 1000)}K`;
+  }
+
+  return `${(num / 1000000).toFixed(1)}M`;
 }
 
-export default function GitHubStats({ owner, repo }: GitHubStatsProps) {
-  const [stats, setStats] = useState<RepoData>({
-    stargazers_count: 0,
-    totalDownloads: 0,
-  });
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchGitHubStats = async () => {
-      try {
-        // Fetch repository data
-        const repoResponse = await fetch(
-          `https://api.github.com/repos/${owner}/${repo}`,
-          {
-            headers: {
-              Accept: "application/vnd.github.v3+json",
-            },
-          }
-        );
-        const repoData = await repoResponse.json();
-
-        // Fetch releases data for download counts
-        const releasesResponse = await fetch(
-          `https://api.github.com/repos/${owner}/${repo}/releases`,
-          {
-            headers: {
-              Accept: "application/vnd.github.v3+json",
-            },
-          }
-        );
-        const releases = await releasesResponse.json();
-
-        // Calculate total downloads
-        let totalDownloads = 0;
-        if (Array.isArray(releases)) {
-          releases.forEach((release: any) => {
-            if (release.assets && Array.isArray(release.assets)) {
-              release.assets.forEach((asset: any) => {
-                totalDownloads += asset.download_count || 0;
-              });
-            }
-          });
-        }
-
-        setStats({
-          stargazers_count: repoData.stargazers_count || 0,
-          totalDownloads: totalDownloads,
-        });
-      } catch (error) {
-        console.error("Error fetching GitHub stats:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchGitHubStats();
-  }, [owner, repo]);
+export default async function GitHubStats({ owner, repo }: GitHubStatsProps) {
+  const { stars, downloads } = await getGitHubStats(owner, repo);
 
   return (
     <Link
@@ -105,25 +128,19 @@ export default function GitHubStats({ owner, repo }: GitHubStatsProps) {
             clipRule="evenodd"
           />
         </svg>
-        <span className="font-medium">
+        <span className="font-medium lg:block hidden">
           {owner}/{repo}
         </span>
       </span>
-      {loading ? (
-        <span className="text-fd-muted-foreground">Loading...</span>
-      ) : (
-        <>
-          <span className="flex items-center gap-1">
-            <Star className="size-3" aria-hidden="true" />
-            {formatNumber(stats.stargazers_count)}
-          </span>
-          {stats.totalDownloads > 0 && (
-            <span className="flex items-center gap-1">
-              <Download className="size-3" aria-hidden="true" />
-              {formatNumber(stats.totalDownloads)}
-            </span>
-          )}
-        </>
+      <span className="flex items-center gap-1">
+        <Star className="size-3" aria-hidden="true" />
+        {formatNumber(stars)}
+      </span>
+      {downloads > 0 && (
+        <span className="flex items-center gap-1">
+          <Download className="size-3" aria-hidden="true" />
+          {formatNumber(downloads)}
+        </span>
       )}
     </Link>
   );

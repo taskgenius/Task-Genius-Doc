@@ -5,12 +5,13 @@ import {
   CheckCircleIcon,
   Github,
   MessageCircle,
-  Star,
-  Download,
 } from "lucide-react";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import LatestVersion from "@/components/LatestVersion";
 import GitHubStats from "@/components/GitHubStats";
+
+// Revalidate the page every 24 hours (86400 seconds)
+export const revalidate = 86400;
 
 export default function HomePage() {
   return (
