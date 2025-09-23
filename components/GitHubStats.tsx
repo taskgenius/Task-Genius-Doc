@@ -110,7 +110,7 @@ export default async function GitHubStats({ owner, repo }: GitHubStatsProps) {
       href={`https://github.com/${owner}/${repo}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-2 px-3 py-0 rounded-full text-xs text-fd-foreground/70 transition-colors hover:text-fd-foreground"
+      className="inline-flex items-center gap-2 px-3 py-0 -mb-0.5 rounded-full text-xs text-fd-foreground/70 transition-colors hover:text-fd-foreground"
     >
       <span className="hidden sm:inline-flex items-center gap-2">
         <svg
