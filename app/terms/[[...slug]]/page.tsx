@@ -44,7 +44,7 @@ export default async function Page({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Plugin Card */}
             <Link
-              href="/terms/plugin-terms"
+              href="/terms/plugin"
               className="flex flex-col p-8 border border-fd-border hover:border-fd-primary/50 transition-all bg-fd-background/50 group no-underline"
             >
               <div className="flex items-center justify-center mb-6">
@@ -60,7 +60,7 @@ export default async function Page({
 
             {/* Desktop Card */}
             <Link
-              href="/terms/desktop-terms"
+              href="/terms/desktop"
               className="flex flex-col p-8 border border-fd-border hover:border-fd-primary/50 transition-all bg-fd-background/50 group no-underline"
             >
               <div className="flex items-center justify-center mb-6">
@@ -149,7 +149,7 @@ export default async function Page({
           </a>{" "}
           or review our{" "}
           <Link
-            href={`/privacy/${page.data.platform === "plugin" ? "plugin-privacy" : "desktop-privacy"}`}
+            href={`/privacy/${page.data.platform === "plugin" ? "plugin" : "desktop"}`}
             className="text-fd-primary hover:underline"
           >
             Privacy Policy
