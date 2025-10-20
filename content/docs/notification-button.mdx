@@ -1,0 +1,333 @@
+---
+title: Notification Button
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import { BellIcon, AlertCircleIcon, ClockIcon } from "lucide-react";
+
+The Notification Button provides at-a-glance awareness of pending and overdue tasks. Located in the toolbar, it displays a badge count and offers quick access to time-sensitive tasks that need your attention.
+
+<VersionCallout version="9.9.0" />
+
+## Overview
+
+The Notification Button is a persistent global indicator that helps you stay on top of your task deadlines. It monitors all tasks across your vault and alerts you to:
+
+- **Overdue tasks**: Tasks past their due date
+- **Upcoming tasks**: Tasks due within the next week
+
+**Key Features:**
+- Global monitoring across all tasks (not workspace-specific)
+- Real-time badge count updates
+- Quick access dropdown menu
+- Always visible in the toolbar
+
+## Location
+
+The Notification Button is located at the **far right of the toolbar** in the Task Genius main view.
+
+It appears as a bell icon (<BellIcon className="inline-block w-5 h-5" />) with a **red badge** in the top-right corner displaying the count of tasks requiring attention.
+
+## Badge Count
+
+### What the Badge Shows
+
+The red badge displays the total number of **incomplete tasks** that are either:
+1. Already overdue (past their due date)
+2. Due within the next 7 days
+
+**Example Counts:**
+- Badge shows `5`: You have 5 incomplete tasks that are overdue or due within a week
+- Badge shows `0` or is hidden: No urgent or upcoming tasks
+- Badge updates **immediately** when you complete or modify tasks
+
+### Real-Time Updates
+
+The badge count is dynamic and updates automatically when:
+- You complete a task (count decreases)
+- You add a new task with an upcoming due date (count increases)
+- A task becomes overdue as time passes (count increases)
+- You change a task's due date (count may increase or decrease)
+
+## Dropdown Menu
+
+### Opening the Menu
+
+Click the Notification Button (<BellIcon className="inline-block w-5 h-5" />) to open a dropdown menu showing all time-sensitive tasks.
+
+### Menu Structure
+
+The dropdown is organized into two sections:
+
+#### 1. <AlertCircleIcon className="inline-block w-5 h-5" /> Overdue Tasks
+
+Tasks that are **past their due date** and still incomplete.
+
+- Sorted by how overdue they are (most overdue first)
+- Displays task content, due date, and priority
+- Visual indicator showing how many days overdue
+
+**Example:**
+```
+Overdue Tasks (3)
+━━━━━━━━━━━━━━━━━━━━━
+☐ Submit quarterly report
+   Due: 3 days ago | Priority: High
+
+☐ Review project proposal
+   Due: 1 day ago | Priority: Medium
+
+☐ Update documentation
+   Due: Today | Priority: Low
+```
+
+#### 2. <ClockIcon className="inline-block w-5 h-5" /> Upcoming Tasks (Next 7 Days)
+
+Tasks due within the **next week** (from today through 7 days from now).
+
+- Sorted by due date (earliest first)
+- Displays task content, due date, and priority
+- Shows relative time (e.g., "Tomorrow", "In 3 days")
+
+**Example:**
+```
+Upcoming (Next 7 Days) (4)
+━━━━━━━━━━━━━━━━━━━━━
+☐ Team meeting preparation
+   Due: Tomorrow | Priority: High
+
+☐ Code review for PR #123
+   Due: In 2 days | Priority: Medium
+
+☐ Monthly planning session
+   Due: In 5 days | Priority: Medium
+
+☐ Backup project files
+   Due: In 6 days | Priority: Low
+```
+
+### Menu Interactions
+
+Within the dropdown menu, you can:
+
+- **Click a task** to jump to its location in your vault
+- **Check the checkbox** to mark a task as complete (removes it from the list)
+- **Right-click a task** to open the context menu for additional actions
+- **Scroll through the list** if you have many time-sensitive tasks
+
+**Note:** The menu closes automatically when you click outside of it or when you select a task.
+
+## Task Criteria
+
+### What Tasks Appear
+
+The Notification Button monitors tasks based on the following criteria:
+
+**Included:**
+- Tasks with a **Due Date** set
+- Tasks that are **incomplete** (not marked as done)
+- Tasks where the due date is:
+  - In the past (overdue), OR
+  - Within the next 7 days (upcoming)
+
+**Excluded:**
+- Completed tasks (marked as done with `x`)
+- Tasks without a due date
+- Tasks due more than 7 days in the future
+- Tasks with only Scheduled or Start dates (no Due date)
+
+### Time Window
+
+The time window is **fixed** and cannot be customized:
+- **Overdue**: From the beginning of time to yesterday
+- **Upcoming**: From today to 7 days from now
+
+**Timeline Example (Today is Jan 15):**
+```
+Jan 1  ─────────┬───────── Jan 14 ─┬─ Jan 15 ─┬───────── Jan 22 ─┬─────────> Future
+                │                   │           │                  │
+           [Overdue Tasks]    [Due Today]  [Upcoming Tasks]   [Not Shown]
+                                                (Next 7 Days)
+```
+
+## Global Scope
+
+The Notification Button operates **globally** across your entire vault:
+
+- **Not workspace-specific**: Monitors all tasks regardless of the current [Workspace](/docs/workspace)
+- **All views included**: Checks tasks from Inbox, Today, Upcoming, Flagged, and custom views
+- **Vault-wide coverage**: Scans all files in your vault that contain tasks
+
+**Implication**: Even if you switch workspaces or change views, the notification count remains consistent, reflecting all time-sensitive tasks in your vault.
+
+## Use Cases
+
+### Morning Review
+
+Start your day by clicking the Notification Button to:
+1. See what's overdue and needs immediate attention
+2. Review what's coming up in the next week
+3. Prioritize tasks based on urgency
+
+### Quick Task Completion
+
+Use the dropdown as a focused task list:
+1. Complete overdue tasks directly from the menu
+2. Clear your notification badge throughout the day
+3. Maintain momentum by tackling time-sensitive items
+
+### Deadline Awareness
+
+Keep the badge count in your peripheral vision:
+- Red badge with high count → Prioritize clearing overdue tasks
+- Badge count decreasing → Progress feedback
+- Badge at zero → All caught up on time-sensitive work
+
+### Weekly Planning
+
+At the start of the week:
+1. Review the "Upcoming (Next 7 Days)" section
+2. Identify tasks that need preparation or delegation
+3. Adjust priorities or deadlines as needed
+
+## Best Practices
+
+### 1. Set Due Dates Intentionally
+
+The Notification Button only tracks tasks with due dates:
+- Use **Due Dates** for time-sensitive tasks with hard deadlines
+- Use **Scheduled Dates** for planning without urgency
+- Leave dates empty for backlog items
+
+### 2. Aim for Zero Overdue
+
+Make it a habit to clear overdue tasks:
+- Review the "Overdue" section daily
+- Complete, reschedule, or delegate overdue items
+- Maintain a badge count focused on upcoming work
+
+### 3. Use the 7-Day Window for Planning
+
+The one-week window is designed for tactical planning:
+- Check upcoming tasks at the start of each week
+- Distribute work evenly across the next 7 days
+- Adjust task scheduling if the upcoming list is overwhelming
+
+### 4. Combine with Other Views
+
+The Notification Button complements other features:
+- Use **Calendar View** ([View Modes](/docs/view-modes)) for visual timeline planning
+- Use **Today View** for daily focus
+- Use **Notification Button** for urgent items across all contexts
+
+### 5. Treat the Badge as a Signal
+
+Let the badge count guide your workflow:
+- **0-3**: Manageable, stay on track
+- **4-10**: Moderate load, may need prioritization
+- **10+**: High load, consider rescheduling or delegating
+
+## Limitations
+
+The Notification Button has the following limitations:
+
+### 1. No Customization Options
+
+- **Cannot disable**: The button is always visible in the toolbar
+- **Cannot change time window**: Fixed at 7 days for upcoming tasks
+- **Cannot add filters**: Shows all tasks meeting the criteria (cannot filter by priority, tag, etc.)
+
+### 2. Due Date Dependency
+
+- Only tracks tasks with **Due Dates** explicitly set
+- Tasks with only Scheduled or Start dates are not included
+- No fallback to other date fields
+
+### 3. Global Scope Only
+
+- Does not filter by current workspace
+- Cannot scope to a specific project or tag
+- Shows all qualifying tasks from the entire vault
+
+### 4. No Notification System
+
+- The button is a passive indicator, not an active notification system
+- No alerts, sounds, or desktop notifications
+- Requires manual checking by clicking the button
+
+## Workarounds for Limitations
+
+While the Notification Button cannot be customized, you can achieve similar functionality through other features:
+
+### Custom Filtered Views
+
+Create custom views ([Custom Views](/docs/task-view/custom-view)) with specific filters:
+- **High Priority Overdue**: Filter by priority and overdue status
+- **Work Tasks Due Soon**: Filter by tag/project and due date range
+- **Personal Deadlines**: Filter by context or specific tags
+
+### Combine with Workspace Strategy
+
+Use [Workspaces](/docs/workspace) to mentally segment tasks:
+- Check Notification Button for global awareness
+- Switch to relevant workspace to focus on specific task sets
+- Use workspace-specific views for detailed work
+
+### Leverage View Modes
+
+Use [View Modes](/docs/view-modes) for different perspectives:
+- **Calendar View** to see the broader timeline (beyond 7 days)
+- **Kanban View** to track task status and progress
+- **List View** for comprehensive task details
+
+## Troubleshooting
+
+### Badge Count Seems Incorrect
+
+**Issue**: The badge shows a different number than expected.
+
+**Solution**:
+- Verify task due dates (use List View to see all dates)
+- Check if tasks are marked as complete
+- Confirm tasks have **Due Dates** (not just Scheduled or Start dates)
+- Refresh the Task Genius view (close and reopen)
+
+### Tasks Not Appearing in Dropdown
+
+**Issue**: Expected tasks are missing from the dropdown menu.
+
+**Solution**:
+- Ensure tasks have a Due Date field
+- Verify tasks are incomplete (not marked with `x`)
+- Check if the due date falls within the criteria:
+  - Overdue: Past due date
+  - Upcoming: Within next 7 days
+- Tasks due 8+ days in the future will not appear
+
+### Badge Not Updating After Task Completion
+
+**Issue**: Completed a task but the badge count hasn't decreased.
+
+**Solution**:
+- Ensure the task was marked as complete (checkbox checked)
+- Wait a moment for the UI to refresh
+- Click the Notification Button to refresh the dropdown
+- Restart Obsidian if the issue persists
+
+### Dropdown Menu Empty Despite Badge Count
+
+**Issue**: Badge shows a count, but the dropdown is empty.
+
+**Solution**:
+- Check the console for errors (Ctrl/Cmd + Shift + I)
+- Verify Task Genius has properly indexed your vault
+- Try reloading the plugin (Settings → Community Plugins → Reload)
+- Check for file permission issues
+
+## Related Features
+
+- [Workspace](/docs/workspace): Understand how workspaces interact with global notifications
+- [View Modes](/docs/view-modes): Use Calendar View for extended timeline visualization
+- [Task View](/docs/task-view): Explore view-specific task management
+- [Date & Priority](/docs/date-priority): Learn about setting due dates and priorities
+- [Filtering](/docs/filtering): Create custom filters for specific task subsets

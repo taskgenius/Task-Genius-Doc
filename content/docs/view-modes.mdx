@@ -1,0 +1,287 @@
+---
+title: View Modes
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import { ListIcon, ColumnsIcon, GitBranchIcon, CalendarIcon } from "lucide-react";
+
+View Modes provide different ways to visualize and interact with your tasks. While the left sidebar lets you choose **what tasks to see** (Inbox, Today, Upcoming, Flagged), the View Mode selector at the top lets you choose **how to see them**.
+
+<VersionCallout version="9.9.0" />
+
+## Overview
+
+Task Genius offers four distinct View Modes, each optimized for different workflows:
+
+- **<ListIcon className="inline-block w-5 h-5" /> List View**: Traditional flat list display
+- **<ColumnsIcon className="inline-block w-5 h-5" /> Kanban View**: Visual board with status-based columns
+- **<GitBranchIcon className="inline-block w-5 h-5" /> Tree View**: Hierarchical task display
+- **<CalendarIcon className="inline-block w-5 h-5" /> Calendar View**: Time-based calendar layout
+
+**Key Benefits:**
+- View the same tasks in different ways without changing filters
+- Each view (Inbox, Today, Upcoming, Flagged) remembers its preferred View Mode
+- Switch perspectives instantly to match your current workflow
+- All View Modes are workspace-specific (see [Workspace](/docs/workspace))
+
+## Switching View Modes
+
+### Quick Switch
+
+1. Open any task view (Inbox, Today, Upcoming, or Flagged).
+2. Look for the **View Mode selector** at the top of the main panel.
+3. Click one of the four horizontal icon buttons:
+   - <ListIcon className="inline-block w-5 h-5" /> for List View
+   - <ColumnsIcon className="inline-block w-5 h-5" /> for Kanban View
+   - <GitBranchIcon className="inline-block w-5 h-5" /> for Tree View
+   - <CalendarIcon className="inline-block w-5 h-5" /> for Calendar View
+4. The view updates immediately to reflect your selection.
+
+### Persistence
+
+- Each view (Inbox, Today, Upcoming, Flagged) **independently saves** its View Mode.
+- For example, you can have Inbox in List View and Today in Calendar View simultaneously.
+- Your View Mode preference is saved per [Workspace](/docs/workspace).
+- When you return to a view, it automatically displays in your last selected View Mode.
+
+## View Modes Reference
+
+### <ListIcon className="inline-block w-5 h-5" /> List View (Default)
+
+The traditional flat list display showing tasks in a linear format.
+
+**Features:**
+- Displays all tasks in a single scrollable list
+- Shows full task details (content, dates, priority, tags, project)
+- Supports text filtering via search bar
+- Automatic sorting by completion status, priority, due date, and content
+- Lazy loading for performance with large task lists
+- Direct task interaction (completion, selection, context menu)
+
+**Best For:**
+- Quick scanning of all tasks
+- Text-based searching and filtering
+- General task management
+- When you need to see all task details at once
+
+**Inherited From:** [Inbox View](/docs/task-view/inbox-view) List Mode
+
+**See Also:** [List Item](/docs/task-view/list-item) for details on task rendering.
+
+---
+
+### <ColumnsIcon className="inline-block w-5 h-5" /> Kanban View
+
+A visual board organizing tasks into columns based on their status, perfect for workflow management.
+
+**Features:**
+- **Columns**: Tasks are grouped by status (e.g., "Todo", "In Progress", "Done")
+- **Drag & Drop**: Move tasks between columns to update their status
+- **Visual Workflow**: See task progression at a glance
+- **Filtering**: Add multiple filters (Tag, Priority, Project, etc.) to narrow displayed tasks
+- **Grouping**: Default grouping by task status; can group by other metadata
+- **Sorting**: Customizable sorting within columns (by priority, due date, etc.)
+- **Empty Columns**: Option to hide empty columns for a cleaner view
+
+**Interactions:**
+- **Drag tasks** between columns to change their status
+- **Click a task** to select and view details
+- **Right-click** for context menu actions
+- **Filter controls** at the top to refine displayed tasks
+
+**Column Organization:**
+- Columns follow your task status configuration
+- Standard statuses appear first, then custom statuses, then completed statuses
+- Tasks within columns are sorted by priority (highest first) and due date (earliest first)
+
+**Best For:**
+- Visual workflow management
+- Quick status updates via drag-and-drop
+- Team collaboration and progress tracking
+- Sprint planning and execution
+
+**Inherited From:** [Status View](/docs/task-view/status-view)
+
+**Note:** Available filters include Status, Tag, Project, Context, Priority, Completed, and File Path.
+
+---
+
+### <GitBranchIcon className="inline-block w-5 h-5" /> Tree View
+
+Displays tasks hierarchically, showing parent-child relationships in an expandable tree structure.
+
+**Features:**
+- **Hierarchical Display**: Parent tasks with nested subtasks
+- **Expand/Collapse**: Control which task branches are visible
+- **Relationship Visualization**: Clearly see task dependencies and structure
+- **Inherited List Features**: Maintains all List View capabilities (sorting, filtering, etc.)
+
+**Interactions:**
+- **Expand/Collapse nodes** to manage visual complexity
+- **View task hierarchies** at a glance
+- **All standard task actions** (completion, selection, context menu)
+
+**Availability:**
+- **Only available when List View is applicable**
+- Not available in Kanban or Calendar modes
+- Think of Tree View as an enhanced variant of List View
+
+**Best For:**
+- Project management with subtasks
+- Complex task hierarchies
+- Understanding task dependencies
+- Breaking down large tasks into smaller components
+
+**Inherited From:** [Inbox View](/docs/task-view/inbox-view) Tree Mode
+
+**Note:** Tree View is particularly useful for projects with multi-level task structures.
+
+---
+
+### <CalendarIcon className="inline-block w-5 h-5" /> Calendar View
+
+Time-based visualization displaying tasks on a calendar based on their dates.
+
+**Features:**
+- **Multiple Calendar Views**:
+  - **Year View**: High-level annual overview
+  - **Month View**: Tasks across a specific month
+  - **Week View**: Current or selected week focus
+  - **Day View**: Single-day task examination
+  - **Agenda View**: List of upcoming tasks
+- **Date Navigation**: Previous/Next buttons and "Today" quick jump
+- **Date Mapping**: Tasks placed by Due Date, falling back to Scheduled Date, then Start Date
+- **Multi-day Events**: Tasks spanning multiple days (if Start Date ≠ Due Date)
+- **Visual Distinction**: Completed tasks displayed differently (e.g., in grey)
+
+**Interactions:**
+- **Click an event** to select the task and open details
+- **Click a day** (Month/Week view) to optionally open Quick Capture for that date
+- **Click a month** (Year view) to switch to Month view
+- **Right-click an event** for context menu actions
+- **Mark complete** directly from calendar events
+
+**Important Limitation:**
+- **Tasks without dates (Due, Scheduled, or Start) are not displayed**
+- Use List or Kanban View for undated tasks
+
+**Best For:**
+- Time-based planning and scheduling
+- Visualizing deadlines and due dates
+- Weekly/monthly reviews
+- Event-driven task management
+
+**Inherited From:** [Event View](/docs/task-view/event-view)
+
+**Settings:** Calendar View includes a "First day of week" setting for customization.
+
+## View Mode Comparison
+
+| Feature | List View | Kanban View | Tree View | Calendar View |
+|---------|-----------|-------------|-----------|---------------|
+| **Default Mode** | ✅ Yes | ❌ No | ❌ No | ❌ No |
+| **Shows All Tasks** | ✅ Yes | ✅ Yes | ✅ Yes | ⚠️ Only dated |
+| **Hierarchical** | ❌ No | ❌ No | ✅ Yes | ❌ No |
+| **Drag & Drop** | ❌ No | ✅ Yes (status) | ❌ No | ✅ Yes (dates) |
+| **Visual Grouping** | ❌ No | ✅ By status | ✅ By parent | ✅ By date |
+| **Best Use Case** | General | Workflow | Projects | Scheduling |
+| **Available When** | Always | Always | List available | Always |
+
+## Use Cases by View Mode
+
+### Daily Planning Workflow
+
+1. **Morning**: Use **Calendar View** on the **Today** view to see time-based tasks
+2. **Midday**: Switch to **List View** to check off completed tasks and see all details
+3. **Evening**: Use **Kanban View** on **Upcoming** to organize tomorrow's priorities
+
+### Project Management
+
+1. **Planning**: Use **Tree View** on **Inbox** to structure project tasks with subtasks
+2. **Execution**: Switch to **Kanban View** to track progress through status columns
+3. **Review**: Use **Calendar View** on **Upcoming** to check deadlines
+
+### Weekly Review
+
+1. **Review Completed**: **List View** on **Flagged** to see all important tasks
+2. **Plan Ahead**: **Calendar View** on **Upcoming** to visualize the week
+3. **Organize**: **Kanban View** on **Inbox** to triage new tasks
+
+## Best Practices
+
+### 1. Match View Mode to Task Type
+
+- **Dated tasks**: Calendar View for time awareness
+- **Status-driven work**: Kanban View for workflow clarity
+- **Complex projects**: Tree View for structure
+- **General processing**: List View for simplicity
+
+### 2. Consistent View Mode per Data Source
+
+Establish consistent View Mode defaults for each data source:
+- **Inbox**: List View (for quick triage)
+- **Today**: Calendar View (for time-based planning)
+- **Upcoming**: Kanban View (for status tracking)
+- **Flagged**: Tree View (for project focus)
+
+### 3. Leverage Workspace-Specific Settings
+
+Create different [Workspaces](/docs/workspace) with optimized View Mode configurations:
+- **Work Workspace**: Kanban-heavy for sprint tracking
+- **Personal Workspace**: Calendar-focused for scheduling
+- **Project Workspace**: Tree View for hierarchical planning
+
+### 4. Use View Mode Switching for Context
+
+Quickly switch View Modes to answer different questions:
+- "What's due soon?" → Calendar View
+- "What's in progress?" → Kanban View
+- "What are the project components?" → Tree View
+- "What needs attention?" → List View
+
+## Troubleshooting
+
+### Tasks Not Showing in Calendar View
+
+**Issue**: Some tasks are missing from Calendar View.
+
+**Solution**:
+- Verify tasks have at least one date field (Due, Scheduled, or Start Date)
+- Tasks without any dates will not appear in Calendar View
+- Switch to List View or Kanban View to see all tasks
+
+### Tree View Not Available
+
+**Issue**: Tree View button is disabled or not showing expected hierarchy.
+
+**Solution**:
+- Tree View is only available when List View is applicable
+- Ensure your tasks have parent-child relationships defined
+- Check if you're currently in Kanban or Calendar mode (Tree View replaces List View)
+
+### Kanban Columns Not Matching Expectations
+
+**Issue**: Tasks appear in unexpected columns.
+
+**Solution**:
+- Verify task status values match your status configuration
+- Check [Task Status](/docs/task-status) settings
+- Review active filters that might be hiding certain columns
+
+### View Mode Not Persisting
+
+**Issue**: View Mode resets when switching between views.
+
+**Solution**:
+- Each view (Inbox, Today, Upcoming, Flagged) saves its own View Mode independently
+- Ensure you're in the correct [Workspace](/docs/workspace)
+- Check if settings are saving properly (Obsidian write permissions)
+
+## Related Features
+
+- [Workspace](/docs/workspace): Manage separate View Mode configurations per workspace
+- [Task View](/docs/task-view): Understand the overall task viewing system
+- [Status View](/docs/task-view/status-view): Deep dive into Kanban functionality
+- [Event View](/docs/task-view/event-view): Detailed Calendar View features
+- [Inbox View](/docs/task-view/inbox-view): List and Tree View details
+- [Custom Views](/docs/task-view/custom-view): Create specialized views with preferred View Modes

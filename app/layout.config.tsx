@@ -6,6 +6,7 @@ import {
   Layout,
   Route,
   Server,
+  Sparkle,
 } from "lucide-react";
 import { Book, ComponentIcon } from "lucide-react";
 
@@ -20,6 +21,11 @@ export const linkItems: LinkItemType[] = [
       </svg>
     ),
     external: true,
+  },
+  {
+    url: "/download",
+    text: "Download",
+    icon: <Sparkle />,
   },
   {
     url: "/changelog",
@@ -165,7 +171,7 @@ export const baseOptions: BaseLayoutProps = {
             className: "lg:col-start-2 lg:col-span-1",
           },
         },
-        
+
         {
           icon: <Gift />,
           text: "Habit Tracking",

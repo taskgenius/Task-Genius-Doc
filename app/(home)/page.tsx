@@ -5,6 +5,7 @@ import {
   CheckCircleIcon,
   Github,
   MessageCircle,
+  Rocket,
 } from "lucide-react";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import LatestVersion from "@/components/LatestVersion";
@@ -13,7 +14,23 @@ import GitHubStats from "@/components/GitHubStats";
 // Revalidate the page every 24 hours (86400 seconds)
 export const revalidate = 86400;
 
+// Define available preview images
+const previewLightImages = [
+  { src: "/media/tg_light.png", alt: "Task Genius Light Mode" },
+  { src: "/media/tg_light_event.png", alt: "Task Genius Light Event View" },
+];
+
+const previewDarkImages = [
+  { src: "/media/tg_dark.png", alt: "Task Genius Dark Mode" },
+  { src: "/media/tg_dark_kanban.png", alt: "Task Genius Dark Kanban View" },
+];
+
 export default function HomePage() {
+  // Randomly select one image on server-side
+  const randomLightImage =
+    previewLightImages[Math.floor(Math.random() * previewLightImages.length)];
+  const randomDarkImage =
+    previewDarkImages[Math.floor(Math.random() * previewDarkImages.length)];
   return (
     <main className="container md:mx-auto max-w-6xl md:px-4 py-12 md:py-20 ">
       <section className="-mt-20 border border-fd-border border-b-0 grid-background-small p-12 px-12 relative">
@@ -26,29 +43,49 @@ export default function HomePage() {
         <h1 className="mb-4 text-4xl font-bold tracking-tight text-fd-foreground sm:text-5xl">
           Task Genius
         </h1>
-        <p className="mb-8 max-w-2xl text-lg text-fd-muted-foreground">
+        <p className="mb-4 max-w-2xl text-lg text-fd-muted-foreground">
           A comprehensive plugin for Task Management in Obsidian.
         </p>
-        <div className="mb-10 flex">
+        <p className="mb-8 text-sm text-fd-muted-foreground">
+          Available as Obsidian Plugin • Desktop App Coming Soon
+        </p>
+        <div className="mb-10 flex flex-col sm:flex-row gap-3">
           <Link
-            href="/docs/getting-started"
-            className="inline-flex items-center justify-center text-sm font-medium ring-offset-fd-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fd-ring disabled:pointer-events-none disabled:opacity-50 text-fd-primary border border-fd-border shadow-fd-background/20 h-11 px-6"
+            href="/#installation"
+            className="inline-flex items-center justify-center text-sm font-medium ring-offset-fd-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fd-ring disabled:pointer-events-none disabled:opacity-50 bg-fd-primary text-fd-primary-foreground border border-fd-primary shadow-fd-background/20 h-11 px-6 hover:bg-fd-primary/90"
           >
-            Full Documentation <ArrowRightIcon className="ml-2 size-4" />
+            Get Started <ArrowRightIcon className="ml-2 size-4" />
+          </Link>
+          <Link
+            href="/download"
+            className="inline-flex items-center justify-center text-sm font-medium ring-offset-fd-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fd-ring disabled:pointer-events-none disabled:opacity-50 text-fd-primary border border-fd-border shadow-fd-background/20 h-11 px-6 hover:bg-fd-muted/50"
+          >
+            Join Desktop Waitlist <ArrowRightIcon className="ml-2 size-4" />
           </Link>
         </div>
       </section>
 
-      <section className="border border-fd-border border-t-0 border-b-0 md:border-b  p-6 px-12  bg-fd-background backdrop-blur-sm bg-opacity-50">
-        {/* Assume image is in public/media */}
-        <Image
-          src="/media/task-genius-preview.png"
-          alt="Task Genius Feature Showcase"
-          width={1920}
-          height={1080}
-          className="rounded-lg p-0 scale-110"
-          priority
-        />
+      <section className="border border-fd-border border-t-0 border-b-0 md:border-b p-6 px-12 bg-opacity-50">
+        {/* Randomly selected preview image */}
+        <div className="w-fit h-fit relative">
+          <Image
+            src={randomLightImage.src}
+            alt={randomLightImage.alt}
+            width={1280}
+            height={720}
+            className="rounded-lg p-0 shadow-xl dark:hidden block"
+            priority
+          />
+          <Image
+            src={randomDarkImage.src}
+            alt={randomDarkImage.alt}
+            width={1280}
+            height={720}
+            className="rounded-lg p-0 shadow-xl dark:block hidden"
+            priority
+          />
+          <div className="noise-layer"></div>
+        </div>
       </section>
 
       <section className="absolute inset-0 -z-10 border-t border-b border-fd-border grid-background  max-h-1/2 top-1/3 border-b md:block hidden"></section>
@@ -79,11 +116,20 @@ export default function HomePage() {
         </ul>
       </section>
       <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background"></section>
-      <section className="border border-fd-border border-b-0 md:border-b pt-8 px-6 md:px-12 pb-6 relative">
+      <section
+        id="installation"
+        className="border border-fd-border border-b-0 md:border-b pt-12 px-6 md:px-12 pb-6 relative"
+      >
         <div className="border-r border-b border-fd-border text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-2 bg-fd-background backdrop-blur-sm">
           <span className="text-fd-primary font-sans font-bold">02</span>{" "}
-          Installation
+          Installation (Plugin)
         </div>
+        <p className="text-sm text-fd-muted-foreground mb-4">
+          Install the Task Genius plugin for Obsidian.{" "}
+          <Link href="/download" className="text-fd-primary hover:underline">
+            Looking for the Task Genius app?
+          </Link>
+        </p>
         <Tabs
           items={["Community", "Manual"]}
           className="rounded-none bg-transparent"
@@ -206,9 +252,50 @@ export default function HomePage() {
         </div>
       </section>
       <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background"></section>
+      <section className="border border-fd-border border-b-0 md:border-b pt-12 px-6 md:px-12 pb-6 relative">
+        <div className="border-r border-b border-fd-border text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-2 bg-fd-background backdrop-blur-sm">
+          <span className="text-fd-primary font-sans font-bold">05</span> Legal
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto text-center">
+          <Link
+            href="/privacy"
+            className="flex flex-col items-center justify-center p-4 border border-fd-border hover:bg-fd-muted/50 transition-colors group"
+          >
+            <div className="text-sm font-medium text-fd-foreground group-hover:text-fd-primary">
+              Privacy Policy
+            </div>
+            <div className="text-xs text-fd-muted-foreground mt-1">
+              How we protect your data
+            </div>
+          </Link>
+          <Link
+            href="/terms"
+            className="flex flex-col items-center justify-center p-4 border border-fd-border hover:bg-fd-muted/50 transition-colors group"
+          >
+            <div className="text-sm font-medium text-fd-foreground group-hover:text-fd-primary">
+              Terms of Service
+            </div>
+            <div className="text-xs text-fd-muted-foreground mt-1">
+              Usage terms & conditions
+            </div>
+          </Link>
+          <a
+            href="mailto:boninall@taskgenius.md"
+            className="flex flex-col items-center justify-center p-4 border border-fd-border hover:bg-fd-muted/50 transition-colors group"
+          >
+            <div className="text-sm font-medium text-fd-foreground group-hover:text-fd-primary">
+              Contact
+            </div>
+            <div className="text-xs text-fd-muted-foreground mt-1">
+              boninall@taskgenius.md
+            </div>
+          </a>
+        </div>
+      </section>
+      <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background"></section>
       <section className="border border-fd-border -mb-20 pt-12 px-6 md:px-12 pb-6 relative text-right">
         <div className="border-r border-b border-fd-border text-sm text-fd-muted-foreground absolute top-0 left-0 px-2 py-2 bg-fd-background backdrop-blur-sm">
-          <span className="text-fd-primary font-sans font-bold">05</span>{" "}
+          <span className="text-fd-primary font-sans font-bold">06</span>{" "}
           Copyright
         </div>
         <div className="prose prose-fd max-w-none">

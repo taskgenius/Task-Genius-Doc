@@ -2,100 +2,96 @@
 @import "fumadocs-ui/css/ocean.css";
 @import "fumadocs-ui/css/preset.css";
 
+@import "../styles/noise.css";
+
 .dark .zimbra-background {
-  --pattern-fg: color-mix(
-    in oklab,
-    var(--color-fd-border) 80%,
-    transparent
-  ) !important;
+    --pattern-fg: color-mix(
+        in oklab,
+        var(--color-fd-border) 80%,
+        transparent
+    ) !important;
 }
 
 .zimbra-background {
-  --pattern-fg: color-mix(in oklab, var(--color-fd-border) 30%, transparent);
-  background-image: repeating-linear-gradient(
-    315deg,
-    var(--pattern-fg) 0,
-    var(--pattern-fg) 1px,
-    transparent 0,
-    transparent 50%
-  );
-  background-size: 10px 10px;
-  background-attachment: fixed;
+    --pattern-fg: color-mix(in oklab, var(--color-fd-border) 30%, transparent);
+    background-image: repeating-linear-gradient(
+        315deg,
+        var(--pattern-fg) 0,
+        var(--pattern-fg) 1px,
+        transparent 0,
+        transparent 50%
+    );
+    background-size: 10px 10px;
+    background-attachment: fixed;
 }
 
 .dark .grid-background,
 .dark .grid-background-small {
-  --pattern-fg: color-mix(
-    in oklab,
-    var(--color-fd-border) 80%,
-    transparent
-  ) !important;
+    --pattern-fg: color-mix(
+        in oklab,
+        var(--color-fd-border) 80%,
+        transparent
+    ) !important;
 }
 
 .grid-background {
-  --pattern-fg: color-mix(in oklab, var(--color-fd-border) 30%, transparent);
-  background-image: linear-gradient(
-      to right,
-      var(--pattern-fg) 1px,
-      transparent 1px
-    ),
-    linear-gradient(to bottom, var(--pattern-fg) 1px, transparent 1px);
-  background-size: 32px 32px;
-  background-attachment: fixed;
+    --pattern-fg: color-mix(in oklab, var(--color-fd-border) 30%, transparent);
+    background-image:
+        linear-gradient(to right, var(--pattern-fg) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--pattern-fg) 1px, transparent 1px);
+    background-size: 32px 32px;
+    background-attachment: fixed;
 }
 
 .grid-background-small {
-  --pattern-fg: color-mix(in oklab, var(--color-fd-border) 30%, transparent);
-  background-image: linear-gradient(
-      to right,
-      var(--pattern-fg) 1px,
-      transparent 1px
-    ),
-    linear-gradient(to bottom, var(--pattern-fg) 1px, transparent 1px);
-  background-size: 16px 16px;
-  background-attachment: fixed;
+    --pattern-fg: color-mix(in oklab, var(--color-fd-border) 30%, transparent);
+    background-image:
+        linear-gradient(to right, var(--pattern-fg) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--pattern-fg) 1px, transparent 1px);
+    background-size: 16px 16px;
+    background-attachment: fixed;
 }
 
 :root {
-  --header-height: 70px;
+    --header-height: 70px;
 }
 
 .task-date::before {
-  display: inline-block;
-  margin-right: 0.4rem;
-  font-size: small;
-  display: inline-flex;
-  transform: translateY(-1px);
+    display: inline-block;
+    margin-right: 0.4rem;
+    font-size: small;
+    display: inline-flex;
+    transform: translateY(-1px);
 }
 
 .task-date.task-due-date::before {
-  content: "📅";
+    content: "📅";
 }
 
 .task-date.task-start-date::before {
-  content: "🛫";
+    content: "🛫";
 }
 
 .task-date.task-created-date::before {
-  content: "➕";
+    content: "➕";
 }
 
 .task-date.task-scheduled-date::before {
-  content: "⏳";
+    content: "⏳";
 }
 
 .task-date.task-done-date::before {
-  content: "✅";
+    content: "✅";
 }
 
 .task-date.task-cancelled-date::before {
-  content: "❌";
+    content: "❌";
 }
 
 .task-date.task-recurrence::before {
-  content: "🔁";
+    content: "🔁";
 }
 
 .task-date.task-on-completion::before {
-  content: "🏁";
+    content: "🏁";
 }

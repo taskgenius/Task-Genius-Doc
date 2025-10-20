@@ -4,79 +4,592 @@ title: Task Status & Cycling
 
 import { VersionCallout } from "@/components/VersionCallout";
 
-Go beyond the standard `- [ ]` (incomplete) and `- [x]` (complete) task markers. Task Genius offers extensive customization for task statuses to fit your workflow.
+Task Status allows you to go beyond Obsidian's basic "incomplete" (`- [ ]`) and "complete" (`- [x]`) checkboxes. Define custom task states like "In Progress", "Waiting", or "Abandoned" to match your workflow, then cycle through them with a single click.
 
 <VersionCallout version="5.0.0" />
 
-## Usage
+## Why Use Custom Task Statuses?
+
+### The Problem with Basic Checkboxes
+
+Obsidian's default tasks only support two states:
+- `- [ ]` Incomplete
+- `- [x]` Complete
+
+But real-world tasks often have more nuanced states:
+- Tasks you're actively working on (in progress)
+- Tasks waiting for someone else (blocked)
+- Tasks you've decided not to do (abandoned)
+- Tasks you're planning to do later (scheduled)
+
+### The Solution
+
+Task Genius lets you define **custom status markers** and organize them into a **status cycle** that matches your workflow.
+
+**Example:**
+```markdown
+- [ ] Buy groceries          ← Not started
+- [/] Write report           ← In progress
+- [?] Review proposal        ← Waiting/Planned
+- [-] Cancelled meeting      ← Abandoned
+- [x] Submit invoice         ← Completed
+```
+
+## Common Use Cases
+
+### GTD (Getting Things Done) Workflow
+
+**Status Cycle:** Inbox → Next Action → Waiting → Done
+
+```markdown
+- [ ] Process emails         ← Inbox
+- [>] Call client           ← Next Action
+- [?] Waiting for approval  ← Waiting
+- [x] Send proposal         ← Done
+```
+
+### Agile/Scrum Development
+
+**Status Cycle:** Backlog → In Progress → Review → Done
+
+```markdown
+- [ ] Add login feature     ← Backlog
+- [/] Implement API         ← In Progress
+- [r] Code review pending   ← Review
+- [x] Deploy to staging     ← Done
+```
+
+### Simple Three-State Workflow (Recommended for Beginners)
+
+**Status Cycle:** To Do → Doing → Done
+
+```markdown
+- [ ] Read documentation    ← To Do
+- [/] Write code           ← Doing
+- [x] Submit PR            ← Done
+```
+
+## Quick Start
 
 <DeepLinkButton href="obsidian://task-genius/settings?tab=task-status">
   Open Task Status Settings
 </DeepLinkButton>
 <DeepLinkFallback />
 
-### Defining Status Markers
+### For New Users: Add "In Progress" Status
 
-Task Genius categorizes statuses for progress tracking and specific behaviors. You can define the marker characters for each category in the settings:
+The simplest enhancement is adding a single "In Progress" state:
 
-- **Completed:** Markers representing finished tasks (e.g., `x`, `X`). Default: `x`.
-- **Planned:** Markers for tasks planned but not started (e.g., `?`). Default: `?`.
-- **In progress:** Markers for tasks currently being worked on (e.g., `/`, `>`). Default: `/`.
-- **Abandoned:** Markers for tasks that will not be completed (e.g., `-`). Default: `-`.
-- **Not started:** The marker for tasks yet to begin (e.g., ` ` (space)). Default: ` `.
+1. Open **Task Status Settings**
+2. Go to **"Task Status Switcher"** section
+3. Click **"Add status"**
+4. Configure the new status:
+   - **Status name:** `In Progress`
+   - **Mark:** `/` (forward slash)
+   - **Include in cycle:** ✅ Enabled
+5. **Save settings**
 
-Separate multiple markers for a single category with a pipe character (`|`), like `x|X`.
+Now you can cycle through: `[ ]` → `[/]` → `[x]`
 
-#### Applying Status Themes
+### For Advanced Users: Create Custom Workflow
 
-You can quickly apply predefined sets of statuses using themes (e.g., "Standard", "Things3"). Select a theme from the dropdown in the "Task Status Settings" section.
+Create a full custom status cycle:
 
-**Note:** Applying a theme will override your current custom marker definitions _and_ your custom status cycle configuration (see below).
+1. Open **Task Status Settings**
+2. In **"Task Status Switcher"**, add multiple statuses:
+   - `Not Started` → Mark: ` ` (space)
+   - `In Progress` → Mark: `/`
+   - `Review` → Mark: `r`
+   - `Waiting` → Mark: `?`
+   - `Done` → Mark: `x`
+3. Use **up/down arrows** to reorder the cycle
+4. **Enable "Enable task status switcher"** toggle
+5. **Save settings**
 
-#### Handling Other Statuses
+## Cycling Through Statuses
 
-If a task uses a marker not defined in the categories above, you can configure how Task Genius should count it using the "Count other statuses as" setting. Options include "not started", "abandoned", "planned", "completed", or "in progress".
+### Click to Cycle
 
-#### Click Behavior Customization
+Once configured, click the checkbox to cycle through your defined statuses:
 
-- **Enable custom task marks:** Replace standard `- [ ]` checkboxes with styled text marks based on your cycle definition.
-- **Enable text mark in source mode:** Allow clicking the text mark in Source Mode to cycle the status.
-- **Enable cycle complete status:** Determine if clicking a marker automatically cycles through all defined states.
+**Example Cycle:**
+```
+Click 1: - [ ] Task  →  - [/] Task  (In Progress)
+Click 2: - [/] Task  →  - [x] Task  (Done)
+Click 3: - [x] Task  →  - [ ] Task  (Back to start)
+```
 
-### Parent Task Automation
+**Where You Can Click:**
+- **In Editor (Live Preview):** Click the checkbox or custom mark
+- **In Task Genius View:** Click the task marker in the task list
+- **In Source Mode:** Click the text mark (if "Enable text mark in source mode" is enabled)
 
-Configure how parent tasks behave based on their subtasks:
+### Keyboard Commands
 
-- **Auto complete parent task:** Automatically mark a parent task as complete when all its direct subtasks are completed. Useful for [progress bars](/docs/progress-bars).
-- **Mark parent as 'in progress' when partially complete:** If the above is enabled, automatically mark a parent task with your "in progress" marker when _some_ but not all subtasks are complete.
+Use commands for precise control:
 
-### Task Counting
+- **`Task Genius: Cycle task status forward`**: Move to the next status in your cycle
+- **`Task Genius: Cycle task status backward`**: Move to the previous status
 
-Control how task progress is calculated:
+**Tip:** Assign hotkeys to these commands in Obsidian's Hotkeys settings for faster status changes.
 
-- **Exclude specific task markers:** Enter markers (separated by `|`) that should _not_ be counted towards progress totals (e.g., `?|-`).
-- **Only count specific task markers:** Enable this toggle and specify markers (separated by `|`) that _should_ be counted. All other markers will be ignored.
+## Defining Status Categories
 
-Read more about task counting in the [Task Progress](/docs/progress-bars) page.
+Task Genius needs to understand what each status marker **means** for progress tracking and automation.
 
-### Cycling Commands
+### Status Categories
 
-You can still use commands to cycle statuses:
+Configure these in **"Task Status Settings"** → **"Defining Status Markers"**:
 
-- **Commands**: Use the Obsidian command palette (`Ctrl/Cmd + P`) and search for:
-  - `Task Genius: Cycle task status forward`
-  - `Task Genius: Cycle task status backward`
+#### 1. **Not Started** (Default: ` ` space)
 
-## Settings
+Tasks that haven't been started yet.
 
-The "Task Status Switcher" section allows you to define a custom sequence for cycling through statuses when clicking on a task marker or using commands.
+```markdown
+- [ ] Plan project
+- [ ] Schedule meeting
+```
 
-- **Enable/Disable:** Toggle the ability to cycle statuses by clicking (`Enable task status switcher`).
-- **Define cycle & marks:**
-  - **Add status:** Add a new status entry to the cycle.
-  - **Status name:** Define the name for the status (e.g., "Todo", "In progress", "Done").
-  - **Mark:** Set the single character marker for this status (e.g., ` `, `/`, `x`).
-  - **Include in cycle:** Toggle whether this specific status should be included when clicking to cycle. Useful for intermediate or final states you don't want to cycle _through_ but want to define a mark for.
-  - **Reorder:** Use the up/down arrows to change the cycling sequence.
-  - **Remove:** Delete a status from the cycle using the trash icon.
-- **Apply themes:** You can also apply a theme's cycle definition from the dropdown here, which will override your custom cycle.
+**Behavior:**
+- Counted as incomplete in progress bars
+- Default starting state for new tasks
+
+---
+
+#### 2. **In Progress** (Default: `/`)
+
+Tasks actively being worked on.
+
+```markdown
+- [/] Writing documentation
+- [>] Debugging feature
+```
+
+**Behavior:**
+- Counted as incomplete but "active" in progress bars
+- Can trigger parent task automation (see below)
+- Can work with [Append Date](/docs/append-date) to auto-add start dates
+
+**Multiple Markers:** Use `|` to define alternatives: `/|>` (both `/` and `>` mean "in progress")
+
+---
+
+#### 3. **Planned** (Default: `?`)
+
+Tasks scheduled or waiting for action from others.
+
+```markdown
+- [?] Waiting for client feedback
+- [?] Scheduled for next week
+```
+
+**Behavior:**
+- Counted as incomplete by default
+- Often excluded from progress tracking (see [Task Counting](#task-counting) below)
+
+---
+
+#### 4. **Abandoned** (Default: `-`)
+
+Tasks that won't be completed (cancelled, not relevant, etc.).
+
+```markdown
+- [-] Cancelled meeting
+- [-] Obsolete task
+```
+
+**Behavior:**
+- Counted as "not completed" but removed from active tracking
+- Often excluded from progress bars
+
+---
+
+#### 5. **Completed** (Default: `x`)
+
+Finished tasks.
+
+```markdown
+- [x] Submitted report
+- [X] Deployed feature  ← Capital X also works
+```
+
+**Behavior:**
+- Counted as complete in progress bars
+- Can auto-set completion date
+- Visually distinct (strikethrough) in most themes
+
+**Multiple Markers:** Use `x|X` to accept both lowercase and uppercase
+
+---
+
+### Handling Other Statuses
+
+If you use a marker not defined in the categories above (e.g., `[!]`, `[r]`), configure how Task Genius should interpret it:
+
+**Setting:** "Count other statuses as"
+
+**Options:**
+- `not started`
+- `in progress`
+- `planned`
+- `abandoned`
+- `completed`
+
+**Example:** If you use `[!]` for urgent tasks, set "Count other statuses as" to `in progress`.
+
+## Task Counting & Progress Bars
+
+Control which tasks contribute to progress calculations.
+
+### Exclude Specific Markers
+
+Prevent certain statuses from being counted in progress totals.
+
+**Setting:** "Exclude specific task markers"
+
+**Format:** Separate markers with `|`
+
+**Example:** `?|-` (exclude planned and abandoned tasks)
+
+**Use Case:**
+```markdown
+- [ ] Write code          ← Counted (0/3 complete)
+- [/] Review PR          ← Counted (0/3 complete)
+- [?] Wait for approval  ← NOT counted (excluded)
+- [-] Cancelled task     ← NOT counted (excluded)
+- [x] Deploy            ← Counted (1/3 complete)
+```
+
+Progress: **1/3** (33%)
+
+---
+
+### Only Count Specific Markers
+
+Whitelist which statuses should be counted, ignoring all others.
+
+**Setting:** "Only count specific task markers"
+
+**Format:** Enable toggle, then specify markers with `|`
+
+**Example:** ` |/|x` (only count not started, in progress, and completed)
+
+**Use Case:** Strict progress tracking, ignoring all intermediate states like "planned" or "waiting".
+
+---
+
+Read more about progress bars in the [Progress Bars](/docs/progress-bars) documentation.
+
+## Parent Task Automation
+
+Automatically update parent tasks based on their subtasks.
+
+### Auto-Complete Parent Tasks
+
+**Setting:** "Auto complete parent task"
+
+When **all** subtasks are completed, the parent task is automatically marked as complete.
+
+**Example:**
+```markdown
+- [ ] Project Launch
+  - [x] Design mockups
+  - [x] Develop feature
+  - [x] Write tests
+```
+
+After completing the last subtask, the parent automatically becomes:
+```markdown
+- [x] Project Launch  ← Auto-completed
+  - [x] Design mockups
+  - [x] Develop feature
+  - [x] Write tests
+```
+
+**Benefits:**
+- Visual feedback of project completion
+- Accurate progress tracking
+- Reduced manual status updates
+
+---
+
+### Mark Parent as "In Progress"
+
+**Setting:** "Mark parent as 'in progress' when partially complete"
+
+When **some** (but not all) subtasks are completed, the parent task is automatically marked with your "in progress" marker.
+
+**Example:**
+```markdown
+- [ ] Project Launch
+  - [x] Design mockups      ← Completed
+  - [ ] Develop feature     ← Not started
+  - [ ] Write tests         ← Not started
+```
+
+After completing one subtask, the parent automatically becomes:
+```markdown
+- [/] Project Launch  ← Auto-marked as "in progress"
+  - [x] Design mockups
+  - [ ] Develop feature
+  - [ ] Write tests
+```
+
+**Benefits:**
+- Visual indicator of active projects
+- Easy identification of work-in-progress
+- Integrates with [Append Date](/docs/append-date) to auto-add start dates
+
+**Note:** This requires "Auto complete parent task" to be enabled.
+
+---
+
+### Integration with Append Date
+
+When parent tasks are marked "in progress", they can automatically receive a **start date** if you've configured the [Append Date](/docs/append-date) feature.
+
+**Example Workflow:**
+1. Parent task starts as `- [ ] Project Launch`
+2. You complete the first subtask
+3. Parent becomes `- [/] Project Launch ⏳ 2025-01-15` (start date auto-added)
+4. Complete all subtasks
+5. Parent becomes `- [x] Project Launch ⏳ 2025-01-15 ✅ 2025-01-20` (completion date auto-added)
+
+This provides a complete timeline of your project's lifecycle.
+
+## Visual Customization
+
+### Custom Task Marks
+
+**Setting:** "Enable custom task marks"
+
+Replace standard checkboxes with **styled text marks** based on your status cycle.
+
+**Visual Effect:**
+
+**Disabled (Default):**
+```
+☐ Not started
+☐ In progress (still shows checkbox)
+☑ Done
+```
+
+**Enabled:**
+```
+[ ] Not started
+[/] In progress     ← Custom styled mark
+[x] Done
+```
+
+The marks are styled with CSS classes, allowing themes to customize their appearance.
+
+**Performance:** No impact on performance.
+
+---
+
+### Text Marks in Source Mode
+
+**Setting:** "Enable text mark in source mode"
+
+Allow clicking the text mark in **Source Mode** to cycle status.
+
+**Disabled:** Must click the actual checkbox area
+**Enabled:** Click anywhere on `[/]` to cycle
+
+**Use Case:** Useful if you frequently work in Source Mode and want faster status cycling.
+
+---
+
+### Cycle Complete Status
+
+**Setting:** "Enable cycle complete status"
+
+Determine if clicking cycles through **all** defined states or stops at "complete".
+
+**Enabled (Recommended):** Clicking cycles through all states in your defined cycle (including completed)
+**Disabled:** Clicking stops at the completed state and won't cycle further
+
+**Example (Enabled):**
+```
+[ ] → [/] → [x] → [ ] → [/] → [x] → ...
+```
+
+**Example (Disabled):**
+```
+[ ] → [/] → [x] (stops here, must manually edit to revert)
+```
+
+## Status Cycle Configuration
+
+### Creating Your Cycle
+
+**Location:** Settings → Task Status Settings → "Task Status Switcher"
+
+1. **Enable the switcher:** Toggle "Enable task status switcher"
+2. **Add statuses:** Click "Add status" for each state in your workflow
+3. **Configure each status:**
+   - **Status name:** Human-readable name (e.g., "In Progress")
+   - **Mark:** Single character marker (e.g., `/`)
+   - **Include in cycle:** Whether clicking should cycle through this status
+4. **Reorder:** Use up/down arrows to set the cycling sequence
+5. **Remove:** Use trash icon to delete unwanted statuses
+
+### Include in Cycle
+
+The **"Include in cycle"** toggle controls whether a status appears when clicking to cycle.
+
+**Use Case:** Define statuses you want to set manually (via commands or context menu) but don't want in the click cycle.
+
+**Example:**
+```markdown
+Cycle (clicking):  [ ] → [/] → [x] → [ ] ...
+Manual only:       [?] Waiting (set via command, not in click cycle)
+```
+
+This keeps your click cycle simple while still supporting advanced statuses.
+
+## Applying Status Themes
+
+**Setting:** Task Status Settings → "Apply theme"
+
+Quickly adopt predefined status configurations.
+
+**Available Themes:**
+- **Standard:** Basic Obsidian-style statuses
+- **Things3:** Inspired by the Things 3 app
+- (More themes may be available in your version)
+
+**Warning:** Applying a theme will **override** both your:
+- Custom status category definitions
+- Custom status cycle configuration
+
+**Recommendation:** Configure your own statuses manually for full control.
+
+## Best Practices
+
+### For Beginners: Keep It Simple
+
+**Recommended Setup:**
+- **States:** Not Started → In Progress → Done
+- **Markers:** ` ` (space) → `/` → `x`
+- **Parent automation:** Enable "Auto complete parent task"
+
+This provides a significant upgrade over basic checkboxes without overwhelming complexity.
+
+---
+
+### For Advanced Users: Optimize for Your Workflow
+
+**GTD Users:**
+- Add "Waiting" (`?`) for tasks dependent on others
+- Add "Someday" (`~`) for future considerations
+- Exclude `?|~` from progress tracking
+
+**Agile/Scrum Teams:**
+- Add "Review" (`r`) for code review or QA
+- Add "Blocked" (`!`) for tasks with dependencies
+- Use parent automation for sprint tracking
+
+**Project Managers:**
+- Add "On Hold" (`h`) for paused work
+- Add "Cancelled" (`-`) for scope changes
+- Enable all parent task automation for accurate reporting
+
+---
+
+### Standardize Across Your Vault
+
+**Consistency Tip:** Define your status cycle once and stick to it across all notes.
+
+**Why:**
+- Reliable progress tracking
+- Easier filtering in Task Genius View
+- Better compatibility with templates and automation
+
+---
+
+### Combine with View Modes
+
+Use custom statuses with [View Modes](/docs/view-modes):
+
+- **Kanban View:** Visualize tasks grouped by status
+- **List View:** Filter by specific status markers
+- **Calendar View:** See when tasks enter different states
+
+---
+
+### Use Context Menu for Rare Statuses
+
+For statuses you rarely use:
+- **Don't** include them in the cycle
+- **Do** set them via right-click context menu or commands
+
+This keeps your click cycle fast and predictable.
+
+## Troubleshooting
+
+### Status Not Cycling
+
+**Issue:** Clicking the checkbox doesn't change status.
+
+**Solution:**
+- Verify "Enable task status switcher" is toggled ON
+- Check that the status has "Include in cycle" enabled
+- Ensure you're clicking the correct area (checkbox or mark)
+- Try using the command `Task Genius: Cycle task status forward` instead
+
+---
+
+### Parent Task Not Auto-Completing
+
+**Issue:** Completing all subtasks doesn't complete the parent.
+
+**Solution:**
+- Verify "Auto complete parent task" is enabled in settings
+- Ensure all subtasks are using your defined "completed" marker (default `x`)
+- Check that subtasks are properly indented under the parent
+- Refresh the task index: `Task Genius: Refresh task index`
+
+---
+
+### Custom Marks Not Showing
+
+**Issue:** Tasks still show standard checkboxes instead of custom marks.
+
+**Solution:**
+- Verify "Enable custom task marks" is toggled ON
+- Check that your theme supports custom task styling
+- Switch between Live Preview and Reading Mode to refresh
+- Restart Obsidian if styling doesn't apply
+
+---
+
+### Progress Bars Counting Wrong Tasks
+
+**Issue:** Progress percentages include tasks you want to exclude.
+
+**Solution:**
+- Review "Exclude specific task markers" setting
+- Ensure markers are separated by `|` (e.g., `?|-`)
+- Check "Count other statuses as" setting
+- Use "Only count specific task markers" for stricter control
+
+---
+
+### Cycle Skipping Statuses
+
+**Issue:** Clicking skips over some statuses in your cycle.
+
+**Solution:**
+- Verify all desired statuses have "Include in cycle" enabled
+- Check the order of statuses (use up/down arrows to reorder)
+- Ensure each status has a unique marker character
+- Reload settings or restart Obsidian
+
+## Related Features
+
+- [Progress Bars](/docs/progress-bars): Visualize task completion with custom statuses
+- [Append Date](/docs/append-date): Auto-add start/completion dates when status changes
+- [View Modes](/docs/view-modes): Use Kanban View to visualize tasks by status
+- [Bulk Operations](/docs/bulk-operations): Change status for multiple tasks at once
+- [Workflows](/docs/workflows): Automate status changes based on triggers

@@ -2,7 +2,7 @@ import type { InferMetaType, InferPageType } from "fumadocs-core/source";
 import { loader } from "fumadocs-core/source";
 import { icons } from "lucide-react";
 import { createElement } from "react";
-import { docs, releases, roadmap } from "@/.source";
+import { docs, releases, roadmap, privacy, terms } from "@/.source";
 
 // Loader for docs
 export const docsSource = loader({
@@ -35,6 +35,18 @@ export const roadmapSource = loader({
   source: roadmap.toFumadocsSource(),
 });
 
+// Loader for privacy
+export const privacySource = loader({
+  baseUrl: "/privacy",
+  source: privacy.toFumadocsSource(),
+});
+
+// Loader for terms
+export const termsSource = loader({
+  baseUrl: "/terms",
+  source: terms.toFumadocsSource(),
+});
+
 export type DocsPage = InferPageType<typeof docsSource>;
 export type DocsMeta = InferMetaType<typeof docsSource>;
 
@@ -43,3 +55,9 @@ export type ReleaseMeta = InferMetaType<typeof releasesSource>;
 
 export type RoadmapPageType = InferPageType<typeof roadmapSource>; // Using a more distinct name
 export type RoadmapMeta = InferMetaType<typeof roadmapSource>;
+
+export type PrivacyPage = InferPageType<typeof privacySource>;
+export type PrivacyMeta = InferMetaType<typeof privacySource>;
+
+export type TermsPage = InferPageType<typeof termsSource>;
+export type TermsMeta = InferMetaType<typeof termsSource>;

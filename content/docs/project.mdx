@@ -2,42 +2,624 @@
 title: Projects
 ---
 
-Projects let you organize and surface work using metadata-based detection.
+import { VersionCallout } from "@/components/VersionCallout";
+
+Projects help you organize and track tasks by grouping them under meaningful categories. Whether you're managing work initiatives, personal goals, or creative endeavors, Task Genius provides flexible ways to define and visualize projects.
+
+## What is a Project?
+
+In Task Genius, a **Project** is a collection of related tasks organized under a common identifier. Projects can be defined in two ways:
+
+### 1. Task-Level Projects
+
+Individual tasks tagged with project identifiers.
+
+**Example:**
+```markdown
+- [ ] Design homepage #project/website
+- [ ] Write API documentation #project/website
+- [ ] Review code changes #project/backend
+```
+
+Each task explicitly declares its project using a tag or metadata field.
+
+---
+
+### 2. File-Level Projects
+
+Entire notes designated as projects, where **all tasks within the file** inherit the project.
+
+**Example:**
+
+File: `Website Redesign.md`
+```yaml
+---
+project: true
+---
+
+# Website Redesign
+
+- [ ] Create wireframes
+- [ ] Design color scheme
+- [ ] Implement responsive layout
+```
+
+All three tasks automatically belong to the "Website Redesign" project (derived from the file name).
+
+---
+
+**Key Difference:**
+- **Task-level**: Each task can have a different project (`#project/website`, `#project/backend`)
+- **File-level**: All tasks in a file share the same project (the file name)
+
+**Important:** A task can only belong to **one project** at a time.
+
+## Why Use Projects?
+
+### Organize Work by Context
+
+Group related tasks together for better focus and tracking.
+
+**Examples:**
+- Work: `#project/q1-sales`, `#project/product-launch`
+- Personal: `#project/home-renovation`, `#project/learning-spanish`
+- Creative: `#project/novel-writing`, `#project/photo-portfolio`
+
+---
+
+### Track Progress Across Your Vault
+
+See all tasks for a specific project in one place, regardless of which files they're in.
+
+**Use Case:**
+You mention the "Website Redesign" project in:
+- `Daily Notes/2025-01-15.md`: `- [x] Design homepage #project/website`
+- `Daily Notes/2025-01-16.md`: `- [ ] Write copy #project/website`
+- `Projects/Website.md`: `- [ ] Deploy to staging #project/website`
+
+The **Project View** shows all three tasks together under "Website Redesign".
+
+---
+
+### Daily Project Tracking
+
+Add project tags to tasks in your daily notes to track what you accomplished each day.
+
+**Example Daily Note:**
+```markdown
+# 2025-01-15
+
+## Tasks
+- [x] Research competitors #project/marketing
+- [x] Fix login bug #project/backend
+- [ ] Write blog post #project/content
+```
+
+Review your project progress over time without manually organizing tasks into project files.
+
+## Project Detection Methods
+
+Configure how Task Genius identifies projects in your vault.
 
 <DeepLinkButton href="obsidian://task-genius/settings?tab=project">
   Open Project Settings
 </DeepLinkButton>
 <DeepLinkFallback />
 
-## Detection Methods
+### Method 1: Frontmatter Key
 
-Enable and configure how files become projects:
+Mark notes as projects using frontmatter metadata.
 
-- Frontmatter key: e.g. `project: true`
-- Tags: One or more tags to qualify files as projects
-- Folders: Paths designating project locations
+**Setting:** Enable "Frontmatter key" detection
 
-You can combine methods to match your vault structure.
+**Format:**
+```yaml
+---
+project: true
+---
+```
+
+or
+
+```yaml
+---
+project: "Custom Project Name"
+---
+```
+
+**Behavior:**
+- `project: true` → Project name = **file name**
+- `project: "Name"` → Project name = **"Name"**
+- All tasks in the file inherit this project
+
+**Example:**
+
+File: `Q1 Marketing Campaign.md`
+```yaml
+---
+project: true
+---
+
+- [ ] Plan social media strategy
+- [ ] Design ad creatives
+- [ ] Launch campaign
+```
+
+All three tasks belong to the "Q1 Marketing Campaign" project.
+
+---
+
+### Method 2: Tags
+
+Designate files as projects using specific tags.
+
+**Setting:** Enable "Tags" detection and specify tag(s)
+
+**Default Tag:** `#project`
+
+**Format:**
+```markdown
+#project
+
+- [ ] Task 1
+- [ ] Task 2
+```
+
+or with custom tags:
+```markdown
+#work-project
+
+- [ ] Task 1
+- [ ] Task 2
+```
+
+**Behavior:**
+- File contains the configured tag → File is a project
+- Project name = **file name**
+- All tasks in the file inherit this project
+
+**Multiple Tags:** You can specify multiple tags (e.g., `#project`, `#work-project`). If a file has **any** of these tags, it's detected as a project.
+
+---
+
+### Method 3: Folders
+
+Treat all files in specific folders as projects.
+
+**Setting:** Enable "Folders" detection and specify folder path(s)
+
+**Format:** Enter folder paths, one per line or separated by commas
+
+**Example Configuration:**
+```
+Projects/
+Work/Active Projects/
+Personal/Goals/
+```
+
+**Behavior:**
+- Any file in these folders → File is a project
+- Project name = **file name**
+- All tasks in the file inherit this project
+
+**Subfolder Support:** If you specify `Projects/`, all files in `Projects/` and its subfolders are projects.
+
+---
+
+### Combining Methods
+
+You can **enable multiple detection methods** simultaneously. Task Genius will recognize projects using any of the configured methods.
+
+**Example Setup:**
+- ✅ Frontmatter key (for explicit project files)
+- ✅ Tags (`#project`, for flexible tagging)
+- ✅ Folders (`Projects/`, for organizational structure)
+
+**Result:** Files are detected as projects if they:
+- Have `project:` frontmatter, OR
+- Contain `#project` tag, OR
+- Are located in `Projects/` folder
+
+## Assigning Tasks to Projects
+
+Tasks can be associated with projects in three ways:
+
+### 1. Project Tags (Most Common)
+
+Use tags with the format `#project/name`.
+
+**Syntax:** `#project/your-project-name`
+
+**Example:**
+```markdown
+- [ ] Design wireframes #project/website
+- [ ] Write unit tests #project/backend
+- [ ] Review budget #project/q1-planning
+```
+
+**Benefits:**
+- Works in any file (daily notes, meeting notes, etc.)
+- Explicit and visible
+- Easy to search and filter
+
+---
+
+### 2. Dataview-Style Metadata
+
+Use inline fields with the `project::` syntax.
+
+**Syntax:** `[project:: name]`
+
+**Example:**
+```markdown
+- [ ] Update documentation [project:: website]
+- [ ] Fix API endpoint [project:: backend]
+```
+
+**Benefits:**
+- Compatible with Dataview plugin
+- Cleaner appearance (can be hidden with CSS)
+- Structured metadata
+
+---
+
+### 3. File Location (Inherited)
+
+Tasks automatically inherit the project from their containing file if the file is detected as a project (via frontmatter, tag, or folder).
+
+**Example:**
+
+File: `Projects/Website Redesign.md` (in "Projects/" folder)
+```markdown
+- [ ] Create mockups
+- [ ] Develop homepage
+- [ ] Write CSS
+```
+
+All tasks automatically belong to "Website Redesign" project (no manual tagging needed).
+
+**Benefits:**
+- No manual tagging required
+- Clean task syntax
+- Organized file structure
+
+---
+
+**Note:** If a task has an explicit project tag or metadata (methods 1 or 2), it will **override** the file-level project (method 3).
+
+## Project View
+
+The **Project View** provides a dedicated interface for managing project-based workflows.
+
+### Opening Project View
+
+1. Open the [Task Genius View](/docs/task-view)
+2. Select **"Projects"** from the left sidebar
+3. The left panel shows your project list, the right panel shows tasks
+
+### Project List (Left Panel)
+
+Projects are displayed in either:
+- **Tree View:** Hierarchical structure (if projects have nested names like `work/project1`)
+- **List View:** Flat list of all projects
+
+**Clicking a project** loads its tasks in the right panel.
+
+### Task Display (Right Panel)
+
+Shows all tasks belonging to the selected project, regardless of which files they're in.
+
+**Features:**
+- Complete, edit, or organize tasks
+- See task details (due dates, priority, tags)
+- All standard [Task View](/docs/task-view) interactions
+
+**Project Status:** The project's status (if any) is displayed but **not editable** in this view.
+
+### Filtering Projects
+
+Use the [Popover Filter](/docs/task-view/filter/popover-filter) to narrow down displayed tasks.
+
+**Example Filter:**
+```
+Property: project
+Condition: is
+Value: website
+```
+
+This shows only tasks belonging to the "website" project.
+
+**Advanced Filtering:**
+Combine project filters with other criteria:
+- Show incomplete tasks in "website" project due this week
+- Show high-priority tasks across multiple projects
 
 ## Metadata Configuration
 
-- Property keys: Define which frontmatter keys store project metadata
-- Status mapping: Map project-level states to status icons/labels
-- Display options: Icons, names, and how projects appear in views
+Customize how project metadata is displayed and interpreted.
 
-## Working With Projects in Views
+### Property Keys
 
-- Projects appear alongside tasks and files where supported
-- Filtering rules can include/exclude projects
-- Consider using separate views for project dashboards vs. task lists
+Map custom property names to Task Genius fields for internationalization (i18n) or personal preference.
 
-## Tips
+**Use Case:** You prefer Chinese property names in your vault.
 
-- Keep project detection conditions simple for maintainability
-- Standardize metadata keys across your vault for consistency
+**Example Configuration:**
+```
+状态 → status
+优先级 → priority
+项目 → project
+```
+
+**In Your Notes:**
+```markdown
+- [ ] 设计界面 [项目:: 网站] [状态:: 未完成]
+```
+
+Task Genius understands `项目` as `project` and `状态` as `status` internally.
+
+**Benefits:**
+- Use your preferred language
+- Match existing vault conventions
+- Maintain consistency across notes
+
+---
+
+### Status Mapping
+
+Map custom status labels to Task Genius's internal status categories.
+
+**Use Case:** You use custom status names that differ from Task Genius defaults.
+
+**Example Configuration:**
+```
+未完成 → incomplete
+进行中 → in_progress
+已放弃 → canceled
+已完成 → completed
+```
+
+**In Your Notes:**
+```markdown
+- [ ] 任务 [状态:: 未完成]
+- [/] 任务 [状态:: 进行中]
+```
+
+Task Genius interprets "未完成" as "incomplete" and "进行中" as "in_progress" for filtering and progress tracking.
+
+**Benefits:**
+- Localization support
+- Custom terminology
+- Better readability
+
+## Use Cases & Workflows
+
+### Daily Project Tracking
+
+Track which projects you worked on each day without organizing tasks into project files.
+
+**Setup:**
+1. Enable project detection via tags (`#project`)
+2. Add project tags to tasks in daily notes
+
+**Example Daily Note:**
+```markdown
+# 2025-01-15
+
+## Work
+- [x] Client meeting #project/sales
+- [x] Update proposal #project/sales
+- [ ] Code review #project/backend
+
+## Personal
+- [ ] Gym workout #project/fitness
+- [ ] Read 30 minutes #project/reading
+```
+
+**Review:**
+Open Project View → Select "sales" → See all sales tasks across all daily notes.
+
+---
+
+### Multi-Project File Organization
+
+Organize tasks by file type (daily notes, meeting notes) while maintaining project associations.
+
+**File Structure:**
+```
+Daily Notes/
+  2025-01-15.md (contains tasks for multiple projects)
+  2025-01-16.md (contains tasks for multiple projects)
+Meetings/
+  Client Call 2025-01-15.md (contains #project/sales tasks)
+```
+
+**Benefit:** Keep chronological or topical file structure without losing project context.
+
+---
+
+### Project-Dedicated Files
+
+Create dedicated files for large projects with all tasks in one place.
+
+**Setup:**
+1. Enable folder detection: `Projects/`
+2. Create project files in that folder
+
+**Example:**
+
+File: `Projects/Website Redesign.md`
+```markdown
+# Website Redesign
+
+## Phase 1: Design
+- [ ] Wireframes
+- [ ] Mockups
+- [ ] Color scheme
+
+## Phase 2: Development
+- [ ] HTML structure
+- [ ] CSS styling
+- [ ] JavaScript interactions
+```
+
+All tasks automatically belong to "Website Redesign" project.
+
+**Benefit:** Centralized project documentation with embedded tasks.
+
+---
+
+### Hybrid Approach (Recommended)
+
+Combine file-level and task-level projects for maximum flexibility.
+
+**Structure:**
+```
+Projects/
+  Website Redesign.md (file-level project)
+Daily Notes/
+  2025-01-15.md (tasks tagged with #project/website)
+```
+
+**Workflow:**
+1. Create a project file for planning and documentation
+2. Add project-tagged tasks to daily notes as you work on them
+3. Use Project View to see all tasks (from both sources) together
+
+**Benefit:** Centralized planning with distributed execution tracking.
+
+## Best Practices
+
+### 1. Choose One Primary Method
+
+While you can combine methods, pick one primary approach for consistency:
+
+**For Daily Note Users:** Use task-level tags (`#project/name`)
+**For Structured Vaults:** Use folder-based detection (`Projects/`)
+**For MOC Users:** Use frontmatter (`project: true`)
+
+---
+
+### 2. Use Consistent Project Names
+
+Standardize project naming to avoid fragmentation.
+
+**Good:**
+```markdown
+#project/website-redesign
+#project/website-redesign
+#project/website-redesign
+```
+
+**Avoid:**
+```markdown
+#project/website-redesign
+#project/WebsiteRedesign
+#project/website_redesign  ← Different names split the project!
+```
+
+**Tip:** Create a project list in your vault's index or MOC for reference.
+
+---
+
+### 3. Archive Completed Projects
+
+Remove or archive finished project files to keep your Project View clean.
+
+**Methods:**
+- Move to an `Archive/` folder (excluded from project detection)
+- Remove the `#project` tag or frontmatter
+- Use a custom tag like `#project-archived`
+
+---
+
+### 4. Combine with View Modes
+
+Use [View Modes](/docs/view-modes) for different project perspectives:
+
+- **List View:** See all project tasks in a flat list
+- **Kanban View:** Visualize project tasks by status
+- **Calendar View:** See project deadlines on a timeline
+- **Tree View:** See hierarchical task structures within projects
+
+---
+
+### 5. Use Filters for Multi-Project Work
+
+If you work on multiple projects simultaneously, create saved filters:
+
+**Example Filters:**
+- "Active Projects": `project` in `[website, backend, marketing]`
+- "Work Projects": `project` starts with `work/`
+- "High Priority Project Tasks": `project` is `website` AND `priority` is `high`
+
+Save these in [Popover Filter](/docs/task-view/filter/popover-filter) for quick access.
 
 ## Troubleshooting
 
-- Project not detected? Check the configured methods and the file’s frontmatter/tags/folder path
-- Conflicting methods? Narrow down criteria or prioritize one method
+### Project Not Detected
 
+**Issue:** A file isn't showing up as a project in Project View.
+
+**Solution:**
+- Verify the detection method is enabled in settings
+- **Frontmatter:** Check for `project: true` or `project: "name"` in frontmatter
+- **Tags:** Ensure the file contains the configured tag (e.g., `#project`)
+- **Folders:** Confirm the file is in the specified folder path
+- Refresh the task index: `Task Genius: Refresh task index`
+
+---
+
+### Tasks Not Appearing in Project
+
+**Issue:** Tasks don't show up when viewing a project.
+
+**Solution:**
+- **Task-level:** Verify the task has the correct project tag or metadata
+  - Check spelling: `#project/website` not `#projects/website`
+  - Ensure no extra spaces: `#project/website` not `#project/ website`
+- **File-level:** Confirm the file is detected as a project (see above)
+- Refresh the view or restart Obsidian
+
+---
+
+### Task in Wrong Project
+
+**Issue:** A task appears under the wrong project.
+
+**Solution:**
+- Check for conflicting project assignments
+- **Explicit tags override file-level:** If a task in a project file has its own `#project/other` tag, it belongs to "other", not the file's project
+- Remove or correct the explicit project tag/metadata
+
+---
+
+### Duplicate Projects
+
+**Issue:** The same project appears multiple times with different names.
+
+**Solution:**
+- Standardize project naming (see Best Practices above)
+- Search your vault for variations: `#project/website`, `#project/Website`, `#project/web-site`
+- Bulk-update inconsistent tags using find-and-replace or [Bulk Operations](/docs/bulk-operations)
+
+---
+
+### Project Status Not Updating
+
+**Issue:** Changing a task's status doesn't update the project status.
+
+**Solution:**
+- **Project status is not editable** in Task Genius
+- If you want to track project status, use:
+  - A manual field in the project file's frontmatter
+  - A dedicated task representing the project milestone
+  - [Workflows](/docs/workflows) to automate status based on task completion
+
+## Related Features
+
+- [Task View](/docs/task-view): Understand the overall task viewing system
+- [View Modes](/docs/view-modes): Visualize project tasks in different formats
+- [Popover Filter](/docs/task-view/filter/popover-filter): Filter tasks by project and other criteria
+- [Bulk Operations](/docs/bulk-operations): Assign multiple tasks to a project at once
+- [Workspace](/docs/workspace): Create workspace-specific project views

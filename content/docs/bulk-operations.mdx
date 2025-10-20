@@ -1,0 +1,587 @@
+---
+title: Bulk Operations
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+import {
+  CheckSquareIcon,
+  CalendarIcon,
+  AlertTriangleIcon,
+  FolderIcon,
+  TrashIcon,
+  XIcon,
+  ListIcon,
+  GitBranchIcon
+} from "lucide-react";
+
+Bulk Operations allow you to perform actions on multiple tasks simultaneously, dramatically improving efficiency when managing large numbers of tasks. Select multiple tasks and execute common operations like status changes, date adjustments, priority updates, and more.
+
+<VersionCallout version="9.9.0" />
+
+## Overview
+
+Instead of editing tasks one by one, Bulk Operations enable you to:
+
+- **Select multiple tasks** using Shift + Click
+- **Modify task properties** for all selected tasks at once
+- **Execute operations** via right-click context menu
+- **Save time** when managing similar tasks
+
+**Key Benefits:**
+- Efficient batch processing of tasks
+- Consistent updates across multiple tasks
+- Reduced repetitive work
+- Powerful project management workflows
+
+## Selecting Tasks
+
+### How to Select Multiple Tasks
+
+1. **Hold the Shift key** on your keyboard
+2. **Click on tasks** one by one to add them to your selection
+3. Each selected task will display visual feedback (see below)
+4. Continue Shift + Clicking to add more tasks
+
+**Important Notes:**
+- You must **hold Shift** while clicking each task
+- **Ctrl/Cmd + Click** is not supported
+- **Ctrl/Cmd + A** (Select All) is not supported
+- There is **no maximum limit** on the number of tasks you can select
+
+### Visual Feedback
+
+When tasks are selected, they display:
+
+- **Left border**: A colored border appears on the left edge of the task
+- **Background color change**: The task background changes to indicate selection
+- **No toolbar**: Unlike single-selection, multi-selection does not show a toolbar
+- **Selection count**: The right-click menu shows the number of selected tasks
+
+**Example:**
+```
+┌────────────────────────────────────┐
+│ ▌ ☐ Review quarterly report       │ ← Selected (border + background)
+│ ▌ ☐ Update project documentation  │ ← Selected (border + background)
+│   ☐ Schedule team meeting          │ ← Not selected
+│ ▌ ☐ Submit budget proposal         │ ← Selected (border + background)
+└────────────────────────────────────┘
+```
+
+### Deselecting Tasks
+
+You can clear your selection using any of these methods:
+
+1. **Press the `Escape` key** to clear all selections
+2. **Right-click** and choose **"Clear selection"** from the menu
+3. **Click outside the task list** (in empty space)
+4. **Execute a bulk operation** (selection auto-clears after operation)
+
+## View Mode Support
+
+Bulk Operations are available in the following [View Modes](/docs/view-modes):
+
+### ✅ Supported View Modes
+
+- **<ListIcon className="inline-block w-5 h-5" /> List View**: Fully supported
+- **<GitBranchIcon className="inline-block w-5 h-5" /> Tree View**: Fully supported
+
+### ❌ Not Currently Supported
+
+- **Kanban View**: Multi-selection not available (yet)
+- **Calendar View**: Multi-selection not available (yet)
+
+**Note:** To use Bulk Operations, ensure you're in List View or Tree View. Switch View Modes using the buttons at the top of the view.
+
+## Bulk Operations Menu
+
+### Accessing the Menu
+
+1. Select multiple tasks using **Shift + Click**
+2. **Right-click** on any selected task
+3. A context menu appears showing available bulk operations
+4. The menu header displays the number of selected tasks
+
+**Menu Structure:**
+```
+┌─────────────────────────────────────┐
+│ 5 tasks selected                    │ ← Selection count
+├─────────────────────────────────────┤
+│ ◻ Bulk change status          >     │
+│ 📅 Bulk set date              >     │
+│ ⚠ Bulk set priority           >     │
+│ 📁 Bulk move to project       >     │
+├─────────────────────────────────────┤
+│ 🗑 Bulk delete                      │
+├─────────────────────────────────────┤
+│ ✕ Clear selection                   │
+└─────────────────────────────────────┘
+```
+
+## Available Operations
+
+### <CheckSquareIcon className="inline-block w-5 h-5" /> Bulk Change Status
+
+Change the completion status for all selected tasks.
+
+**How to Use:**
+1. Select tasks
+2. Right-click → **Bulk change status**
+3. Choose a status from the submenu (e.g., "Todo", "In Progress", "Done")
+4. All selected tasks update to the new status
+
+**Submenu Options:**
+- All configured task statuses from your [Task Status](/docs/task-status) settings
+- Each option shows the status checkbox indicator
+- Status names are displayed (e.g., "Todo", "In Progress", "Done")
+
+**Example Use Cases:**
+- Mark multiple tasks as "In Progress" when starting a work session
+- Change completed tasks back to "Todo" if they need revision
+- Batch-update project tasks to a custom status
+
+**Status Change Behavior:**
+- If changing to a completed status, the completion date is automatically set
+- If changing from completed to incomplete, the completion date is cleared
+
+---
+
+### <CalendarIcon className="inline-block w-5 h-5" /> Bulk Set Date
+
+Modify date fields for all selected tasks.
+
+**How to Use:**
+1. Select tasks
+2. Right-click → **Bulk set date**
+3. Choose from three sub-options (see below)
+
+#### Set Specific Date
+
+Set all selected tasks to the same specific date.
+
+**Submenu:**
+- **Due date**: Set a specific due date
+- **Start date**: Set a specific start date
+- **Scheduled date**: Set a specific scheduled date
+
+**Flow:**
+1. Select date type (e.g., "Due date")
+2. A date picker modal opens
+3. Choose a date from the calendar
+4. All selected tasks are updated with that date
+
+**Example Use Case:**
+- Set the same deadline for all tasks in a sprint
+- Align start dates for a group of related tasks
+
+#### Postpone by...
+
+Shift dates forward or backward by a specified number of days.
+
+**Submenu:**
+- **Due date**: Postpone/advance due dates
+- **Start date**: Postpone/advance start dates
+- **Scheduled date**: Postpone/advance scheduled dates
+
+**Flow:**
+1. Select date type (e.g., "Due date")
+2. An offset modal opens
+3. Enter number of days (positive to postpone, negative to advance)
+4. Each task's date is shifted by that amount
+
+**Example Use Cases:**
+- Postpone all tasks by 3 days due to a delay
+- Advance start dates by 2 days to accommodate early availability
+- Shift scheduled dates by 1 week for rescheduling
+
+**Important:** If a task doesn't have the selected date type, the current date is used as the base for offset calculation.
+
+#### Clear Dates
+
+Remove date fields from all selected tasks.
+
+**Submenu:**
+- **Clear due date**: Remove all due dates
+- **Clear start date**: Remove all start dates
+- **Clear scheduled date**: Remove all scheduled dates
+
+**Example Use Case:**
+- Clear due dates from backlog tasks to remove deadline pressure
+- Remove start dates when tasks are no longer time-bound
+
+---
+
+### <AlertTriangleIcon className="inline-block w-5 h-5" /> Bulk Set Priority
+
+Change the priority level for all selected tasks.
+
+**How to Use:**
+1. Select tasks
+2. Right-click → **Bulk set priority**
+3. Choose a priority level or clear priority
+
+**Submenu Options:**
+- **! Priority 1**: Lowest priority
+- **!! Priority 2**: Low priority
+- **!!! Priority 3**: Medium priority
+- **!!!! Priority 4**: High priority
+- **!!!!! Priority 5**: Highest priority
+- **Clear priority**: Remove priority from all selected tasks
+
+**Example Use Cases:**
+- Elevate all project tasks to high priority before a deadline
+- Set a batch of low-priority tasks for backlog processing
+- Clear priority from completed tasks for cleaner archives
+
+**Visual Indicators:**
+Priority is shown with exclamation marks (`!`, `!!`, `!!!`, etc.) in the task display.
+
+---
+
+### <FolderIcon className="inline-block w-5 h-5" /> Bulk Move to Project
+
+Assign all selected tasks to a specific project.
+
+**How to Use:**
+1. Select tasks
+2. Right-click → **Bulk move to project**
+3. Choose a project from the list
+4. All selected tasks are assigned to that project
+
+**Submenu Options:**
+- List of all existing projects (dynamically generated from tasks in your vault)
+- **Clear project**: Remove project assignment from all selected tasks
+- If no projects exist, shows "No projects available" (disabled)
+
+**Example Use Cases:**
+- Organize inbox tasks into projects after triage
+- Reassign tasks when restructuring projects
+- Bulk-remove project tags when archiving
+
+**Note:** The project list is generated from existing task metadata, not from a static configuration. Create projects by assigning them to individual tasks first.
+
+---
+
+### <TrashIcon className="inline-block w-5 h-5" /> Bulk Delete
+
+Permanently delete all selected tasks.
+
+**How to Use:**
+1. Select tasks
+2. Right-click → **Bulk delete**
+3. A confirmation modal appears showing the number of tasks to be deleted
+4. Click **"Delete"** to confirm or **"Cancel"** to abort
+
+**Confirmation Modal:**
+```
+┌─────────────────────────────────────┐
+│ Confirm bulk delete                 │
+│                                     │
+│ Are you sure you want to delete     │
+│ 12 tasks?                           │
+│                                     │
+│ [Cancel]              [Delete]      │
+└─────────────────────────────────────┘
+```
+
+**Important:**
+- **Deletion is permanent** and cannot be undone (unless you have version control or backups)
+- Always double-check your selection before confirming
+- The `deleteChildren` parameter is set to `false`, meaning subtasks are not automatically deleted
+
+**Example Use Cases:**
+- Clean up completed tasks in bulk
+- Remove duplicate or obsolete tasks
+- Archive cleanup after project completion
+
+---
+
+### <XIcon className="inline-block w-5 h-5" /> Clear Selection
+
+Exit selection mode and deselect all tasks.
+
+**How to Use:**
+1. Right-click → **Clear selection**
+2. All tasks are deselected
+3. Selection mode is exited
+
+**Alternative:** Press the **Escape** key to clear selection quickly.
+
+## Operation Results
+
+### Success Notifications
+
+When a bulk operation completes successfully, you'll see a notification:
+
+```
+✓ Changed status to "In Progress": 8 tasks updated successfully
+```
+
+```
+✓ Set dueDate: 15 tasks updated successfully
+```
+
+```
+✓ Deleted tasks: 10 tasks updated successfully
+```
+
+### Partial Success Notifications
+
+If some tasks fail during an operation, you'll see:
+
+```
+⚠ Set priority to 3: 7 succeeded, 2 failed
+```
+
+**What Happens on Failure:**
+- Successfully updated tasks remain updated
+- Failed tasks are left unchanged
+- Error details are logged to the console (press `Ctrl/Cmd + Shift + I` to view)
+- A notice displays the count of successes and failures
+
+**Common Failure Reasons:**
+- File permission issues
+- Tasks in read-only files
+- Corrupted task format
+- Plugin API errors
+
+### Checking Console Errors
+
+To view detailed error information:
+
+1. Press **Ctrl/Cmd + Shift + I** to open Developer Tools
+2. Click the **Console** tab
+3. Look for "Bulk operation errors:" messages
+4. Each error includes:
+   - Task ID
+   - Task content
+   - Error message
+
+## Workflows and Use Cases
+
+### Daily Task Management
+
+**Scenario:** You process your inbox every morning.
+
+**Workflow:**
+1. Open **Inbox** view in **List View**
+2. Select all low-priority tasks (Shift + Click each)
+3. Right-click → **Bulk set priority** → **! Priority 1**
+4. Select all high-priority tasks
+5. Right-click → **Bulk move to project** → **"Urgent Work"**
+
+---
+
+### Project Rescheduling
+
+**Scenario:** A project is delayed by one week.
+
+**Workflow:**
+1. Open **Project View** for the delayed project
+2. Select all tasks with due dates (Shift + Click)
+3. Right-click → **Bulk set date** → **Postpone by...** → **Due date**
+4. Enter `7` days
+5. All tasks are postponed by one week
+
+---
+
+### Sprint Planning
+
+**Scenario:** Moving tasks from backlog to the current sprint.
+
+**Workflow:**
+1. Open **Upcoming** view in **Kanban View** (or switch to **List View** for multi-select)
+2. Switch to **List View** temporarily for bulk operations
+3. Select all sprint tasks (Shift + Click)
+4. Right-click → **Bulk change status** → **"In Progress"**
+5. Right-click → **Bulk set date** → **Set specific date** → **Due date** → (Sprint end date)
+6. Switch back to **Kanban View** to visualize progress
+
+---
+
+### Task Cleanup
+
+**Scenario:** Archiving or deleting completed tasks from last month.
+
+**Workflow:**
+1. Open **Custom View** with filter: Completed = Yes, Completed Date < 30 days ago
+2. Switch to **List View**
+3. Select all tasks (Shift + Click)
+4. Right-click → **Bulk delete**
+5. Confirm deletion
+
+---
+
+### Weekly Review
+
+**Scenario:** Reviewing and reprioritizing tasks for the upcoming week.
+
+**Workflow:**
+1. Open **Upcoming** view in **List View**
+2. Select all medium-priority tasks for next week
+3. Right-click → **Bulk set priority** → **!!! Priority 3**
+4. Select tasks without due dates
+5. Right-click → **Bulk set date** → **Set specific date** → **Due date** → (End of week)
+
+## Best Practices
+
+### 1. Use List View for Bulk Operations
+
+While Tree View is supported, **List View** provides a clearer, flatter structure for selecting multiple tasks. Switch to List View before performing bulk operations for better visibility.
+
+### 2. Double-Check Selection Before Deleting
+
+Always verify your selection count before executing **Bulk delete**:
+- Check the menu header: "X tasks selected"
+- Review the confirmation modal carefully
+- Use **Clear selection** (or `Esc`) if you selected wrong tasks
+
+### 3. Use Postpone for Relative Date Changes
+
+When rescheduling, prefer **Postpone by...** over **Set specific date** if tasks should maintain their relative timing:
+- **Set specific date**: All tasks get the same date (e.g., all due on Jan 15)
+- **Postpone by**: Each task's date shifts by the same amount (e.g., all shift 3 days later)
+
+### 4. Batch Similar Tasks Together
+
+Group similar operations to minimize selection effort:
+- Instead of selecting all tasks at once, do operations in batches:
+  1. Select and update status for Group A
+  2. Select and set priority for Group B
+  3. Select and move to project for Group C
+
+### 5. Leverage Project-Based Selection
+
+Use project or tag filters to narrow visible tasks before bulk selecting:
+1. Apply filter to show only relevant tasks
+2. Select all visible tasks (easier than manual selection in large lists)
+3. Execute bulk operation
+4. Clear filter
+
+### 6. Test with Small Batches First
+
+When using a bulk operation for the first time:
+1. Select 2-3 tasks as a test
+2. Execute the operation
+3. Verify the results
+4. Proceed with larger batches once confident
+
+### 7. Combine with View Modes
+
+Use the right [View Mode](/docs/view-modes) for context, then switch to List View for bulk operations:
+- **Plan in Calendar View** → Switch to **List View** for bulk date changes
+- **Track in Kanban View** → Switch to **List View** for bulk status changes
+- **Organize in Tree View** → Use **Tree View** directly for hierarchical bulk operations
+
+## Limitations
+
+### View Mode Restrictions
+
+- **Not supported in Kanban View**: Multi-selection is unavailable
+- **Not supported in Calendar View**: Multi-selection is unavailable
+- **Only List and Tree View**: Must be in these View Modes to use bulk operations
+
+**Workaround:** Temporarily switch to List View to perform bulk operations, then switch back to your preferred View Mode.
+
+### No Select All
+
+- **No Ctrl/Cmd + A**: Cannot select all visible tasks with a keyboard shortcut
+- **No "Select All" button**: Must manually Shift + Click each task
+
+**Workaround:** Use filters to reduce the visible task count, then Shift + Click the remaining tasks.
+
+### No Ctrl/Cmd + Click for Toggle Selection
+
+- **Cannot toggle individual tasks**: No way to add/remove single tasks from selection without Shift
+- **Cannot deselect one task**: Must clear all and re-select
+
+**Workaround:** Be careful with initial selection. Use **Clear selection** if you make a mistake, then re-select.
+
+### Selection Clears After Operation
+
+- **No persistent selection**: After executing a bulk operation, selection is automatically cleared
+- **Cannot chain operations**: Must re-select tasks for each operation
+
+**Workaround:** Plan to execute only one operation per selection, or use filters to maintain the same visible task set for re-selection.
+
+### No Undo for Bulk Operations
+
+- **Operations are immediate**: Changes are written to files immediately
+- **No built-in undo**: Must manually revert changes
+
+**Workaround:**
+- Use version control (Git) for your vault to enable rollback
+- Test with small batches before large operations
+- Keep backups of your vault
+
+### No Progress Indicator for Large Batches
+
+- **No loading bar**: Large bulk operations may appear to "hang"
+- **No cancellation**: Cannot abort an in-progress operation
+
+**Workaround:**
+- Be patient with large selections (100+ tasks)
+- Check the console for progress logs if needed
+- Avoid selecting thousands of tasks in a single batch
+
+## Troubleshooting
+
+### Tasks Not Selecting
+
+**Issue:** Clicking tasks while holding Shift doesn't select them.
+
+**Solution:**
+- Verify you're in **List View** or **Tree View** (not Kanban or Calendar)
+- Ensure you're **holding Shift** before clicking
+- Try releasing and re-pressing Shift
+- Refresh the view (close and reopen)
+
+### Right-Click Menu Not Showing Bulk Options
+
+**Issue:** Right-click menu shows single-task options instead of bulk menu.
+
+**Solution:**
+- Verify multiple tasks are actually selected (visual feedback should be visible)
+- Ensure you right-clicked on a **selected task** (not an unselected one)
+- Try clearing selection (`Esc`) and re-selecting tasks
+
+### Some Tasks Failing in Bulk Operation
+
+**Issue:** Notification shows "X succeeded, Y failed".
+
+**Solution:**
+- Open Console (`Ctrl/Cmd + Shift + I`) and check error messages
+- Common fixes:
+  - Ensure files are not read-only
+  - Check file permissions
+  - Verify tasks are not in a corrupted format
+  - Reload the plugin (Settings → Community Plugins → Reload)
+- Successfully updated tasks remain updated; manually fix failed tasks
+
+### Bulk Delete Not Working
+
+**Issue:** Confirmation modal appears, but tasks aren't deleted.
+
+**Solution:**
+- Check if files are locked or in use by another application
+- Ensure Obsidian has write permissions
+- Verify tasks are not in read-only files
+- Check Console for error details
+
+### Selection Deselecting Unexpectedly
+
+**Issue:** Tasks deselect while trying to add more to selection.
+
+**Solution:**
+- Ensure you're continuously holding Shift (not tapping it)
+- Avoid clicking outside the task area
+- Don't press Escape accidentally
+- Disable any conflicting plugins or hotkeys
+
+## Related Features
+
+- [View Modes](/docs/view-modes): Switch between List, Kanban, Tree, and Calendar views
+- [Task Status](/docs/task-status): Configure task statuses for bulk status changes
+- [Date & Priority](/docs/date-priority): Understand date and priority fields modified by bulk operations
+- [Project](/docs/project): Learn about project organization for bulk project moves
+- [Workspace](/docs/workspace): Use workspaces to organize different task contexts
+- [Filtering](/docs/filtering): Filter tasks before bulk selection for efficiency

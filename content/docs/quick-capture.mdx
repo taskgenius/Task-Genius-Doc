@@ -4,31 +4,234 @@ title: Quick Capture
 
 import { VersionCallout } from "@/components/VersionCallout";
 
-Quickly jot down tasks or notes and send them to a designated file without interrupting your current workflow.
+Quick Capture lets you instantly record tasks and notes without interrupting your workflow. Whether you're in the middle of editing a document or need to jot down a quick idea, Task Genius provides multiple capture methods optimized for different scenarios.
 
 <VersionCallout version="6.0.0" />
 
-## Methods
+## Overview
 
-Task Genius offers several ways to capture information:
+Task Genius offers three capture interfaces, each designed for specific use cases:
 
-1.  **Inline Panel**:
+1. **Editor Quick Capture**: Inline panel within your current editor (like Org-mode's `M-x org-capture`)
+2. **Minimal Quick Capture**: Simple modal for fast task entry with due date
+3. **Detailed Capture**: Comprehensive modal with full metadata support and multi-line input
 
-    - Use the command `Task Genius: Toggle quick capture panel` or the default hotkey (`Alt+C`).
-    - A small input panel appears at the bottom of the current editor.
-    - Type your task or note and press `Enter` to send it to your configured capture file.
+<VersionCallout version="9.9.0" />
 
-2.  **Global Command**:
+Starting with version 9.9.0, Quick Capture supports both:
+- **Checkbox Tasks**: Traditional task items (`- [ ] Task`)
+- **File-Level Tasks**: Entire notes as tasks (requires [File Indexer](#file-level-task-capture))
 
-    - Use the command `Task Genius: Quick capture (Global)`.
-    - This opens a modal window where you can type your task/note.
-    - This command can often be assigned to a global hotkey in Obsidian's settings, allowing capture from anywhere, even outside Obsidian.
+## Capture Methods
+
+### 1. Editor Quick Capture (Inline Panel)
+
+A lightweight input panel that appears at the bottom of your current editor, inspired by Org-mode's capture workflow.
+
+**How to Use:**
+1. Focus on any editor in Obsidian
+2. Trigger the command: `Task Genius: Toggle quick capture panel`
+3. **Default Hotkey**: `Alt+C` (customizable in Obsidian's Hotkeys settings)
+4. Type your task or note
+5. Press `Enter` to save to your configured capture file
+
+**Best For:**
+- Quick task entry while writing
+- Minimal disruption to current work
+- Keyboard-driven workflow
+- Rapid inbox processing
+
+**Behavior:**
+- Panel appears at the bottom of the active editor
+- Input remains focused for rapid successive captures
+- Press `Esc` to close the panel
+- Tasks are immediately appended to your capture file
+
+---
+
+### 2. Minimal Quick Capture Modal
+
+A simple modal window for fast task capture with optional due date.
+
+**How to Use:**
+1. Trigger the command: `Task Genius: Quick capture (Global)`
+2. Type your task
+3. Optionally set a due date using the date picker
+4. Press `Enter` or click "Capture" to save
+
+**Best For:**
+- Quick tasks with deadlines
+- Simple capture without metadata complexity
+- Users who prefer modal interfaces
+- One-off task recording
+
+**Features:**
+- Clean, distraction-free interface
+- Due date picker (optional)
+- Single-line input for fast entry
+- Works from anywhere in Obsidian
+
+**Note:** While called "Global", this method still requires Obsidian to be open and focused.
+
+---
+
+### 3. Detailed Capture Modal
+
+A comprehensive capture interface with full metadata support, multi-line input, and live preview.
 
 <VersionCallout version="7.0.0" />
 
-3.  **Detailed Capture Modal**:
-    - Use the command `Task Genius: Task capture with metadata`.
-    - This opens a more comprehensive modal allowing you to add details like due dates, priorities, tags, or project links directly during capture.
+**How to Use:**
+1. Trigger the command: `Task Genius: Task capture with metadata`
+2. Enter task content in the right-side input area
+3. Configure metadata in the left-side metadata panel
+4. Review the preview at the bottom
+5. Click "Capture" to save
+
+**Interface Layout:**
+```
+┌─────────────────────────────────────────┐
+│ Detailed Task Capture                   │
+├─────────────┬───────────────────────────┤
+│  Metadata   │   Input Area              │
+│  Panel      │   (Multi-line)            │
+│  (Left)     │   (Right)                 │
+│             │                           │
+│ • Due Date  │   - [ ] Write report      │
+│ • Priority  │   - [ ] Review code       │
+│ • Tags      │   - [ ] Send email        │
+│ • Project   │                           │
+│ • Status    │                           │
+│ • etc.      │                           │
+├─────────────┴───────────────────────────┤
+│ Preview:                                │
+│ - [ ] Write report 📅 2025-01-20 🔺     │
+└─────────────────────────────────────────┘
+```
+
+**Best For:**
+- Complex tasks requiring multiple metadata fields
+- Batch task entry (multiple tasks at once)
+- Project-based task creation
+- Tasks with detailed context
+
+**Features:**
+
+#### Multi-Line Input
+Capture multiple tasks in one session:
+```markdown
+- [ ] Task 1
+- [ ] Task 2
+- [ ] Task 3
+```
+
+All tasks inherit the metadata you configure.
+
+#### Relative Date Support
+Use natural language for due dates:
+- `明天` (tomorrow)
+- `后天` (day after tomorrow)
+- `大后天` (three days from now)
+- `下周一` (next Monday)
+- (Supports your system's date parsing)
+
+#### Live Preview
+See exactly what will be written to your file before capturing.
+
+**Example:**
+- **Input:** `Write report`
+- **Metadata:** Due: 2025-01-20, Priority: High, Tags: #work
+- **Preview:** `- [ ] Write report 📅 2025-01-20 🔺 #work`
+
+#### Supported Metadata
+Configure any task metadata:
+- **Due Date**: Task deadline
+- **Start Date**: When to begin
+- **Scheduled Date**: Planned work date
+- **Priority**: Urgency level (1-5)
+- **Status**: Task state (not started, in progress, etc.)
+- **Tags**: Categorization tags
+- **Project**: Project assignment
+- **Context**: Work context (e.g., @home, @office)
+- (All standard task metadata fields)
+
+## File-Level Task Capture
+
+<VersionCallout version="9.9.0" />
+
+Create entire notes as tasks instead of checkbox items.
+
+### Requirements
+
+**File Indexer must be enabled:**
+1. Open Task Genius settings
+2. Go to **Indexer** settings
+3. Enable **"File-level task indexing"** or similar option
+
+Once enabled, the capture modals (Minimal and Detailed) display a **tab switcher** at the top.
+
+### Tab Switcher
+
+**Tabs:**
+- **Checkbox Task**: Traditional task items (default)
+- **File Task**: Entire notes as tasks
+
+**Behavior:**
+- Switch tabs to change capture mode
+- Settings persist between sessions
+- Tab only appears if File Indexer is enabled
+
+### File Task Mode
+
+When capturing a **File Task**:
+
+1. **Template Integration**:
+   - Task Genius calls your configured template (if any)
+   - Template content is used as the base for the new file
+   - File name is generated based on your input
+
+2. **Metadata as Frontmatter**:
+   - All metadata from the metadata panel is inserted as **YAML Frontmatter**
+   - No inline fields are used
+
+3. **File Creation**:
+   - New file is created in the configured target location
+   - File name is derived from your task title or template settings
+
+**Example Workflow:**
+
+**Input:**
+- **Mode:** File Task
+- **Title:** `Website Redesign Project`
+- **Metadata:**
+  - Due: 2025-02-15
+  - Priority: High
+  - Tags: work, design
+  - Project: Q1 Goals
+
+**Result:**
+
+File created: `Website Redesign Project.md`
+```yaml
+---
+due: 2025-02-15
+priority: high
+tags:
+  - work
+  - design
+project: Q1 Goals
+---
+
+# Website Redesign Project
+
+(Template content if configured)
+```
+
+**Best For:**
+- Project planning notes
+- Large tasks requiring dedicated documentation
+- Integration with project management workflows
+- Notes that need extensive details
 
 ## Configuration
 
@@ -37,8 +240,413 @@ Task Genius offers several ways to capture information:
 </DeepLinkButton>
 <DeepLinkFallback />
 
-In the Task Genius settings, define how Quick Capture behaves:
+### Target File
 
-- **Target File**: Specify the path to the file where captured items will be saved (e.g., `Inbox.md`, `Quick Notes.md`).
-- **Append/Prepend/Replace**: Choose how new captures are added to the target file (add to the end, beginning, or replace a specific section).
-- **Formatting**: Define templates or formatting for captured items (e.g., automatically add `- [ ]` for tasks, include timestamps).
+Specify where captured tasks will be saved.
+
+**Setting:** "Target File"
+
+**Format:** File path (e.g., `Inbox.md`, `Daily/Capture.md`)
+
+**Examples:**
+```
+Inbox.md
+Quick Notes.md
+Tasks/Capture.md
+```
+
+**File Auto-Creation:**
+- If the file doesn't exist, Task Genius automatically creates it
+- Parent directories are created if needed
+
+---
+
+### Dynamic Date Variables
+
+<VersionCallout version="9.9.0" />
+
+Use date variables in the target file path for dynamic daily capture.
+
+**Syntax:** `{{DATE:FORMAT}}`
+
+**Supported Formats:** Any valid date format string (e.g., `YYYY-MM-DD`, `YYYY/MM/DD`, `YYYYMMDD`)
+
+**Examples:**
+
+**Daily Note Capture:**
+```
+Target File: Daily Notes/{{DATE:YYYY-MM-DD}}.md
+Result (on 2025-01-15): Daily Notes/2025-01-15.md
+```
+
+**Monthly Capture:**
+```
+Target File: Capture/{{DATE:YYYY-MM}}/Tasks.md
+Result (on 2025-01-15): Capture/2025-01/Tasks.md
+```
+
+**Weekly Capture:**
+```
+Target File: Weekly/{{DATE:YYYY-[W]WW}}.md
+Result (on 2025-01-15): Weekly/2025-W03.md
+```
+
+**Benefit:** Automatically capture to today's note without manual file selection.
+
+---
+
+### Insert Position
+
+Choose where in the target file captured items are added.
+
+**Setting:** "Insert Position"
+
+**Options:**
+
+#### Append (Default)
+Add captured tasks to the **end** of the file.
+
+**Use Case:** Chronological task capture (newest at bottom)
+
+**Example:**
+```markdown
+# Inbox
+
+- [x] Old task 1
+- [x] Old task 2
+- [ ] New captured task  ← Added here
+```
+
+---
+
+#### Prepend
+Add captured tasks to the **beginning** of the file.
+
+**Use Case:** Newest tasks first (priority-based)
+
+**Example:**
+```markdown
+# Inbox
+
+- [ ] New captured task  ← Added here
+- [x] Old task 1
+- [x] Old task 2
+```
+
+---
+
+#### Replace
+**Advanced Option** (use with caution)
+
+Replace the entire file content with captured tasks.
+
+**Use Case:** Temporary scratchpad or single-task files
+
+**Warning:** All existing content is overwritten. Use only if intentional.
+
+---
+
+### Task Formatting
+
+<VersionCallout version="9.9.0" />
+
+**Current Behavior:**
+- Checkbox tasks are automatically prefixed with `- [ ]` (if not already present)
+- Metadata is added as inline fields (for checkbox tasks) or frontmatter (for file tasks)
+- No additional template variables or formatting options (planned for future versions)
+
+**For Advanced Formatting:**
+- Consider using File Task mode with templates
+- Manually edit captured tasks after creation
+- Use [Workflows](/docs/workflows) for post-capture automation
+
+## Use Cases & Workflows
+
+### Inbox Workflow (GTD Style)
+
+Capture everything to a central inbox for later processing.
+
+**Setup:**
+1. **Target File:** `Inbox.md`
+2. **Insert Position:** Append
+3. **Method:** Editor Quick Capture (`Alt+C`)
+
+**Daily Routine:**
+- Throughout the day, press `Alt+C` to capture tasks as they come up
+- At end of day, review `Inbox.md` and organize tasks (assign projects, dates, priorities)
+- Use [Bulk Operations](/docs/bulk-operations) to process multiple inbox tasks at once
+
+**Benefit:** Never lose a task, process later when you have time.
+
+---
+
+### Daily Note Integration
+
+Automatically capture tasks to today's daily note.
+
+**Setup:**
+1. **Target File:** `Daily Notes/{{DATE:YYYY-MM-DD}}.md`
+2. **Insert Position:** Append
+3. **Method:** Minimal Quick Capture (for fast entry)
+
+**Workflow:**
+- Quick Capture creates or opens today's note automatically
+- Tasks are added to the end of your daily note
+- Review and organize tasks as part of your daily review
+
+**Benefit:** Context-aware task capture tied to specific days.
+
+---
+
+### Project-Based Capture
+
+Capture tasks directly to project files with full metadata.
+
+**Setup:**
+1. **Method:** Detailed Capture Modal
+2. **Metadata:** Set project field to the target project
+3. **Insert Position:** Append
+
+**Workflow:**
+1. Open Detailed Capture
+2. Set **Project** metadata to `Website Redesign`
+3. Enter multiple tasks in the input area
+4. All tasks are tagged with the project and added to your capture file
+
+**Alternative (File Task Mode):**
+- Use File Task mode to create project notes directly
+- Each project gets its own file with frontmatter metadata
+
+**Benefit:** Immediate project association without manual tagging.
+
+---
+
+### Meeting Notes Capture
+
+Quickly jot down action items during meetings.
+
+**Setup:**
+1. **Method:** Editor Quick Capture (inline panel)
+2. **Target File:** `Meetings/{{DATE:YYYY-MM-DD}} Actions.md`
+3. **Insert Position:** Append
+
+**Workflow:**
+- During meeting, press `Alt+C` to open capture panel
+- Type action items as they come up
+- Press `Enter` to save, continue listening
+- Repeat as needed
+
+**Post-Meeting:**
+- Review `Meetings/2025-01-15 Actions.md`
+- Use Detailed Capture or manual editing to add due dates and priorities
+
+**Benefit:** Minimal interruption during meetings, structured capture for later processing.
+
+---
+
+### File Task for Project Planning
+
+Create comprehensive project files with metadata.
+
+**Setup:**
+1. **Method:** Detailed Capture Modal
+2. **Tab:** File Task
+3. **Template:** (Configure a project template if desired)
+4. **Target File:** `Projects/{{title}}.md` (or similar)
+
+**Workflow:**
+1. Open Detailed Capture
+2. Switch to **File Task** tab
+3. Enter project title: `Q1 Marketing Campaign`
+4. Set metadata:
+   - Due: 2025-03-31
+   - Priority: High
+   - Tags: marketing, q1
+5. Click "Capture"
+
+**Result:**
+New file created: `Projects/Q1 Marketing Campaign.md` with frontmatter containing all metadata.
+
+**Benefit:** Structured project initialization with metadata-driven workflows.
+
+## Best Practices
+
+### 1. Choose the Right Capture Method for the Situation
+
+**Quick Decision Guide:**
+- **Editing a document?** → Editor Quick Capture (`Alt+C`)
+- **Need to set a due date?** → Minimal Quick Capture
+- **Complex task with metadata?** → Detailed Capture
+- **Creating a project note?** → Detailed Capture (File Task mode)
+
+---
+
+### 2. Process Your Inbox Regularly
+
+Don't let captured tasks pile up:
+- Set a daily or weekly inbox review time
+- Use [Task View](/docs/task-view) to see all inbox tasks
+- Use [Bulk Operations](/docs/bulk-operations) to assign metadata efficiently
+
+---
+
+### 3. Use Dynamic Date Variables for Daily Notes
+
+If you use daily notes, always configure:
+```
+Target File: Daily Notes/{{DATE:YYYY-MM-DD}}.md
+```
+
+This ensures tasks are captured to the correct day automatically.
+
+---
+
+### 4. Leverage Detailed Capture for Batch Entry
+
+Instead of capturing one task at a time:
+- Open Detailed Capture once
+- Enter 5-10 tasks in the input area
+- Set shared metadata (project, priority)
+- Capture all at once
+
+**Saves time** compared to individual captures.
+
+---
+
+### 5. Combine with Keyboard Shortcuts
+
+**Recommended Hotkeys:**
+- `Alt+C`: Editor Quick Capture (default)
+- `Ctrl+Shift+C`: Minimal Quick Capture
+- `Ctrl+Alt+Shift+C`: Detailed Capture
+
+**Tip:** Assign hotkeys in Obsidian's Hotkeys settings for muscle-memory efficiency.
+
+---
+
+### 6. Use File Tasks for Large Initiatives
+
+For tasks that need extensive documentation:
+- Use **File Task** mode instead of checkbox tasks
+- Create dedicated files for projects, goals, or complex tasks
+- Benefit from templates and structured metadata
+
+## Limitations
+
+### No External Triggering
+
+Quick Capture requires Obsidian to be open and focused. It cannot be triggered from outside Obsidian (e.g., global system hotkey).
+
+**Workaround:**
+- Use Obsidian's URI protocol with automation tools (e.g., AutoHotkey, Keyboard Maestro)
+- Consider third-party integrations (check community resources)
+
+---
+
+### Limited Template Support (Checkbox Tasks)
+
+Template variables (e.g., `{{date}}`, `{{time}}`, `{{content}}`) are not currently supported for checkbox task capture.
+
+**Workaround:**
+- Use **File Task** mode for template-based capture
+- Manually edit tasks after capture
+- Use [Workflows](/docs/workflows) for post-capture formatting
+
+---
+
+### Single Target File
+
+Each capture method uses one configured target file (though it supports date variables).
+
+**Workaround:**
+- Use different capture methods for different targets
+- Manually change target file in settings when needed
+- Use **Project** metadata to organize tasks within a single capture file
+
+---
+
+### No Multi-File Capture
+
+Cannot capture to multiple files simultaneously.
+
+**Workaround:**
+- Capture to inbox, then use [Task Mover](/docs/task-mover) to distribute tasks
+- Use [Bulk Operations](/docs/bulk-operations) to move tasks to different project files
+
+## Troubleshooting
+
+### Capture Panel Not Appearing
+
+**Issue:** Pressing `Alt+C` does nothing.
+
+**Solution:**
+- Ensure you're focused on an **editor pane** (not settings, graph, or other views)
+- Check if the hotkey is conflicting with another plugin (Obsidian Settings → Hotkeys)
+- Try triggering via command palette: `Ctrl/Cmd+P` → `Task Genius: Toggle quick capture panel`
+
+---
+
+### Tasks Not Saving to Target File
+
+**Issue:** Captured tasks disappear or don't appear in the target file.
+
+**Solution:**
+- Verify the target file path in settings (Settings → Quick Capture → Target File)
+- Check if the file exists or if auto-creation is working
+- Ensure you have write permissions to the target directory
+- Check the console for errors (`Ctrl/Cmd+Shift+I`)
+
+---
+
+### Date Variables Not Working
+
+**Issue:** `{{DATE:YYYY-MM-DD}}` appears literally instead of being replaced.
+
+**Solution:**
+- Verify the syntax is exact: `{{DATE:FORMAT}}` (case-sensitive)
+- Ensure you're using a valid date format string
+- Restart Obsidian to reload settings
+- Check Task Genius version (date variables require 9.9.0+)
+
+---
+
+### File Task Tab Not Showing
+
+**Issue:** The "File Task" tab doesn't appear in capture modals.
+
+**Solution:**
+- Verify **File Indexer** is enabled in Task Genius settings
+- Check Settings → Indexer → Enable file-level task indexing
+- Restart Obsidian after enabling
+- Ensure you're using Task Genius 9.9.0 or later
+
+---
+
+### Metadata Not Applying
+
+**Issue:** Metadata from Detailed Capture isn't added to tasks.
+
+**Solution:**
+- **Checkbox Tasks:** Metadata should appear as inline fields (e.g., `[due:: 2025-01-20]`)
+- **File Tasks:** Metadata should be in YAML frontmatter
+- Check the preview pane before capturing to verify formatting
+- Ensure metadata fields are filled correctly (no invalid values)
+
+---
+
+### Preview Showing Wrong Format
+
+**Issue:** Preview doesn't match what actually gets captured.
+
+**Solution:**
+- This may indicate a bug—report to the developer
+- Double-check your settings (Insert Position, Target File)
+- Try capturing a test task to a scratch file
+
+## Related Features
+
+- [Task View](/docs/task-view): Process captured tasks in the dedicated task view
+- [Bulk Operations](/docs/bulk-operations): Efficiently organize captured tasks
+- [Task Mover](/docs/task-mover): Move captured tasks to permanent locations
+- [Workflows](/docs/workflows): Automate post-capture actions
+- [Date & Priority](/docs/date-priority): Learn about task metadata captured in Detailed mode

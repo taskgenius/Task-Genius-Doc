@@ -9,6 +9,7 @@
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.75.1",
     "class-variance-authority": "^0.7.1",
     "fast-glob": "^3.3.3",
     "fumadocs-core": "15.7.13",

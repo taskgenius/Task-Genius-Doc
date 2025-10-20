@@ -47,6 +47,30 @@ export const roadmap = defineDocs({
   },
 });
 
+export const privacy = defineDocs({
+  dir: "content/privacy",
+  docs: {
+    schema: frontmatterSchema.extend({
+      title: z.string(),
+      description: z.string(),
+      lastUpdated: z.string(),
+      platform: z.enum(["plugin", "desktop"]),
+    }),
+  },
+});
+
+export const terms = defineDocs({
+  dir: "content/terms",
+  docs: {
+    schema: frontmatterSchema.extend({
+      title: z.string(),
+      description: z.string(),
+      lastUpdated: z.string(),
+      platform: z.enum(["plugin", "desktop"]),
+    }),
+  },
+});
+
 export default defineConfig({
   mdxOptions: {
     // MDX options

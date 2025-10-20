@@ -1,0 +1,183 @@
+---
+title: Workspace
+---
+
+import { VersionCallout } from "@/components/VersionCallout";
+
+Workspace allows you to organize your task management environment by creating multiple independent workspaces, each with its own view configurations and settings. This feature is ideal for separating different contexts, projects, or workflows within Task Genius.
+
+<VersionCallout version="9.9.0" />
+
+## Overview
+
+Workspaces provide a powerful way to maintain distinct task management environments without interference. Each workspace stores its own:
+
+- View configurations (Inbox, Today, Upcoming, Flagged)
+- View modes (List, Kanban, Tree, Calendar)
+- Filter settings
+- Custom views
+- Sorting preferences
+
+**Note**: Editor-related settings and plugin configurations are global and not affected by workspace switching.
+
+## Default Workspace
+
+When you first use Task Genius, a **Default Workspace** is automatically created. This workspace serves as the template for new workspaces:
+
+- **Inheritance**: When creating a new workspace, it inherits all settings from the Default Workspace at the time of creation.
+- **Independence**: After creation, modifying the Default Workspace does **not** affect existing workspaces.
+- **Template Role**: Use the Default Workspace as your baseline configuration for consistency across new workspaces.
+
+## Creating a Workspace
+
+You can create a new workspace using two methods:
+
+### Method 1: Workspace Selector (Quick Access)
+
+1. Open the Task Genius View.
+2. Click the **Workspace Selector** button in the top-left corner of the main view.
+3. In the dropdown menu, select **Create Workspace**.
+4. Enter a name for your new workspace.
+5. The new workspace will be created with settings inherited from the Default Workspace.
+
+### Method 2: Settings Page (Detailed Management)
+
+1. Open Task Genius settings.
+2. Navigate to the **Workspace** settings page.
+3. Click **Create New Workspace**.
+4. Configure your workspace name and initial settings.
+5. Save to create the workspace.
+
+## Switching Between Workspaces
+
+### Quick Switch
+
+1. Click the **Workspace Selector** in the top-left corner of the main view.
+2. Select the workspace you want to switch to from the dropdown menu.
+3. Your current workspace state will be **automatically saved** before switching.
+
+### Settings Page Switch
+
+1. Open Task Genius settings.
+2. Go to the **Workspace** settings page.
+3. Select a workspace from the list.
+4. Click **Switch to This Workspace**.
+
+**Auto-Save**: Task Genius automatically saves your current workspace state (view positions, filters, selections) when switching, ensuring no work is lost.
+
+## Managing Workspaces
+
+### Renaming a Workspace
+
+1. Access the **Workspace** settings page.
+2. Select the workspace you want to rename.
+3. Click the **Rename** button.
+4. Enter the new name and confirm.
+
+### Deleting a Workspace
+
+1. Access the **Workspace** settings page.
+2. Select the workspace you want to delete.
+3. Click the **Delete** button.
+4. Confirm the deletion.
+
+**Warning**: Deleting a workspace removes all its view configurations and settings. This action cannot be undone.
+
+**Note**: The Default Workspace cannot be deleted.
+
+## Use Cases
+
+### Project-Based Separation
+
+Create separate workspaces for different projects:
+- **Work Projects**: Configure views to focus on work-related tags and deadlines.
+- **Personal Tasks**: Set up views optimized for personal goal tracking.
+- **Learning Goals**: Organize study materials and progress tracking.
+
+### Context Switching
+
+Maintain different mental contexts:
+- **Deep Work**: Minimal views showing only high-priority tasks.
+- **Planning Mode**: Kanban and calendar views for weekly planning.
+- **Review Mode**: Custom filters for weekly reviews and retrospectives.
+
+### Team Collaboration
+
+If multiple people use the same vault:
+- Each person can have their own workspace.
+- Shared Default Workspace for team standards.
+- Personal workspaces for individual workflows.
+
+## Workspace Scope
+
+### Settings Tied to Workspaces
+
+The following settings are saved per workspace:
+
+- All view configurations (Inbox, Today, Upcoming, Flagged, etc.)
+- View modes (List, Kanban, Tree, Calendar)
+- Filter rules and saved filters
+- Custom view definitions
+- Task sorting preferences
+- View layout and sidebar positions
+- Active view selection
+
+### Global Settings (Not Workspace-Specific)
+
+The following settings are global and shared across all workspaces:
+
+- Editor features and configurations
+- Task formatting options
+- Keyboard shortcuts
+- File filtering rules
+- Plugin integration settings
+- Theme and appearance (if applicable)
+- General behavior settings
+
+## Best Practices
+
+### 1. Configure Your Default Workspace First
+
+Since new workspaces inherit from the Default Workspace, set up your preferred baseline configuration there before creating additional workspaces.
+
+### 2. Use Descriptive Names
+
+Name workspaces clearly to reflect their purpose:
+- ✅ "Work - Q1 Projects"
+- ✅ "Personal - Health & Fitness"
+- ❌ "Workspace 1"
+
+### 3. Regular Cleanup
+
+Periodically review and delete unused workspaces to keep your environment organized.
+
+### 4. Consistent Structure
+
+Maintain similar view structures across workspaces for easier mental switching, but customize filters and display modes as needed.
+
+## Troubleshooting
+
+### Workspace Not Switching
+
+- Ensure you have saved any pending changes.
+- Check if any modal dialogs are open and close them.
+- Restart Obsidian if the issue persists.
+
+### Settings Not Saving
+
+- Verify that Obsidian has write permissions to the vault.
+- Check the console for error messages (Ctrl/Cmd + Shift + I).
+- Ensure you're not running multiple instances of Obsidian with the same vault.
+
+### Lost Workspace Configuration
+
+If a workspace appears to have lost its settings:
+- Check if the workspace was accidentally deleted.
+- Look in the plugin's data folder for backup files.
+- Consider exporting/importing workspace settings if the feature is available.
+
+## Related Features
+
+- [Task View](/docs/task-view): Learn about the different built-in views available in each workspace.
+- [Custom Views](/docs/task-view/custom-view): Create custom views tailored to your workspace needs.
+- [View Modes](/docs/view-modes): Understand the different ways to display tasks within a workspace.
