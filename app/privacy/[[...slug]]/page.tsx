@@ -41,7 +41,7 @@ export default async function Page({
         <section className="border border-fd-border border-t-0 border-b-0 p-0 md:p-6 px-12 zimbra-background"></section>
 
         {/* Selection Cards */}
-        <section className="border border-fd-border border-b-0 p-12 bg-fd-background backdrop-blur-sm bg-opacity-50">
+        <section className="border border-fd-border border-b-0 p-8 md:p-12 bg-fd-background backdrop-blur-sm bg-opacity-50">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Plugin Card */}
             <Link

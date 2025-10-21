@@ -33,7 +33,7 @@ export default function WaitlistPage() {
       <section className="-mt-20 border border-fd-border border-b-0 p-6 px-12 relative zimbra-background"></section>
 
       {/* Hero Section */}
-      <section className="text-center border border-fd-border border-b-0 p-12 bg-fd-background backdrop-blur-sm bg-opacity-50">
+      <section className="text-center border border-fd-border border-b-0 p-8 md:p-12 bg-fd-background backdrop-blur-sm bg-opacity-50">
         {showWaitlistForm ? (
           <>
             <Rocket className="size-8 sm:size-12 md:size-16 text-fd-primary group-hover:scale-110 transition-transform mx-auto mb-2" />
@@ -59,7 +59,7 @@ export default function WaitlistPage() {
 
       {/* Dual Path Selection Cards */}
       {!showWaitlistForm && (
-        <section className="border border-fd-border border-b-1 p-12 bg-fd-background backdrop-blur-sm bg-opacity-50">
+        <section className="border border-fd-border border-b-1 px-6 p-8 md:p-12 bg-fd-background backdrop-blur-sm bg-opacity-50">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {/* Plugin Card */}
             <div
@@ -152,7 +152,7 @@ export default function WaitlistPage() {
 
       {/* Waitlist Form Section */}
       {showWaitlistForm && (
-        <section className="border border-fd-border border-b-0 p-12 bg-fd-background backdrop-blur-sm bg-opacity-50">
+        <section className="border border-fd-border border-b-0 p-8 md:p-12 bg-fd-background backdrop-blur-sm bg-opacity-50">
           {!submitted ? (
             <div className="max-w-md mx-auto">
               <h2 className="text-2xl font-semibold text-fd-foreground mb-4 text-center">

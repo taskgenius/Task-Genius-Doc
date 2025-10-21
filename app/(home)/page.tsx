@@ -65,7 +65,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border border-fd-border border-t-0 border-b-0 md:border-b p-6 px-12 bg-opacity-50">
+      <section className="border border-fd-border border-t-0 border-b-0 md:border-b p-4 md:p-6 px-6 md:px-12 bg-opacity-50">
         {/* Randomly selected preview image */}
         <div className="w-fit h-fit relative">
           <Image
