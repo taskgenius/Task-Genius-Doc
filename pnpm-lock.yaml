@@ -50,6 +50,9 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
+      react-medium-image-zoom:
+        specifier: ^5.4.0
+        version: 5.4.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       remark:
         specifier: ^15.0.1
         version: 15.0.1
